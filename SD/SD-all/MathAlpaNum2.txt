@@ -1,0 +1,86 @@
+ambient_space: R8
+sphere: S7
+points_on_sphere: 240
+ring_structure:
+  rings: 8
+  points_per_ring: 30
+  total: 240
+8 circular bands
+each containing 30 equally spaced points
+vector ↔ spinor⁺ ↔ spinor⁻
+ring:
+  dimension: 1
+  structure: cyclic
+  points: 30
+θ = 0, 12°, 24°, ... 348°
+axes:
+  count: 8
+  each_axis_generates: ring_of_30_points
+interactions:
+  ring_i intersects: none
+  ring_i links_with: all_other_rings
+S7_structure:
+  base_space: S4
+  fiber: S3
+geometry:
+  ambient_space: R8
+  sphere: S7
+
+  hopf_fibration:
+    fiber: S3
+    base: S4
+
+  circle_orbits:
+    rings: 8
+    points_per_ring: 30
+
+circle × circle = torus
+number_systems:
+  Z ⊂ Q ⊂ R ⊂ C
+
+geometry:
+
+  ambient_space: R8
+
+  sphere: S7
+
+  S7_structure:
+    base_space: S4
+    fiber: S3
+
+    internal_fibers:
+      S3:
+        fiber: S1
+
+  lattice:
+    type: E8
+    root_points: 240
+
+  ring_decomposition:
+    rings: 8
+    points_per_ring: 30
+
+======modular_time:
+  integer_set: 0..27
+  steps_per_cycle: 28
+  geometric_projection: 30 points on circle
+  mapping: "angle → time phase"
+integer_time_mapping:
+  lattice_points: 240
+  ring_points: 30
+  time_phases: 28
+  rollover: true
+mapping_layers:
+  geometry: "E8 lattice on S7"
+  temporal: "28-phase counter"
+  integer_indexing: "Z mod 28"
+  angles: "θ = 0°..348° in 12° steps"
+  projection: "astro / gps / digital"
+S7_fractal_clock:
+  rings: 8
+  points_per_ring: 30
+  time_phases: 28
+  sub_fibers: S3 / S1
+  integer_counter: Z
+  theta_rollover: 12 degrees
+=====

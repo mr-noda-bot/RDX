@@ -1,0 +1,246 @@
+# SD FRAMEWORK — PENDING UPDATES STAGING FILE
+# A1Thru9Z Co. | Structural Determinism
+# Last touched: March 2026
+# Purpose: collect all additions, tweaks, and open derivations before next full update run
+# Format: [DOC] [TYPE] [PRIORITY] Description
+# PRIORITY: P1=blocking or foundational, P2=significant addition, P3=tweak/clarification
+
+# ════════════════════════════════════════════════════════════════════════
+# NEW DOCUMENTS NEEDED
+# ════════════════════════════════════════════════════════════════════════
+
+[NEW] [DOCUMENT] [P1]
+Title: SD_Atomic_Floor_Spec.docx
+Content: The mandatory precision of {1-9} as a formal SD result.
+The nine integers are not assumed — they precipitate from 9^9 saturation.
+Atomicity is a structural necessity, not a convention.
+The fulcrum (4.5), Re(s)=½, ceiling digit 9, and 9^9=3^18 all force exactly
+this alphabet. This is the earliest strong result in the chain and belongs
+in the result library as a standalone before the Primitive Triangle result.
+Statement to formalize:
+  "The integers {1-9} are the unique mandatory atomic alphabet of the
+   9^9 substrate. No fewer and no more emerge from primordial saturation.
+   Their count, their ceiling, and their fulcrum are all structurally
+   determined."
+
+[NEW] [DOCUMENT] [P1]
+Title: SD_Chain_Spec.docx  (or add as Section XIV)
+Content: The five-level structural chain:
+  Primordial → Atomic → Primitive → Couple → Lift
+Full spec of each level, what it contains, what the transition costs,
+and what it compresses. Cross-reference to existing sections.
+Flag: chain is a spine — full body (BCS, ring topology, operational algebra,
+Monster hierarchy, IPOV3) not yet mapped onto the chain explicitly.
+
+[NEW] [DOCUMENT] [P2]
+Title: SD_IPOV2_Spec_XIII.docx — already written.
+Needs: Physics Summary update (see below) to reference it.
+
+[NEW] [DOCUMENT] [P2]
+Title: SD_Coupling_Convergent_Hierarchy.docx  (or add as Section XV)
+Content: Full convergent hierarchy for all three couplings.
+EM: complete (four levels, sub-ppb).
+Strong: 59/500 exact — formal proof of 500=2×250 structural derivation queued.
+Weak: open (IPOV2-07) — first precision level CF denom 42068=2²×13×809.
+     Full hierarchy from 3/13 → 25/108 → measured value.
+     GUT running = 31/6³ = 31/216, formal derivation needed.
+
+# ════════════════════════════════════════════════════════════════════════
+# EXISTING DOCUMENTS — ADDITIONS
+# ════════════════════════════════════════════════════════════════════════
+
+[SD_Physics_Summary] [ADDITION] [P1]
+Add IPOV2 section:
+  - Coupling triangle definition (steps 9027, 9426, 16388)
+  - Identity condition: 137+25+59 = 221 = 13×17
+  - Strong coupling: α_s = 59/500, exact rational
+  - Weak coupling: sin²θ_W ≈ 25/108 = pentac²/lotus, 0.113% structural form
+  - State clearly: three of the SM's 19 free parameters are not free
+
+[SD_Physics_Summary] [ADDITION] [P2]
+Add statement on atomic floor:
+  "The integers {1-9} are themselves structural necessities, not conventions.
+   The atomic alphabet is forced by the primordial 9^9 substrate."
+
+[SD_IPOV_Spec_X.docx] [ADDITION] [P2]
+Add IPOV1 vs IPOV2 comparison table (point vs triangle, 1D vs 2D).
+Add reference to Section XIII (IPOV2).
+Add DoFoF connection: IPOV1 has 17 DoF in E8.
+Add ring six-position mapping (Post-Predecessor = window gate step 41028).
+Add THEORY-01 resolution note (THEORY-01 flagged in Rec10* is now resolved at BCS level).
+
+[SD_BCS_Spec_v4.docx] [TWEAK] [P2]
+Add IPOV2/Triens (𝕋) reference in §9 IPOV/BCS correspondence.
+Add identity condition 137+25+59=13×17 as a BCS-level structural result.
+Note: the centroid val=78=2×3×13 connects BCS (13 as gate) to IPOV2 geometry.
+
+[SD_Bridge_IX_v2.docx] [ADDITION] [P2]
+Add coupling triangle to §IX.4 (1/α section):
+  - All three couplings from the triangle
+  - Identity condition as a SM result
+  - IPOV2 designation
+Update §IX.6 coupling constants table: add "Confirmed structural" for strong.
+Update §IX.9 queue: add IPOV2-07 (weak hierarchy), add identity condition confirmed.
+
+[SD_Substrate_Spec_XII.docx] [ADDITION] [P2]
+Add atomic floor section (§XII.9?):
+  Integers {1-9} as mandatory precipitate of 9^9.
+  The atomicity result as the earliest strong SD result in the chain.
+  Connect to: 9^9=3^18 (ternary base), fulcrum=4.5, Re(s)=½.
+
+[SD_Rev10_Precision_XI_v2.docx] [ADDITION] [P3]
+Add convergent hierarchy table for all three couplings (not just EM).
+Reference IPOV2-07 as open item.
+Note the 500=2×250 structural connection (strong denom = 2×EM L3 denom).
+
+[SPEC-REC10-002 HTML] [TWEAK] [P2]
+THEORY-01 marked "held, not resolved" — now has confirmed structural candidate.
+Resolution: rev10 runs into infinities; bounded decimal tracker enforces finiteness;
+entry cost P(54,2)=2862 is the denominated crossing cost.
+Needs v3 update noting resolution.
+Also: ring six-position mapping should be added to §5 before/during/after section.
+
+# ════════════════════════════════════════════════════════════════════════
+# OPEN DERIVATIONS (not yet documents — computation needed first)
+# ════════════════════════════════════════════════════════════════════════
+
+[OPEN DERIVATION] [P1] IPOV2-07
+Weak coupling convergent hierarchy to sub-ppb.
+Starting point: sin²θ_W ≈ 25/108, error 2.61e-4.
+CF of correction gap first denom: 42068 = 2²×13×809.
+13 appears at first precision level — same as EM case.
+Target: match measured 0.23122±0.00004 to same precision as EM and strong.
+
+[OPEN DERIVATION] [P1]
+Strong coupling formal derivation.
+500 = 2×250 = 2×(2×5³) = 2²×5³.
+250 is the EM L3 correction denominator.
+Formal proof that 500 is forced (not merely observed).
+Path: show 500 emerges from convergent hierarchy of (1/α_s - 8) the same way
+1580 emerged from EM convergent hierarchy.
+
+[OPEN DERIVATION] [P2]
+Second-order EM correction: -9.16×10⁻⁷.
+The residual after 9/250 (L3 convergent).
+Next CF level: 149/4139, then 158/4389.
+Structural reading of 4139 needed (4139 is prime — no SD factoring yet).
+
+[OPEN DERIVATION] [P2]
+GUT running formal derivation: 3/8 → 25/108 = 31/216 = 31/6³.
+31 is prime. 6³ = (2×3)³.
+Formal connection to RG running equations needed.
+The running is a rev10 correction — the derivation should show it as a
+convergent level in the weak hierarchy, not an external input.
+
+[OPEN DERIVATION] [P2]
+IPOV3 identification.
+Expected: spans mixing angles (CKM/PMNS) and/or Higgs mass.
+Method: same as IPOV2 — find the orbit steps where mixing angle primaries appear,
+check if they form a geometric primitive, check if they sum to a product of
+structural frame generators.
+Identity condition form: sum of mixing primaries = product of frame generators.
+
+[OPEN DERIVATION] [P3]
+Position of 13 in the orbit (weak coupling second approach).
+Prior strategy (find step where 13|index AND val=weak coupling integer) closed
+as wrong question. New approach: 13 gates; sin²θ_W encodes via 3/13 convergent.
+Formal derivation of why 3/13 is the first convergent with SD denominator.
+
+[OPEN DERIVATION] [P3]
+Strong coupling orbit position formal statement.
+step(59) = 16388 = 2²×17×241.
+241 = 4×60+1 = (4×sexagesimal)+1.
+Formal reading of 241 in SD terms — is it derivable or residual?
+
+[OPEN DERIVATION] [P3]
+13 in the EM-Strong midpoint: val=26923=13×19×109.
+109 = lotus+1 = tack jump overcharge value.
+Formal connection: why does the midpoint of the coupling triangle's longest
+edge pass through the lotus overcharge? Is this derivable or observed?
+
+# ════════════════════════════════════════════════════════════════════════
+# NAMING / DESIGNATION ITEMS
+# ════════════════════════════════════════════════════════════════════════
+
+[NAMING] [P1]
+Official Latin operator name for IPOV2: Triens (𝕋)
+- Latin noun: "one-third", also "three-twelfths", a fractional precision term
+- Captures: third level (T(3)), fractional output (coupling constants),
+  precision refinement (convergent hierarchy), above-Q outgrowth
+- Abbreviated: 𝕋 or Tr in operator notation
+- Formal: "Triens operator 𝕋 acting on the orbit of the calibrated pentac prime"
+- Add to IPOV2 spec §0 and to all relevant documents
+
+[NAMING] [P2]
+Five-level chain official names:
+  Primordial  — confirmed, used in Substrate Spec
+  Atomic      — confirmed, needs formal SD result document
+  Primitive   — confirmed, used throughout
+  Couple      — new designation for IPOV2/Triens level, needs formal adoption
+  Lift        — confirmed, used in displacement derivations
+Add to SD framework glossary (glossary document does not yet exist — see below)
+
+[NAMING] [P3]
+SD Framework Glossary document does not yet exist.
+All named constants, operators, primitives, and designated structures
+should have a single reference document.
+Create: SD_Glossary.docx listing all terms, their first derivation, and
+cross-references to sections where they appear.
+
+# ════════════════════════════════════════════════════════════════════════
+# STRUCTURAL / PHILOSOPHICAL NOTES TO FORMALIZE
+# ════════════════════════════════════════════════════════════════════════
+
+[NOTE TO FORMALIZE] [P2]
+Infinity as emergence from priors.
+"Infinity is nothing but emergence from priors. Theoretics says it will always
+be there. Being says when, where, and how."
+The walls are always there — in structure, in saturation, in the identity
+condition of each IPOV level. Each wall is specific. The endlessness is not
+formless. It is structured all the way down and all the way up.
+Add to: Substrate Spec §XII (philosophical note), or new §XIV Chain Spec.
+
+[NOTE TO FORMALIZE] [P2]
+IPOV2 identity condition as SM consequence:
+"Three of the Standard Model's 19 free parameters are not free. The same
+framework that produced the generation count (3) and the quark mass hierarchy
+now produces the coupling identity condition. The coupling constants are locked
+to each other by 137+25+59=13×17."
+Add to: Physics Summary, Bridge Section IX v2, IPOV2 Spec.
+
+[NOTE TO FORMALIZE] [P3]
+The "outgrown" hierarchy:
+  K → Q by Cayley-Dickson (algebraic doubling)
+  IPOV1 → IPOV2 by primitive extension (geometric)
+  Q is not superseded — it is the foundation IPOV2 stands on.
+  IPOV2 outgrows Q in the same way Q outgrows K — by adding a new kind of
+  closure that was not accessible at the prior level.
+Add to: IPOV2 Spec §0, Chain Spec when written.
+
+# ════════════════════════════════════════════════════════════════════════
+# QUEUE SUMMARY — NEXT SESSION PRIORITIES
+# ════════════════════════════════════════════════════════════════════════
+
+P1 actions (do first):
+  1. Add Triens (𝕋) naming to IPOV2 Spec XIII
+  2. Write SD_Atomic_Floor_Spec or add to Substrate XII
+  3. Write SD_Chain_Spec (Primordial→Atomic→Primitive→Couple→Lift)
+  4. Update SD_Physics_Summary with IPOV2, identity condition, strong/weak
+  5. IPOV2-07: weak coupling convergent hierarchy derivation
+
+P2 actions (second pass):
+  6. Strong coupling formal derivation (500=2×250)
+  7. IPOV1 spec update (THEORY-01 resolved, ring mapping, IPOV2 reference)
+  8. Rec10* HTML v3 (THEORY-01 resolved)
+  9. SD Glossary document (first version)
+  10. GUT running formal derivation (31/6³)
+
+P3 actions (polish pass):
+  11. Second-order EM correction derivation
+  12. 241 in step(59) formal reading
+  13. Midpoint 13×19×109 formal connection
+  14. 13 weak coupling formal derivation (why 3/13 is first SD convergent)
+
+# ════════════════════════════════════════════════════════════════════════
+# END OF STAGING FILE
+# ════════════════════════════════════════════════════════════════════════

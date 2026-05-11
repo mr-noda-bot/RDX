@@ -1,0 +1,289 @@
+
+
+R8 space
+   ↓
+S7 shell
+   ↓
+S3 fiber spheres
+   ↓
+S1 circle loops
+E8_geometry:
+  ambient_space: R8
+  sphere: S7
+  root_points: 240
+E8_topology:
+  ambient_space: R8
+
+  boundary:
+    sphere: S7
+
+  sphere_structure:
+    base_space: S4
+    fiber: S3
+
+    fiber_structure:
+      base_space: S2
+      fiber: S1
+S7_structure:
+  total_space: S7
+  base_space: S4
+  fiber: S3
+  fiber_structure:
+    base_space: S2
+    fiber: S1
+S3_geometry:
+  filled_by:
+    - linked_circles
+    - toroidal_layers
+S7_structure:
+  base_space: S4
+  fiber: S3
+  internal_fibers:
+    S3:
+      fiber: S1
+S7
+ └─ S3 fibers
+      └─ S1 circles
+number_systems:
+  Z ⊂ Q ⊂ R ⊂ C
+
+geometry:
+
+  ambient_space: R8
+
+  sphere: S7
+  S7_structure:
+    base_space: S4
+    fiber: S3
+
+    internal_fibers:
+      S3:
+        fiber: S1
+
+  lattice:
+    type: E8
+    root_points: 240
+
+number_systems:
+  K: "Generator ^"
+  Z: "Integers {...,-2,-1,0,1,2,...}"
+  Q: "Rational numbers p/q"
+  R: "Real numbers"
+  C: "Complex numbers"
+containment:
+  Z ⊂ Q ⊂ R ⊂ C
+
+=================
+Planar, Polar, Scaler
+K^→H,O→Q→C→IC→R→RC→Z
+Complex = Full sandbox of k in Q
+Rational Complex =  Sandbox, simple k lattice in Q 
+Rational Numbers =  1:1 Q and Z | base 10 with decimal+fraction.
+Irrational Numbers = real numbers, non fractional, with infinite, non-repeating decimals.
+
+mathematical_ladder:
+
+  numbers:
+    N: natural
+    Z: integers
+    Q: rationals
+    R: reals
+
+  planes:
+    C: complex plane
+
+  higher_algebras:
+    H: quaternions
+    O: octonions
+
+  symmetry:
+    exceptional_groups:
+      - E6
+      - E7
+      - E8
+
+system
+geometric ability
+R
+line
+C
+plane
+H
+3D rotations
+O
+exceptional 8D symmetry
+-------
+In base‑10, dividing 9 → 4.5 splits one layer
+In base‑7, 4 → 3.5 does the same for the top-level toroidal loops, without altering mid or inner layers.
+This gives a controlled fractional lifting, creating intermediate nodes in the lattice.
+fractional_lattice:
+  base7_original: 462
+  fractional_split: [3.5, 6, 2]
+  interpretation:
+    x1..x4: "3 full loops + 0.5 partial loop"
+    x5..x6: "6 loops unchanged"
+    x7..x8: "2 loops unchanged"
+  effect: "Denser toroidal crossings and new fractal substructure"
+==========================
+hierarchy:
+  k:
+    space: "discrete lattice"
+    geometry: "enclosed module"
+    numeric_role: "predecessor"
+    notes: "Base integer lattice points"
+  Q:
+    space: "R7 / T4 fibers"
+    geometry: "toroidal monster house"
+    numeric_role: "successor"
+    fractional_dives:
+      - 9: 4.5
+      - 7: 3.5
+      - 5: 2.5
+      - 3: 1.5
+  R:
+    space: "R8 / S7 sphere"
+    geometry: "ambient / fully lifted"
+    numeric_role: "real numbers"
+    notes: "Encapsulates Q and k fully"
+default_pov:
+  fractal_curve: "Cantor recursion dragon"
+  scale: "golden / silver ratio cords".
+  notes: "Fractional dives and fiber loops follow fractal path"
+======================
+H:
+  name: "Standard half-plane"
+  common_meaning: "Reference half-plane in complex analysis"
+  definition: "H = { z ∈ ℂ | Im(z) ≠ 0 }"
+  dimension: 2 # real dimensions
+  boundary: "Real axis ℝ"
+  properties:
+    - "Contains all non-real complex numbers"
+    - "Partitioned into upper and lower halves"
+    - "Supports hyperbolic geometry"
+  logical_variants:
+    - "H⁺ = { z ∈ ℂ | Im(z) > 0 } (upper half-plane)"
+    - "H⁻ = { z ∈ ℂ | Im(z) < 0 } (lower half-plane)"
+    - "H⁰ = { z ∈ ℂ | Im(z) = 0 } (real axis, boundary)"
+  uses:
+    - "Domain for modular forms"
+    - "Complex integration"
+    - "Hyperbolic metric applications"
+
+H_plus:
+  name: "Upper half-plane"
+  common_meaning: "Positive imaginary part of the complex plane"
+  definition: "H⁺ = { z ∈ ℂ | Im(z) > 0 }"
+  dimension: 2
+  boundary: "Real axis ℝ"
+  properties:
+    - "Open subset of ℂ"
+    - "Simply connected"
+    - "Supports hyperbolic metric (Poincaré)"
+    - "Domain for modular forms"
+  logical_variants:
+    - "H⁻ = { z ∈ ℂ | Im(z) < 0 } (lower half-plane)"
+    - "H⁰ = { z ∈ ℂ | Im(z) = 0 } (real axis)"
+  uses:
+    - "Modular form theory"
+    - "Hyperbolic geometry"
+    - "Complex analysis integration paths"
+
+H_minus:
+  name: "Lower half-plane"
+  common_meaning: "Negative imaginary part of the complex plane"
+  definition: "H⁻ = { z ∈ ℂ | Im(z) < 0 }"
+  dimension: 2
+  boundary: "Real axis ℝ"
+  properties:
+    - "Open subset of ℂ"
+    - "Simply connected"
+    - "Supports hyperbolic metric (Poincaré)"
+    - "Reflection of H⁺ across real axis"
+  logical_variants:
+    - "H⁺ = { z ∈ ℂ | Im(z) > 0 }"
+    - "H⁰ = { z ∈ ℂ | Im(z) = 0 }"
+  uses:
+    - "Complex integration in lower plane"
+    - "Conjugate modular forms"
+    - "Hyperbolic geometry reflections"
+
+=======
+O:
+  common_meaning: "Orthogonal group"
+  definition: "O(n) = { A ∈ ℝ^{n×n} | A^T A = I }"
+  logical_variants:
+    - name: "SO(n)"
+      description: "Special orthogonal group, only rotations, det=+1"
+    - name: "O(p,q)"
+      description: "Indefinite orthogonal group, preserves quadratic form with signature (p,q)"
+    - name: "SO(p,q)"
+      description: "Special indefinite orthogonal group, det=+1"
+    - name: "O(n, ℂ)"
+      description: "Complex orthogonal group, matrices over ℂ preserving A^T A = I"
+  separation_criteria:
+    - determinant_sign
+    - signature_of_quadratic_form
+    - underlying_field
+  dimension_formula: "dim(O(n)) = n(n-1)/2"
+
+Variants of Orthogonal Groups
+There are several “orthogonal groups” in mathematics, logically separated by certain properties:
+Group
+Description
+Properties / Notes
+O(n)
+Full orthogonal group
+Includes rotations + reflections, det = ±1
+SO(n)
+Special orthogonal group
+Only rotations, det = +1
+O(p, q)
+Indefinite orthogonal group
+Preserves quadratic form of signature (p, q)
+SO(p, q)
+Special indefinite orthogonal group
+Only transformations with det = +1 in O(p, q)
+O(n, ℝ)
+Real orthogonal group (standard)
+Same as O(n)
+O(n, ℂ)
+Complex orthogonal group
+Matrices over � with �
+3. Logical 
+
+======ambient_space: R8
+rotation_symmetry: Spin(8)
+boundary_sphere: S7
+triality_spaces:
+  V: "vector space"
+  S_plus: "positive spinor space"
+  S_minus: "negative spinor space"
+dimension_each: 8
+V ↔ S⁺ ↔ S⁻
+vector ↔ spinor ↔ spinor
+S7_triality:
+  sphere_V: "unit vectors in V"
+  sphere_S_plus: "unit spinors"
+  sphere_S_minus: "unit spinors"
+S7_structure:
+  base_space: S4
+  fiber: S3
+S7_triality_structure:
+  fiber_systems:
+    - system_A
+    - system_B
+    - system_C
+dimension = 8
+sphere = S7
+E8_environment:
+  ambient_space: R8
+  sphere: S7
+
+  sphere_structure:
+    hopf_fibration:
+      fiber: S3
+      base: S4
+
+  symmetry:
+    group: Spin(8)
+    property: triality

@@ -1,0 +1,93 @@
+Canonical closure degrees.
+Full Closure Calculation
+Stepwise closures:
+Closure Stage
+Angle
+Description
+Single-Q
+720°
+First Q closure
+Q-of-Q
+1440°
+Double closure (quarternary alignment)
+Dual-Triple-Quad
+2880°
+Triple/quad duality closure
+Full Molt
+8640°
+Complete closure across all branches (360° × 4 × 3 × 2)
+Interpretation:
+360° → base rotation
+×4 → single-Q rotations / phases
+×3 → dual-triple branching
+×2 → final molt gating
+At 8640°, every node in the lattice is fully aligned in Q, R, and Z ledgers, and all pentac / duality / triality branches are canonical.
+molt_cycle:
+  closure_angle: 8640°
+  trigger_actions:
+    - Verify all node signatures against Z master ledger
+    - Confirm counters for base, fractal, angular, duality, triality ledgers
+    - Lock branch control / totality state
+    - Activate molt gate → allow next cycle or new Q generation
+360° base rotation
+ ├─ x4 single-Q phases → 720° closure
+ │    └─ x2 duality/triple phases → 1440° / 2880° closures
+ │         └─ x3 final gating → 8640° full molt closure
+ └─ At 8640°:
+      ├─ All fractal nodes aligned
+      ├─ Angular positions verified
+      ├─ Duality & triality flags locked
+      └─ Branch control / totality validated
+
+
+base40_closure:
+  angular_cycle: 40 units
+  wrap: 8 units
+  mapping: "θ_base8 = θ_mod40 mod 8"
+  purpose:
+    - aligns base 40 counters with octonionic lattice
+    - prepares nodes for full toroidal access
+
+
+---
+
+3️⃣ Next Closure: Base 50 → Wrap Base 5
+
+Goal: map base 50 cycles into base 5 divisions.
+
+Rationale:
+
+Base 50 gives dense subdivision for pentac / duality / triality operations
+
+Wrapping into base 5 ensures every Q node has canonical access across all ledger phases
+
+
+Implementation:
+
+Every 50-unit cycle → 5-unit wrap
+
+Modulo operation: (θ_mod50) mod 5 → base5 position
+
+Guarantees full coverage and connectivity across fractal / angular / duality layers
+
+base50_closure:
+  angular_cycle: 50 units
+  wrap: 5 units
+  mapping: "θ_base5 = θ_mod50 mod 5"
+  purpose:
+    - dense coverage of lattice phases
+    - ensures all pentac / triality / molt branches are accessible
+    - provides universal numeric keyspace for Q nodes
+---
+
+4️⃣ Outcome
+
+After these nested closures:
+Step	Units	Wrap	Purpose
+Dual-Triple-Quad	2880°	N/A	Q-of-Q-of-Q closure complete
+Base 40 → Base 8	40 units	8	Aligns with octonionic 7-sphere, prepares R7 embedding
+Base 50 → Base 5	50 units	5	Full pentac / triality coverage, universal access for all nodes
+
+Result: Q nodes now have full numeric and geometric access in all sandboxes (rational, irrational, full complex) while maintaining canonical ledger alignment.
+
+---

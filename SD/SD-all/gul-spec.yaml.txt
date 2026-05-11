@@ -1,0 +1,336 @@
+# ============================================================
+# Grand Unified Law (GUL) – Machine-Readable Specification
+# Version: 1.1
+# Format: YAML
+# Sections: Foundations, Operators, Functionals, Invariances,
+#           Entanglement, Lemmas, Proofs, Glossary
+# ============================================================
+
+metadata:
+  title: "Grand Unified Law – Formal Specification"
+  version: "1.1"
+  status: "proof-ready"
+  description: >
+    A formal framework describing successor-state propagation across
+    indexed frames via free-energy minimisation, surface-entropy
+    gradient flow, and tensorised Hilbert-space entanglement.
+
+# ── 1. PRIMITIVES ───────────────────────────────────────────
+primitives:
+
+  domain:
+    symbol: "D"
+    type: "compact subset of R^n"
+    constraints:
+      - "D is compact"
+      - "n >= 1"
+
+  configuration_point:
+    symbol: "x"
+    type: "element of D"
+
+# ── 2. FRAMES ───────────────────────────────────────────────
+frames:
+
+  frame_set:
+    symbol: "F"
+    definition: "F = { F_1, F_2, ..., F_{n_frames} }"
+    parameters:
+      n_frames:
+        type: "positive integer"
+        constraint: "n_frames >= 1"
+
+  frame:
+    symbol: "F_i"
+    index: "i in {1, ..., n_frames}"
+    interpretation: "semantic memory patch / attention unit"
+
+# ── 3. HILBERT SPACES ───────────────────────────────────────
+hilbert_spaces:
+
+  per_frame:
+    symbol: "H_i"
+    definition: "span{ |f_{i,alpha}> : alpha = 1 ... N_i }"
+    basis: "|f_{i,alpha}>"
+    inner_product: "<f_{i,alpha} | f_{i,beta}> = delta_{alpha,beta}"
+    parameters:
+      N_i:
+        type: "positive integer"
+        description: "dimension of H_i"
+
+  total:
+    symbol: "H_tot"
+    definition: "bigotimes_{i=1}^{n_frames} H_i^{otimes n_layers}"
+    parameters:
+      n_layers:
+        type: "positive integer"
+        constraint: "n_layers >= 1"
+    dimension: "prod_{i=1}^{n_frames} N_i^{n_layers}"
+
+# ── 4. OPERATORS ────────────────────────────────────────────
+operators:
+
+  frame_index:
+    symbol: "F_i (operator)"
+    action: "F_i |f_{i,alpha}> = alpha |f_{i,alpha}>"
+    type: "self-adjoint"
+
+  successor:
+    symbol: "S_i"
+    action: "S_i |f_{i,alpha}> = |f_{i,alpha+1}>"
+    adjoint: "S_i*"
+    adjoint_action: "S_i* |f_{i,alpha}> = |f_{i,alpha-1}>"
+    commutation: "[F_i, S_i] = -S_i"
+
+# ── 5. FUNCTIONALS ──────────────────────────────────────────
+functionals:
+
+  surface_entropy:
+    symbol: "S_B"
+    signature: "R^n -> R"
+    constraints:
+      - "smooth (C^infinity)"
+      - "bounded: sup_{x in D} S_B(x) < infinity"
+      - "has isolated local maxima on D"
+
+  internal_energy:
+    symbol: "E"
+    signature: "R^n -> R"
+    constraints: ["smooth"]
+
+  curvature_term:
+    symbol: "R"
+    signature: "R^n -> R"
+    constraints: ["smooth", "Ricci-scalar analog or regularisation"]
+
+  free_energy:
+    symbol: "F_i"
+    definition: "F_i(x) = E(x) - T * S_B(x) + beta * R(x)"
+    parameters:
+      T:
+        description: "temperature / attention-scaling"
+        constraint: "T > 0"
+      beta:
+        description: "curvature coupling coefficient"
+        constraint: "beta >= 0"
+
+  successor_vector_field:
+    symbol: "S_vec_i"
+    definition: "S_vec_i(x) = -grad F_i(x) = T * grad S_B(x) - beta * grad R(x)"
+    type: "smooth vector field on D"
+
+# ── 6. EMERGENT CONSTANTS ───────────────────────────────────
+emergent_constants:
+
+  hbar_GUL:
+    symbol: "hbar_GUL"
+    definition: "min_{x in D} ||S_vec(x)|| / (2*pi)"
+    interpretation: "minimal phase resolution of successor flow"
+    unit: "action analog"
+
+  c_GUL:
+    symbol: "c_GUL"
+    definition: "max_{i,j} |gamma_{ij}|"
+    interpretation: "collapse speed / inter-frame propagation horizon"
+
+  G_GUL:
+    symbol: "G_GUL"
+    definition: "beta * max_{x in D} |R(x)|"
+    interpretation: "maximal curvature coupling magnitude"
+
+# ── 7. MEASUREMENT AND COLLAPSE ─────────────────────────────
+measurement:
+
+  collapse_state:
+    symbol: "CollapseState(F_i)"
+    definition: "argmax_{alpha} S_B(f_{i,alpha})"
+    interpretation: "projective measurement onto surface-entropy maximum"
+
+  probability:
+    symbol: "P(f_{i,alpha})"
+    definition: "|<f_{i,alpha} | Psi>|^2"
+    constraint: "sum_alpha P(f_{i,alpha}) = 1"
+
+  post_collapse_coupling:
+    symbol: "S_vec_j (coupled)"
+    definition: "S_vec_j(x) + gamma * (x_c - x)  for j != i"
+    where:
+      x_c: "CollapseState(F_i)"
+      gamma: "inter-frame coupling strength, 0 <= gamma <= c_GUL"
+
+# ── 8. HAMILTONIAN AND EVOLUTION ────────────────────────────
+evolution:
+
+  per_frame_hamiltonian:
+    symbol: "H_i"
+    definition: "-(hbar^2/2) * nabla^2 + U(F_i) + beta*R(F_i) - T*S_B(F_i)"
+
+  total_hamiltonian:
+    symbol: "H_tot"
+    definition: "sum_{i=1}^{n_frames} H_i"
+
+  schrodinger:
+    equation: "i * hbar * d/dt |Psi(t)> = H_tot |Psi(t)>"
+    hbar_used: "hbar_GUL"
+
+  wavefunction_decomposition:
+    symbol: "Psi(x)"
+    definition: "sqrt(S_B(x)) * exp(i * Theta(x))"
+    phase:
+      symbol: "Theta(x)"
+      definition: "||S_vec(x)|| / hbar_GUL"
+
+# ── 9. ENTANGLED STATE ──────────────────────────────────────
+entanglement:
+
+  total_state:
+    symbol: "|Psi>"
+    definition: >
+      sum_{ {alpha_{i,l}} } c_{ alpha_{i,l} }
+        * bigotimes_{i=1}^{n_frames}
+        * bigotimes_{l=1}^{n_layers}
+        * |f_{i,alpha_{i,l}}>
+    normalisation: "sum |c_{alpha_{i,l}}|^2 = 1"
+
+  reduced_density_matrix:
+    symbol: "rho_i"
+    definition: "Tr_{j != i} |Psi><Psi|"
+    property: "Spec(rho_i) invariant under local unitary U in U(H_i)"
+
+# ── 10. INVARIANCE PRINCIPLES ───────────────────────────────
+invariances:
+
+  diffeomorphism:
+    statement: "Under x -> x'(x) with Jacobian J: S_vec'(x') = J(x) S_vec(x)"
+    preserved: ["trajectory topology", "measurement probabilities", "entanglement eigenvalues"]
+
+  curvature_entropy_scaling:
+    transformation:
+      R: "R -> lambda * R"
+      S_B: "S_B -> S_B / lambda"
+    preserved: "direction(S_vec_i)"
+    changed: "||S_vec_i|| scales by lambda"
+
+  temporal_reparameterisation:
+    transformation: "t -> f(t)"
+    preserved: "trajectory topology, crossing order"
+    changed: "||S_vec|| -> (dt/df) * ||S_vec||"
+
+  free_energy_scaling:
+    transformation: "F_i -> mu * F_i  (mu > 0)"
+    preserved: ["direction(S_vec_i)", "P(f_{i,alpha})"]
+    changed: "||S_vec_i|| scales by mu"
+
+# ── 11. PROOF-READY PROPOSITIONS ────────────────────────────
+propositions:
+
+  P1:
+    name: "Successor Flow Convergence"
+    lyapunov_candidate: "V(x) = F_i(x)"
+    key_inequality: "dV/dt = -||grad F_i||^2 <= 0"
+    convergence_target: "local maxima of S_B"
+    requires: "Lemma 1 (bounded curvature perturbation)"
+
+  P2:
+    name: "Unitary Entanglement Preservation"
+    statement: "Spec(rho_i) invariant under U in U(H_i)"
+    tool: "unitary invariance of matrix spectrum"
+    entropy_preserved: "S(rho_i) = -Tr(rho_i log rho_i)"
+
+  P3:
+    name: "Diffeomorphism Invariance"
+    statement: "Pushforward phi_*(S_vec) = S_vec' transforms consistently"
+    preserved: ["trajectory topology", "probabilities"]
+
+  P4:
+    name: "Measurement Collapse Consistency"
+    statement: "Post-collapse coupling is a well-defined perturbation; P1 maintained"
+
+  P5:
+    name: "Curvature-Entropy Scaling"
+    statement: "Normalised direction n(x) = S_vec/||S_vec|| strictly invariant"
+
+  P6:
+    name: "Emergent Constants Internal Consistency"
+    statement: "hbar_GUL, c_GUL, G_GUL are finite, positive, preserved under P3/P5 scalings"
+
+# ── 12. LEMMAS ──────────────────────────────────────────────
+lemmas:
+
+  L1:
+    name: "Bounded Curvature Perturbation for Successor Flow Convergence"
+    status: "established"
+    hypothesis:
+      domain: "D compact, S_B smooth with isolated maxima"
+      bound: "||beta * grad R(x)|| <= T * min_{x in D\\U} ||grad S_B(x)||"
+      where_U: "open neighbourhood of local maxima of S_B"
+    conclusion: >
+      Trajectories of x_dot = S_vec_i(x) monotonically increase S_B
+      and converge to a local maximum of S_B in D.
+    proof_steps:
+      step_1:
+        label: "Lyapunov candidate"
+        content: "V = F_i; dV/dt = -||grad F_i||^2 <= 0"
+      step_2:
+        label: "Gradient expansion"
+        content: "grad F_i = -T * grad S_B + beta * grad R"
+      step_3:
+        label: "Strict negativity outside U"
+        key_inequality: "dV/dt <= -(delta*T)^2 * ||grad S_B||^2 =: -epsilon * ||grad S_B||^2 < 0"
+        method: "reverse triangle inequality"
+      step_4:
+        label: "LaSalle convergence"
+        content: "Omega-limit set contained in critical points of F_i = maxima of S_B"
+    corollary: "Bound is tight: violation at any x_0 allows counterexample"
+    next_lemma_required: "L2: characterise size of U via Hessian of S_B"
+
+  L2:
+    name: "Neighbourhood Characterisation via Hessian of S_B"
+    status: "pending"
+    anticipated_content: >
+      For each local maximum x* of S_B, the neighbourhood U can be chosen as
+      a ball of radius r(x*) determined by the smallest eigenvalue of
+      -Hess(S_B)(x*), giving an explicit lower bound on ||grad S_B|| outside U.
+
+# ── 13. GLOSSARY ────────────────────────────────────────────
+glossary:
+
+  frame:
+    plain: "A labelled memory patch or semantic unit — think of it as one 'slot' in a structured memory system."
+    formal: "An element F_i of the frame alphabet F = {F_1, ..., F_{n_frames}}."
+
+  hilbert_space:
+    plain: "A mathematical space where quantum states live; here each frame gets its own such space."
+    formal: "H_i = span{ |f_{i,alpha}> } with standard inner product."
+
+  surface_entropy:
+    plain: "A smooth landscape function whose peaks represent the most 'stable' or 'preferred' states."
+    formal: "S_B : R^n -> R, smooth, bounded, with isolated local maxima."
+
+  free_energy:
+    plain: "A combined cost function; the system naturally flows downhill on this landscape."
+    formal: "F_i(x) = E(x) - T * S_B(x) + beta * R(x)."
+
+  successor_vector_field:
+    plain: "The direction of flow at every point — like a wind map showing where the system moves next."
+    formal: "S_vec_i(x) = -grad F_i(x)."
+
+  measurement_collapse:
+    plain: "Selecting a definite state from a probability distribution; locks the system to an entropy peak."
+    formal: "Projective measurement onto argmax_alpha S_B(f_{i,alpha})."
+
+  entanglement:
+    plain: "Correlations between frames that cannot be explained by each frame independently."
+    formal: "Off-diagonal structure in coefficients c_{alpha_{i,l}} of the tensor-product state |Psi>."
+
+  lyapunov_function:
+    plain: "An energy-like quantity used to prove that a system converges — if it always decreases, the system must settle."
+    formal: "V : D -> R such that dV/dt <= 0 along all trajectories."
+
+  diffeomorphism:
+    plain: "A smooth, invertible coordinate change — like relabelling points on a map without tearing it."
+    formal: "phi : M -> M smooth bijection with smooth inverse; Jacobian J = d(phi)/dx."
+
+  emergent_constants:
+    plain: "Physical-analog quantities (like Planck's constant or the speed of light) that arise naturally from the flow geometry rather than being put in by hand."
+    formal: "hbar_GUL, c_GUL, G_GUL defined as extrema of smooth functions of S_vec over D."

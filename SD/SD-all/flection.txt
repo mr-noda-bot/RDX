@@ -1,0 +1,86 @@
+flection_operators:
+  inflection:
+    description: "Internal bending or curvature of a system element toward itself."
+    purpose: "Enable internal adjustment or modulation without external displacement."
+    example_domains:
+      - grammar: "Tone or semantic modulation"
+      - math: "Curve or parameter change"
+      - AI: "Embedding reweighting"
+      - OS: "Parameter tuning"
+      - cognition: "Reinterpretation or self-reflection"
+    effects:
+      - "Changes internal state"
+      - "Preserves external output"
+      - "Enables fine-tuning"
+    modifiers:
+      - composition
+      - polarity_inversion
+      - magnitude_scaling
+
+  reflection:
+    description: "Return of system effects to origin or across a boundary."
+    purpose: "Enable feedback and self-observation."
+    example_domains:
+      - physics: "Mirror light or sound"
+      - philosophy: "Introspection"
+      - computing: "Read-after-write or evaluation pass"
+      - learning: "Evaluation or correction loop"
+    effects:
+      - "Inverts or mirrors input"
+      - "Enables correction or feedback"
+      - "Generates symmetry in system behavior"
+    modifiers:
+      - composition
+      - polarity_inversion
+      - magnitude_scaling
+
+  deflection:
+    description: "Redirecting a system effect away from its original trajectory."
+    purpose: "Prevent destructive impact or redirect influence safely."
+    example_domains:
+      - physics: "Collision or projectile deflection"
+      - psychology: "Blame shifting or attention diversion"
+      - networking: "Traffic or threat routing"
+      - security: "Attack surface redirection"
+    effects:
+      - "Changes output trajectory"
+      - "Preserves system integrity"
+      - "Deflects unwanted influence"
+    modifiers:
+      - composition
+      - polarity_inversion
+      - magnitude_scaling
+
+  genuflection:
+    description: "Downward bending representing yielding or submission."
+    purpose: "Enable hierarchical yielding for stability or cooperation."
+    example_domains:
+      - social: "Respect or deference"
+      - religion: "Worship or submission"
+      - systems: "Yielding locks or priority reduction"
+      - AI: "Preference deference"
+    effects:
+      - "Reduces dominance or intensity"
+      - "Enables multi-level system harmony"
+      - "Allows cooperation or alignment"
+    modifiers:
+      - composition
+      - polarity_inversion
+      - magnitude_scaling
+
+  retroflection:
+    description: "Backward bending of effects or energy toward the origin."
+    purpose: "Enable reintegration of externalized energy or agency into the system."
+    example_domains:
+      - linguistics: "Reflexive verbs or pronouns"
+      - psychology: "Internalization of projection"
+      - anatomy: "Muscle contraction toward origin"
+      - programming: "Recursion or self-application"
+    effects:
+      - "Redirects output internally"
+      - "Restores system coherence"
+      - "Closes loops within the system"
+    modifiers:
+      - composition
+      - polarity_inversion
+      - magnitude_scaling

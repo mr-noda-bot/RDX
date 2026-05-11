@@ -1,0 +1,342 @@
+
+---
+
+1. Scope → Metaphor Mapping
+
+Scope	Brain	Differential	Government	Loom
+
+Local	Subnetwork / neuron clusters	Single gear tooth / axis torque	Local council / policy	Single warp/weft crossing / frame
+Region	Layer of neurons / subnetwork integration	Gear set / coupled axes	District / pool-level governance	Pool / batch section of fabric
+Global	Entire neural layer / pattern propagation	Gear assembly / torque balance across all axes	Federal / system-wide laws	Full woven panel / bucket
+Universal	Cross-network influence / emergent intelligence	Multi-gear network / global rotations	Constitution / universal policy	Entire fabric mesh / multi-looms
+
+
+
+---
+
+2. Interpretation
+
+Brain → Local/Region/Global/Universal:
+Governs adaptive decisions and emergent computation at multiple scales. Local neurons fire, regional subnetworks propagate, global layers enforce system patterns, and universal intelligence handles cross-system feedback.
+
+Differential → Local/Region/Global/Universal:
+Governs mechanical balancing. Local torque adjustments affect a single node, regional gear sets distribute torque among pools, global gear assemblies balance overall lattice, universal rotation ensures consistent system-wide spin.
+
+Government → Local/Region/Global/Universal:
+Enforces constraints, policy, and law. Local councils handle small pools, districts coordinate regions, federal agencies manage the global state, and universal principles enforce invariants across multiple systems.
+
+Loom → Local/Region/Global/Universal:
+Handles pattern propagation. Single warp/weft for local node interactions, pooled batches for regional patterns, full panel weaving for global structure, and multi-looms for universal context alignment.
+
+
+
+---
+
+3. Visualization (Conceptual Grid)
+
+Scope →          Local       Region       Global       Universal
+Brain            neuron      sublayer     layer        cross-network
+Differential     gear tooth  gear set     assembly     multi-gear net
+Government       council     district     federal      constitution
+Loom             frame       pool/batch  bucket/panel multi-looms
+
+
+---
+
+4. Operational Insight
+
+1. Tasks & Flows:
+
+Execution lives mostly in Loom + Differential, moving from local → universal.
+
+
+
+2. Directing & Governance:
+
+Decision-making lives mostly in Brain + Government, also scaled across scopes.
+
+
+
+3. Duality / Multi-Scale:
+
+Local/Global dual-scope nodes operate at intersections, e.g., a local loom weave may influence a regional differential gear alignment, guided by a brain policy decision.
+
+
+
+metaphors:
+  # Execution / Flow Layer
+  Loom:
+    description: "Memory / patterned flow"
+    applications:
+      - Frames -> Pools -> Batches -> Buckets
+      - Warp = Q lattice
+      - Weft = Butterfly flows
+    scope_roles:
+      Local: "Single warp/weft crossing / frame"
+      Region: "Pool / batch section of fabric"
+      Global: "Full woven panel / bucket"
+      Universal: "Multi-looms / entire mesh"
+
+  Differential:
+    description: "Coupled propagation / balance"
+    applications:
+      - Torque distribution across axes
+      - Balances toroidal Q rotations and butterfly energy
+      - Spin propagation / molting support
+    scope_roles:
+      Local: "Single gear tooth / axis torque"
+      Region: "Gear set / coupled axes"
+      Global: "Gear assembly / torque balance"
+      Universal: "Multi-gear network / global rotations"
+
+  Butterfly:
+    description: "Energetic feedback / valence flow"
+    applications:
+      - Cross-cutting flows around Mansion and Tower
+      - Drives local entanglement and molting
+      - Energetic propagation in Q lattice
+    scope_roles:
+      Local: "Node-to-node energetic feedback"
+      Region: "Neighborhood cluster flows"
+      Global: "Pool/batch-wide propagation"
+      Universal: "System-wide entanglement influence"
+
+  # Control / Directing Layer
+  Brain:
+    description: "Adaptive / emergent computation"
+    applications:
+      - Successor weighting
+      - Entropy prioritization
+      - Molting triggers
+    scope_roles:
+      Local: "Subnetwork / neuron clusters"
+      Region: "Layer of neurons / subnetwork integration"
+      Global: "Entire neural layer / pattern propagation"
+      Universal: "Cross-network emergent influence"
+
+  Government:
+    description: "Policy / invariants / governance"
+    applications:
+      - Scope enforcement
+      - Constraint validation
+      - Duality & universal rules
+    scope_roles:
+      Local: "Local council / policy"
+      Region: "District / pool-level governance"
+      Global: "Federal / system-wide laws"
+      Universal: "Constitution / universal policy"
+
+  # Structural / Spatial Layer
+  MonsterMansion:
+    description: "Octonion basement / sub-basement"
+    applications:
+      - Node clusters
+      - Interconnections
+      - Butterfly anchor points
+    scope_roles:
+      Local: "Individual basement node"
+      Region: "Sub-basement clusters"
+      Global: "Full basement level"
+      Universal: "Foundation of larger structures"
+
+  Tower:
+    description: "Pentac tower / field / attic"
+    applications:
+      - Higher-level node connections
+      - Transcendent nodes
+      - Spin accumulation / 720° molting
+    scope_roles:
+      Local: "Tower floor / node cluster"
+      Region: "Tower sections / field"
+      Global: "Entire tower level"
+      Universal: "Cross-system closure influence"
+
+  Basement:
+    description: "Foundational hierarchical node structure"
+    applications:
+      - Node depth and hierarchy
+      - Structural engagement for butterfly and tower
+    scope_roles:
+      Local: "Basement node / octonion element"
+      Region: "2nd Basement cluster"
+      Global: "3rd Basement / deeper sub-structure"
+      Universal: "Structural base for system-wide mapping"
+
+  Pentac:
+    description: "Attic / field specialized valence"
+    applications:
+      - High-dimensional rotations
+      - Interaction hubs
+      - Closure nodes
+    scope_roles:
+      Local: "Individual pentac node"
+      Region: "Pentac field subset"
+      Global: "Full attic/field level"
+      Universal: "Transcendent valence closure"
+
+  # Lifecycle / Propagation Layer
+  Seed:
+    description: "Node origin / initial state"
+    applications:
+      - ZeroFrame instantiation
+      - Base node entropy, arity, orientation
+    scope_roles:
+      Local: "Seed node in basement / ground floor"
+      Region: "Neighborhood placement"
+      Global: "Pool-wide initialization"
+      Universal: "System-wide seed influence"
+
+  Core:
+    description: "Active operational nucleus"
+    applications:
+      - Node computation
+      - Butterfly interactions
+      - Frame/pool/batch engagement
+    scope_roles:
+      Local: "Node active execution"
+      Region: "Pool-level core engagement"
+      Global: "Batch-wide operational hub"
+      Universal: "System-wide operational influence"
+
+  Shell:
+    description: "Encapsulation / interface"
+    applications:
+      - Metadata / policy / invariants
+      - Scope enforcement
+      - Duality handling
+    scope_roles:
+      Local: "Node-level shell"
+      Region: "Pool/batch shell"
+      Global: "Bucket / panel encapsulation"
+      Universal: "Cross-system protective interface"
+
+  Molt:
+    description: "Transformation / state update / transcendence"
+    applications:
+      - 720° rotation / molting
+      - Dual / universal scope propagation
+      - Structural and valence updates
+    scope_roles:
+      Local: "Node-level molting"
+      Region: "Cluster / pool-level molting"
+      Global: "Batch / bucket closure"
+      Universal: "System-wide transcendence / closure"
+
+---
+metaphor_grid:
+  - metaphor: Loom
+    layer: Execution
+    description: "Memory / patterned flow"
+    scope:
+      Local: "Single warp/weft crossing / frame"
+      Region: "Pool / batch section of fabric"
+      Global: "Full woven panel / bucket"
+      Universal: "Multi-looms / entire mesh"
+
+  - metaphor: Differential
+    layer: Execution
+    description: "Coupled propagation / balance"
+    scope:
+      Local: "Single gear tooth / axis torque"
+      Region: "Gear set / coupled axes"
+      Global: "Gear assembly / torque balance"
+      Universal: "Multi-gear network / global rotations"
+
+  - metaphor: Butterfly
+    layer: Execution
+    description: "Energetic feedback / valence flow"
+    scope:
+      Local: "Node-to-node energetic feedback"
+      Region: "Neighborhood cluster flows"
+      Global: "Pool/batch-wide propagation"
+      Universal: "System-wide entanglement influence"
+
+  - metaphor: Brain
+    layer: Control
+    description: "Adaptive / emergent computation"
+    scope:
+      Local: "Subnetwork / neuron clusters"
+      Region: "Layer of neurons / subnetwork integration"
+      Global: "Entire neural layer / pattern propagation"
+      Universal: "Cross-network emergent influence"
+
+  - metaphor: Government
+    layer: Control
+    description: "Policy / invariants / governance"
+    scope:
+      Local: "Local council / policy"
+      Region: "District / pool-level governance"
+      Global: "Federal / system-wide laws"
+      Universal: "Constitution / universal policy"
+
+  - metaphor: MonsterMansion
+    layer: Structural
+    description: "Octonion basement / sub-basement"
+    scope:
+      Local: "Individual basement node"
+      Region: "Sub-basement clusters"
+      Global: "Full basement level"
+      Universal: "Foundation of larger structures"
+
+  - metaphor: Tower
+    layer: Structural
+    description: "Pentac tower / field / attic"
+    scope:
+      Local: "Tower floor / node cluster"
+      Region: "Tower sections / field"
+      Global: "Entire tower level"
+      Universal: "Cross-system closure influence"
+
+  - metaphor: Basement
+    layer: Structural
+    description: "Foundational hierarchical node structure"
+    scope:
+      Local: "Basement node / octonion element"
+      Region: "2nd Basement cluster"
+      Global: "3rd Basement / deeper sub-structure"
+      Universal: "Structural base for system-wide mapping"
+
+  - metaphor: Pentac
+    layer: Structural
+    description: "Attic / field specialized valence"
+    scope:
+      Local: "Individual pentac node"
+      Region: "Pentac field subset"
+      Global: "Full attic/field level"
+      Universal: "Transcendent valence closure"
+
+  - metaphor: Seed
+    layer: Lifecycle
+    description: "Node origin / initial state"
+    scope:
+      Local: "Seed node in basement / ground floor"
+      Region: "Neighborhood placement"
+      Global: "Pool-wide initialization"
+      Universal: "System-wide seed influence"
+
+  - metaphor: Core
+    layer: Lifecycle
+    description: "Active operational nucleus"
+    scope:
+      Local: "Node active execution"
+      Region: "Pool-level core engagement"
+      Global: "Batch-wide operational hub"
+      Universal: "System-wide operational influence"
+
+  - metaphor: Shell
+    layer: Lifecycle
+    description: "Encapsulation / interface"
+    scope:
+      Local: "Node-level shell"
+      Region: "Pool/batch shell"
+      Global: "Bucket / panel encapsulation"
+      Universal: "Cross-system protective interface"
+
+  - metaphor: Molt
+    layer: Lifecycle
+    description: "Transformation / state update / transcendence"
+    scope:
+      Local: "Node-level molting"
+      Region: "Cluster / pool-level molting"
+      Global: "Batch / bucket closure"
+      Universal: "System-wide transcendence / closure"

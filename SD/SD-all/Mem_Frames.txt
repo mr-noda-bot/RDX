@@ -1,0 +1,398 @@
+
+
+mem.frame.buffer.pool.batch.bucket.cache.fs.db
+
+The tick-driven Q system can map directly onto those memory layers. Think of each tick producing a frame, which then flows through buffers and pools before storage.
+
+I'll show how they align.
+
+
+---
+
+1. Tick → Frame
+
+Each update of the toroidal Q produces a state snapshot.
+
+tick → Q state → frame
+
+Example frame structure:
+
+frame:
+  timestamp: int64
+  q_theta: uint2048
+  q_phi: uint2048
+  butterfly_node: uint8
+  entropy: float32
+  flags: uint16
+
+Frame size example:
+
+Q size	frame size
+
+1024-bit Q	~80–120 bytes
+2048-bit Q	~160–220 bytes
+4096-bit Q	~300–400 bytes
+
+
+
+---
+
+2. Frame → Buffer
+
+Frames first land in a ring buffer.
+
+Purpose:
+
+smooth bursts
+
+prevent disk writes every tick
+
+allow short rewind
+
+
+Example:
+
+frame_buffer:
+  capacity: 512 frames
+  retention: ~25 seconds at 20 Hz
+
+Memory usage example:
+
+frame size	buffer memory
+
+200 bytes	~100 KB
+
+
+Tiny footprint.
+
+
+---
+
+3. Buffer → Pool
+
+Pools group frames for processing.
+
+frame_pool:
+  batch_size: 32 frames
+  purpose:
+    - compute entropy trends
+    - successor analysis
+    - butterfly flow updates
+
+Pools allow vectorized processing instead of per-frame work.
+
+
+---
+
+4. Pool → Batch
+
+When enough frames accumulate:
+
+batch:
+  frames: 128
+  duration: ~6 seconds at 20 Hz
+
+This is when heavier work can happen:
+
+trajectory updates
+
+lattice indexing
+
+compression
+
+
+
+---
+
+5. Batch → Bucket
+
+Buckets are logical time segments.
+
+Example:
+
+bucket:
+  duration: 5 minutes
+  frames: ~6000
+
+These help organize history.
+
+Buckets can store:
+
+torus trajectory
+butterfly cycles
+entropy statistics
+
+
+---
+
+6. Bucket → Cache
+
+Recent buckets stay in memory.
+
+cache:
+  buckets: 6
+  coverage: 30 minutes
+
+This allows:
+
+fast queries
+
+live visualization
+
+quick rewind
+
+
+
+---
+
+7. Cache → Filesystem
+
+Older buckets move to storage.
+
+Example:
+
+/selftrix/state/
+   2026/
+      03/
+         bucket_001.bin
+         bucket_002.bin
+
+Compression works very well because frames are similar.
+
+Compression ratio:
+
+3x – 10x typical
+
+
+---
+
+8. Filesystem → Database
+
+Finally metadata goes into DB:
+
+db:
+  bucket_index
+  entropy_events
+  molting_markers
+  provenance
+
+DB stores indexes, not the full frame stream.
+
+
+---
+
+Complete Flow
+
+tick
+  ↓
+frame
+  ↓
+buffer
+  ↓
+pool
+  ↓
+batch
+  ↓
+bucket
+  ↓
+cache
+  ↓
+filesystem
+  ↓
+database
+
+Which is almost exactly your earlier hierarchy.
+
+
+---
+
+Example Numbers (Phone Prototype)
+
+phone_node:
+
+  tick_rate: 20 Hz
+
+  frame_size: 200 bytes
+
+  frame_buffer:
+    capacity: 512
+    memory: ~100 KB
+
+  pools:
+    batch_size: 32
+
+  buckets:
+    duration: 5 minutes
+    size: ~1.2 MB
+
+  cache:
+    buckets: 6
+    memory: ~7 MB
+
+Total runtime memory:
+
+~150–250 MB including compute state
+
+Very safe for mobile.
+
+
+---
+
+Why This Architecture Is Good
+
+It creates three time scales:
+
+frames   → milliseconds
+batches  → seconds
+buckets  → minutes
+
+
+---
+frame:
+  role: atomic_state_snapshot
+  frequency: every_tick
+  size: small
+  operations:
+    - capture Q state
+    - record butterfly node
+
+buffer:
+  role: short-term smoothing
+  frequency: milliseconds
+  operations:
+    - queue frames
+    - prevent burst overload
+
+pool:
+  role: compute staging
+  frequency: seconds
+  operations:
+    - vector processing
+    - entropy / successor analysis
+
+batch:
+  role: grouped compute unit
+  frequency: seconds
+  operations:
+    - trajectory update
+    - compression
+
+bucket:
+  role: time segment
+  frequency: minutes
+  operations:
+    - persistent storage block
+    - statistics
+
+cache:
+  role: fast access window
+  frequency: recent history
+  operations:
+    - quick queries
+    - visualization
+
+fs:
+  role: raw storage
+
+db:
+  role: indexing / metadata
+
+
+frame_64b:
+  q_theta: 128 bits
+  q_phi: 128 bits
+  butterfly_node: 8 bits
+  entropy: 32 bits
+  timestamp: 64 bits
+  flags: 16 bits
+  reserved/padding: 64 bits
+
+frame_128b:
+  q_theta: 256 bits
+  q_phi: 256 bits
+  butterfly_nodes: 16 bits x 4 (64 bits total)
+  entropy: 64 bits
+  timestamp: 64 bits
+  flags: 16 bits
+  derived_metrics: 64 bits
+  extra_context: 128 bits
+  reserved/padding: 128 bits
+
+---
+
+128-Byte Frame Layout (1024 bits)
+
+frame_128b:
+  # === Core Toroidal Q State ===
+  q_theta: 256 bits   # main torus theta angle / lattice position
+  q_phi: 256 bits     # main torus phi angle / lattice position
+
+  # === Butterfly Nodes / Energetic Flow ===
+  butterfly_nodes: 64 bits  # 4 nodes × 16 bits (or 8 nodes × 8 bits)
+  butterfly_flags: 16 bits  # status, molting triggers, branch flags
+
+  # === Entropy & Metrics ===
+  entropy: 32 bits          # local H(x) measure
+  growth_factor: 32 bits    # F* / perturbation info
+  cumulative_spin: 32 bits  # orientation_angle sum for molting check
+  reserved_metrics: 32 bits # extra computed metrics
+
+  # === Context & Provenance ===
+  timestamp: 64 bits        # absolute or relative tick
+  frame_id: 32 bits         # unique frame counter
+  parent_id: 32 bits        # reference to previous frame
+  pool_batch_id: 16 bits    # index in current pool/batch
+  reserved_context: 16 bits # padding / future-proofing
+
+  # === Reserved / Padding ===
+  reserved: 64 bits         # aligns to 128 bytes, cache-friendly
+
+
+---
+
+Field Breakdown & Purpose
+
+Field	Bits	Purpose
+
+q_theta	256	Toroidal angle θ, main Q lattice coordinate
+q_phi	256	Toroidal angle φ, main Q lattice coordinate
+butterfly_nodes	64	Multiple butterfly nodes’ energetic state
+butterfly_flags	16	Molting, branch triggers, state markers
+entropy	32	Local H(x) measure, branching info
+growth_factor	32	F* / perturbation tracking
+cumulative_spin	32	Δ-spin accumulation for molting thresholds
+reserved_metrics	32	Extra derived metrics
+timestamp	64	Tick timestamp for ordering & recovery
+frame_id	32	Unique frame index
+parent_id	32	Reference to previous frame (DAG tracking)
+pool_batch_id	16	Indicates which pool or batch this frame belongs to
+reserved_context	16	Future context expansion
+reserved	64	Cache alignment / future-proofing
+
+
+
+---
+
+Why This Works Well
+
+1. Cache-Aligned
+128 bytes = 2 × 64-byte cache lines → very efficient memory reads/writes.
+
+
+2. Flexible
+Stores toroidal Q, butterfly, entropy, molting, context all in one atomic frame.
+
+
+3. Supports Pools & Batches
+pool_batch_id + parent_id allow easy batching, trajectory reconstruction, and temporal queries.
+
+
+4. Future-Proof
+Reserved fields allow extra derived metrics or subnodes without changing structure.
+
+
+5. Phone-Friendly
+At 20 Hz tick rate, each frame = 128 bytes → 128 × 20 = 2.56 KB/sec.
+Even over 1 hour: 2.56 KB × 3600 = ~9 MB — tiny footprint.
+
+---

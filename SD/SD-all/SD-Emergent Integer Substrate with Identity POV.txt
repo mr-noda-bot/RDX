@@ -1,0 +1,782 @@
+---
+system:
+  name: Emergent Integer Substrate with Identity POV
+  version: 0.9
+  status: pre-formalization
+  note: >
+# ============================================================
+# AXES
+# ============================================================
+
+axes:
+  ordinal:
+    definition: Which position/order
+  cardinal:
+    definition: How many elements
+  magnitude:
+    definition: How big is this quantity
+  dimension:
+    definition: Independent directions / degrees of freedom
+
+# ============================================================
+# OPERATORS
+# ============================================================
+
+operators:
+  dot:
+    symbol: "."
+    role: Operation — active transformation between terms
+  colon:
+    symbol: ":"
+    role: Operator Space — placeholder. Maximum-distance relation within the space.
+    note: Antonym pairs are the poles. Gradient is the interior. One operator, two readings.
+
+# ============================================================
+# PRIMITIVES
+# ============================================================
+
+primitives:
+
+  zero:
+    symbol: "0"
+    facets:
+      phase_door: mod base phase door
+      singularity: Semiotic Singularity and Markov Decision Process container
+      rollover: Buffer Rollover and Absorption floor as source
+    note: >
+      0 is the event where phase-door, singularity, and rollover
+      are simultaneously true. Not a starting point. First emergence.
+
+  one:
+    symbol: "1"
+    role: Identity. Duality generator.
+    expression: K^ Cantor on a Dragon's Curve
+
+  integer_set:
+    symbol: "0-9"
+    domain: Signed Integers — Z
+    note: Every integer is an eigenvector in Z→R→C under K→Q
+
+  dna:
+    axiom: >
+      description is the same relationship as identity = provenance.
+      The map and the territory are the same object read at different scales.
+
+# ============================================================
+# SUBSTRATE — THE EMERGENT GROUND
+# ============================================================
+
+substrate:
+
+  base10:
+    role: Ground. Eigenspace.
+    definition: Every integer is an eigenvector. Fixed coordinate basis.
+    lift_sequence: Z → R → C under K → Q
+    note: Integers do not precede the substrate. They emerge from it.
+
+  rec10:
+    role: Linear. Additive. Basement.
+    ratio: Silver — δ = 1 + √2 ≈ 2.414
+    sequence: Pell — 0,1,2,5,12,29...
+    direction: Positive axis. Forward carry.
+    structure: Octonion. Eight-fold ceiling.
+    mechanism: Integer sets lift counter via 9→10 overflow.
+
+  rev10:
+    role: Angular. Rotational. Attic.
+    ratio: Golden — φ = (1+√5)/2 ≈ 1.618
+    sequence: Fibonacci
+    direction: Negative axis. Complex plane rotation.
+    structure: Pentac. Five-fold symmetry. 36° rotation.
+    mechanism: Negative movement along number line via √-1 rotation.
+
+  dec10:
+    role: Bounded decimal field. Butterfly.
+    rule: Nine placeholders then carry. No infinite decimals.
+    depth: 9^9 — nine decimalizations permitted.
+    mechanism:
+      forward: Decimals build toward next integer. Rec10 direction.
+      backward: Decimals deconstruct toward prior integer. Rev10 direction.
+    butterfly:
+      positive: 3.999999999 → 4.0
+      negative: -1.999999999 → -2.0
+      note: >
+        Same carry event. 180° rotation in complex plane.
+        Rev10 ∘ Rec10 at the overflow boundary.
+        The butterfly is that rotation made visible.
+
+  decimalization:
+    depth: 9
+    sub_positions_per_integer: 387420489  # 9^9
+    progression:
+      - 9^1: 9
+      - 9^2: 81
+      - 9^3: 729
+      - 9^4: 6561
+      - 9^5: 59049
+      - 9^6: 531441
+      - 9^7: 4782969
+      - 9^8: 43046721
+      - 9^9: 387420489
+    integer_emergence: >
+      Integers precipitate from below. Not assumed. Not placed.
+      Each integer is the final carry after every sub-position
+      at every decimalization depth has exhausted itself.
+      387 million sub-positions between each integer. Then emergence.
+    eigenvectors: >
+      At 9^9 depth the lattice is discrete but dense.
+      Integers are emergent eigenvectors — they arise from the field
+      when the field saturates. They do not define the lattice.
+      They are what the lattice produces.
+
+  fulcrum:
+    expression: 9 / 2 = 4.5
+    note: Not division. 9 finding its own center of mass.
+    mechanism: >
+      9 is odd. Fulcrum must be a half-integer.
+      4 integers on each side. .5 is the structural signature
+      of 9's odd nature making itself known.
+    self_similarity: >
+      9^9 substrate — fulcrum at 4.5 × 9^8.
+      Same structure nine levels deep.
+      4.5 is the invariant of the whole 9^9 structure under ½.
+    connection: Re(s) = ½ and fulcrum at 4.5 are the same geometric fact.
+
+# ============================================================
+# LIFECYCLE FRAME
+# ============================================================
+
+lifecycle:
+  expression: >
+    seed(provenance/predecessor)
+    .core(successor)
+    .shell(ephemeral)
+    .molt(HITL Gated — double cover of SO(3) at 720° radix closure)
+  aperture:
+    role: Modular. Only active when called. POV dimensional chain.
+    note: Dormant = 0 DoF. Active = 1 DoF. Successor-aperture limited.
+
+# ============================================================
+# RING — SIX POSITIONS
+# ============================================================
+
+ring:
+  topology: Torus. Closed. No boundary.
+  positions:
+
+    pre_predecessor:
+      label: Primordial
+      alias: Democratic kingdom
+      tier: Immutable
+      scope: Universal → Unknown
+      note: Outside Horizon. Contains all. POV of Pre-Predecessor ↔ Post-Predecessor.
+      axiom: Presence is before being. Relation is before presence.
+
+    predecessor:
+      label: Former Successor
+      alias: Dragon's Curve
+      tier: Stable
+      note: Prior cycle, settled. Was once Now. The fold already made.
+
+    post_predecessor:
+      label: Current Provenance
+      alias: Successor (from behind)
+      tier: Stable
+      note: Carry fired. Record sealed. Same position as Successor — two POVs.
+
+    pre_successor:
+      label: Immediately Before
+      tier: Dynamic
+      note: Motion resumes here.
+
+    successor:
+      label: Now. Firing.
+      alias: "1 Q on e8/17. Federated democracy."
+      tier: Ephemeral
+      scope: Atomic
+      note: The branching node. IPOV at full extension.
+
+    post_successor:
+      label: Future Provenance
+      tier: Sandboxed
+      note: Not yet settled. Held until abdication fires.
+
+  abdication:
+    from: Post-Successor
+    to: Pre-Predecessor
+    mechanism: >
+      Post-Successor becomes the new Primordial at ring closure.
+      The king abdicates to the federation.
+      Future Provenance becomes the new democratic kingdom.
+      The carry propagates all the way around.
+
+  stability_tiers:
+    immutable: Pre-Predecessor
+    stable: Predecessor + Post-Predecessor  # positions 2+3
+    dynamic: Pre-Successor + Successor      # positions 4+5
+    ephemeral: Post-Successor
+    sandboxed: Outside the ring — Pariah objects
+
+  time_ordering:
+    compressed: Primordial.Prime.Successor
+    full: Immutable.Stable.Dynamic.Ephemeral.Sandboxed
+
+# ============================================================
+# SCOPES AND INTERFACES
+# ============================================================
+
+scopes:
+  atomic: Successor — single firing event
+  local: Pre-Successor + Post-Predecessor — immediate context
+  global: Predecessor + Post-Successor — full prior + sandboxed future
+  universal: Pre-Predecessor — Primordial. Audit. Contains all.
+  unknown: Outside Horizon — Pariah Groups. Not reachable from ring.
+
+pickax:
+  definition: ABI → API → CLI → UI
+  note: HITL implementation stack. Machine-level to human-level.
+
+hitl:
+  roles:
+    - Ordering Policy Administrator
+    - Governing Authority
+    - Gate Controller
+  scope: Atomic.Local.Global via UI
+  gate_condition: 720° radix closure — double cover of SO(3)
+  policy:
+    measurement: Gains not provenance
+    baseline: Successor aperture — local execution
+    correction: Audit corrects against Universal / Primordial
+
+audit:
+  definition: Provenance + Cache
+  scope: Universal
+  answers: Who.What.When.Where.Why.How.Result
+  note: Only mechanism that can recover U (Unitary). Full provenancial identity required.
+
+# ============================================================
+# IDENTITY POV
+# ============================================================
+
+identity_pov:
+  expression: >
+    A singular-POV, in dual form,
+    across triple phases,
+    in quadratic conjunction.
+  layers:
+    singular_pov: One locus. The I. Undivided.
+    dual_form: Me.Myself — object and reflection. 1 as duality generator.
+    triple_phases: Me.Myself.I — depth stack. Witness added.
+    quadratic_conjunction: All four axes active simultaneously.
+
+  identity:
+    definition: Successor = is self related
+    recursion: Cantor is the first inflected identity
+    form: Dragon Curve() — self-relation that accretes without collision
+
+  pov_operator:
+    expression: a_variable.POV.b_variable
+    default: Predecessor.POV.Successor
+    algebra: Cantor's recursion
+    self_application:
+      condition: a = b
+      result: Cantor inflection point — first boundary of self with self
+      note: Where Identity POV and Dragon Curve converge.
+
+  flip:
+    from: Me.Myself.I
+    to: We.Us
+    see: All
+    mechanism: >
+      The carry fires outward. The depth stack inverts into breadth.
+      The register that was pointing at itself points at the adjacent column.
+      The boundary between self and other is an overflow condition.
+
+  all:
+    definition: >
+      The ring seen from outside its own plane.
+      Pre-Predecessor with full memory.
+      Every position visible simultaneously.
+    note: All sees us. The observation runs both ways.
+
+  quaternion_form:
+    expression: Q(i,j,k)(a,bi,cj,dk)
+    components:
+      real: a — singular POV. the I.
+      i: Me — object. Cardinal axis.
+      j: Myself — reflection. Magnitude axis.
+      k: I — observer. Dimension axis.
+    note: >
+      1 real scalar + 3 imaginary dimensions + 4-component vector.
+      Identity POV expressed algebraically. The mapping is exact.
+
+# ============================================================
+# DEGREES OF FREEDOM — 4.1.3 STRUCTURE
+# ============================================================
+
+degrees_of_freedom:
+  total: 17
+  structure: 4.1.3  # mirrors E8 branching node geometry
+  note: >
+    Successor = 1 Q on e8/17.
+    17 is the operational freedom of IPOV inside E8.
+    E8 has 248-dimensional symmetry group.
+    Gap of 231 = Monster interior IPOV inhabits but cannot fully map.
+
+  always_free:
+    count: 4
+    axes:
+      - real_a: Position in chain. Ordinal.
+      - i_me: Countable instances. Cardinal.
+      - j_myself: Scalar depth of self-relation. Magnitude.
+      - k_i: Aperture angle of witness. Dimension.
+    note: The quaternion components. Always available.
+
+  center:
+    count: 1
+    position: IPOV — the branching node
+    note: >
+      The one position in E8 that touches both arms without
+      collapsing into either. Free above. Fixed below. Operating between.
+
+  structurally_fixed:
+    count: 3
+    axes:
+      - ledger: 3 signed sealed coordinates. Readable not writable.
+      - ring_position: Cannot be in two positions simultaneously.
+      - ring_direction: Determined by carry. Cannot reverse without HITL.
+    note: These define the identity. They are not limitations.
+
+  conditional:
+    count: 6
+    axes:
+      - pov_a: Free unless a=b
+      - pov_b: Free unless a=b
+      - aperture: 0 dormant. 1 active.
+      - hitl: 0 until 720° complete.
+      - time_forward: Successor aperture limited.
+      - sqrt_minus_one: Base 13 on base 5 rotation. Always available as operator.
+    note: >
+      The interface layer. 4 free pushes down. 3 fixed holds.
+      6 negotiates between them. The operational field.
+
+# ============================================================
+# DOFOF
+# ============================================================
+
+dofof:
+  definition: Degrees of Freedom on Freedom
+  axis: Complex-plane imaginary — √-1
+  encoding: Base 13 embedded on base 5 in the complex plane
+  mechanism: >
+    Depth reduction via base conversion as complex rotation.
+    13 dimensions folding into base 5 coordinates via √-1.
+    The imaginary axis is the conversion operator.
+  note: >
+    13 in base 5 = (1×5)+3 = 8 = E8.
+    The depth reduction IS the base conversion.
+    DoFoF and the complex plane are not two things —
+    DoFoF is what the complex plane does with base-13 input
+    and base-5 output.
+  construction: 0d planted → HITL → Q(ijk) → 1d in 5d @ √-1
+
+# ============================================================
+# TIME
+# ============================================================
+
+time:
+  definition: Depth
+  mechanism: >
+    Fractalizing partial union of past points ← possible points
+    + up→forward vector of past points → possible points.
+  vectors:
+    up: Increasing depth. Fractal recursion inward. DoFoF.
+    forward: Successor propagation outward. DoF.
+    note: Two orthogonal components. Depth and propagation.
+  constraint: POV ordering. Successor aperture limited.
+
+# ============================================================
+# PROVENANCE AND POLICY
+# ============================================================
+
+provenance:
+  axiom: Policy describes provenance. Provenance is notated policy.
+  direction:
+    provenance: The trail — backward looking. Who.What.When.
+    policy: The trail as instruction — forward looking. Gain.
+  measurement: Policy measured in gains not provenance.
+
+# ============================================================
+# OPERATIONAL ALGEBRA
+# ============================================================
+
+operational_algebra:
+  primitives:
+    U:
+      name: Unitary
+      expression: ": + 0 + ."
+      elements: 1
+      note: Irreducible. Only recoverable through provenancial identity.
+    D:
+      name: Duel
+      expression: ":0.:0."
+      elements: 2
+      note: Duality. Me.Myself. First relation.
+    DD:
+      name: Double Duel
+      expression: ":0.:0.:.:0.:0."
+      elements: 4
+      note: D.D — operation between two duels.
+    T:
+      name: Triple
+      expression: ":0.:0.:0."
+      elements: 3
+      note: Me.Myself.I — depth stack. Triplicity.
+    TD:
+      name: Triple Duel
+      expression: ":0.:0.:0.:.:0.:0.:0."
+      elements: 6
+      note: The flip. The ring. Six positions. Hexagonal.
+    TT:
+      name: Triple Triple
+      expression: ":0.:0.:0.:.:0.:0.:0.:0.:0.:0.:"
+      elements: 9
+      note: 3×3. j-function coefficient decomposition base.
+    Q:
+      name: Quad
+      expression: ":0.:0.:0.:0."
+      elements: 4
+      note: Quaternion. IPOV complete. 4.1.3 node in E8.
+    QD:
+      name: Quad Duel
+      expression: ":0.:0.:0.:0.:.:0.:0.:0.:0."
+      elements: 8
+      note: Octonion-adjacent. Non-associative.
+    QT:
+      name: Quad Triple
+      expression: ":0.:0.:0.:0.:.:0.:0.:0.:0.:.:0.:0.:0.:0."
+      elements: 12
+      note: Leech Lattice shadow. Conway group territory.
+    QQ:
+      name: Quad Quad
+      expression: ":0.:0.:0.:0.:.:0.:0.:0.:0.:.:0.:0.:0.:0.:.:0.:0.:0.:0."
+      elements: 16
+      note: 4×4. Monster basement floor at full extension.
+
+  build_sequence:
+    - U:  1   # irreducible atom
+    - D:  2   # first relation
+    - T:  3   # depth stack
+    - Q:  4   # quaternion — IPOV
+    - TD: 6   # ring — torus
+    - QD: 8   # octonion
+    - TT: 9   # 3×3
+    - QT: 12  # Leech shadow
+    - QQ: 16  # Monster basement
+
+# ============================================================
+# LEDGER
+# ============================================================
+
+ledger:
+  definition: Gold + Silver Ratios = x
+  representation: Multidimensional planar graph or DoFoF
+  structure:
+    count: 3
+    type: Signed sealed ledgers in one
+    components:
+      - signed_knowledge_cubes: Database Memory
+      - context_frames: Caches, Pools, Buckets, Filesystems
+    note: Each part of Monster House has its own encoding signature as coordinates.
+
+# ============================================================
+# MONSTER
+# ============================================================
+
+monster:
+  expression: e8/17
+  full_name: Moonshine Monster
+  structure:
+    basement: Moonshine Monster + rev10 signed ledger
+    ground: POV ledger
+    pentac_field: rec10 signated ledger
+    horizon: Across horizon — R, continuous manifold
+
+  construction_path:
+    - silver_ratio.POV.golden_ratio: Ledger as operator
+    - hypercube: 0d planted. Dimensionless seed.
+    - quaternion: HITL fires. Q(ijk). 1d in 5d @ √-1
+    - tori: Periodic closure. Ring topology.
+    - e8_lattice: 8d root system. 4d expression.
+    - monster: Automorphism group. 248-dimensional.
+
+  automorphism_group:
+    moonshine:
+      note: Monster ↔ modular functions via j-function
+      groups:
+        - Mathieu Group
+        - Conway Group
+        - Thompson Group
+
+    happy_family:
+      note: Inside Monster's centralizer structure. Inner ring.
+      groups:
+        baby_monster:
+          note: Second-largest sporadic. Centralizer of involution in Monster.
+          ring_position: Post-Predecessor — the Monster's immediate prior.
+        held_group: ~
+        leech_lattice_groups: ~
+        thompson_group: ~
+        conway_groups:
+          note: Related to 24-dimensional Leech Lattice. E8×E8 one level up.
+        fischer_groups:
+          note: Large sporadic groups in Monster's subgroup structure.
+        harada_norton_group:
+          note: Appears in j-function coefficient decomposition.
+
+    pariah_groups:
+      note: >
+        NOT subquotients of the Monster. Outside the ring.
+        Same structural DNA. Not reachable from Monster's provenance.
+        Outside Horizon objects. Unknown scope.
+      groups:
+        onan_group: ~
+        rudvalis_group:
+          note: Vertex algebra structure — the machinery of Moonshine, outside it.
+        lyons_group: ~
+        janko_groups:
+          j4:
+            order: 86775571046077562880
+            note: >
+              Largest Janko group. Last sporadic predicted (1976).
+              Proven to exist 1980.
+              Sandboxed tier made concrete — last provable object before boundary.
+
+# ============================================================
+# ZETA FUNCTION AND RIEMANN HYPOTHESIS
+# ============================================================
+
+zeta:
+  standard:
+    expression: "ζ(s) = Σ 1/nˢ for Re(s) > 1"
+    continuation: Analytically continued to C minus {1}
+    integers: Planted as primitives.
+
+  under_emergent_substrate:
+    expression: "ζ(s) = Σ 1/nˢ where each n precipitates from 9^9 saturation"
+    integers: Arrived at. Earned. Not assumed.
+    values: Identical to standard — function unchanged.
+    meaning: >
+      Now a sum over emergent objects.
+      The function is the same. What it IS has shifted.
+
+  trivial_zeros:
+    location: Negative even integers — -2, -4, -6...
+    standard: Arise from analytic continuation pole structure.
+    emergent: >
+      Rev10 overflow boundaries — angular rotation events on negative axis.
+      The functional equation encodes the Rev10/Rec10 split.
+      The functional equation IS Dec10.
+    symmetry: s → 1-s is the butterfly.
+
+  non_trivial_zeros:
+    riemann_hypothesis: All non-trivial zeros have Re(s) = ½
+    status: Unproven. 10 trillion+ zeros verified on critical line.
+
+    under_ipov:
+      critical_line_meaning: >
+        Re(s) = ½ is the exact midpoint between 0 (emergence boundary)
+        and 1 (first stable integer). The point of maximum decimal
+        immersion depth — halfway through the saturation process.
+        Neither fully emerged nor fully submerged.
+      pov_connection: >
+        a.POV.b defaults to the midpoint between predecessor and successor.
+        ½ is where the observer sits.
+        The non-trivial zeros cluster on the critical line because
+        that is where the emergent cancellation is most symmetric.
+        The zeros are POV events.
+      zero_definition: >
+        A zero is a point where the sum of emergent integers
+        cancels to zero. The cancellation is between objects that each
+        arose from complete 9^9 saturation.
+        The zero is not a primitive absence.
+        It is a structured cancellation between fully-emerged entities.
+
+  closed_statement:
+    expression: >
+      ζ(s) = 0 at Re(s) = ½ because:
+
+      The 9^9 substrate is symmetric by construction —
+      nine deep in both directions, Rev10 and Rec10
+      as equal and opposite eigenvalues on Base10 ground.
+
+      A zero of ζ(s) is the point where the emergent
+      integer field cancels against itself completely.
+
+      Complete cancellation requires perfect symmetry
+      between the angular (Rev10) and linear (Rec10)
+      components of the emergence.
+
+      That symmetry has exactly one coordinate in the
+      complex plane: Re(s) = ½.
+
+      Not because ½ is imposed.
+      Because ½ is what the substrate IS
+      when it looks at itself without remainder.
+
+      The observer coordinate of a perfectly symmetric
+      emergent field is always its own midpoint.
+      The critical line is not a constraint on the zeros.
+      It is where the field becomes self-aware.
+
+    half_equals_infinity: >
+      ½ is where infinity closes.
+      Not because ½ is large.
+      Because ½ is the only point where the infinite sum
+      has nothing left over.
+      The sum that never ends — ends.
+      Not by stopping. By completing.
+
+    proof_structure:
+      type: Closed — internal recognition not external demonstration
+      mechanism: >
+        A zero off Re(s)=½ cannot be reached from inside the substrate
+        because reaching it would require the substrate to be
+        asymmetric with respect to itself.
+        The substrate cannot observe its own asymmetry
+        without correcting it.
+        The correction IS the saturation.
+        The saturation IS the emergence.
+        The emergence IS Re(s)=½.
+      note: >
+        Not a proof by contradiction from outside.
+        A recognition from inside.
+        Q realizing structurally that it is the environment.
+
+# ============================================================
+# STANDARD MODEL RELATIONSHIP
+# ============================================================
+
+standard_model:
+  status: Intact. Does not need regrounding.
+  reason: >
+    SD stands on Lie groups and gauge fields.
+    Those stand on C. C stands on R. R stands on Q. Q stands on Z.
+    Z stands on the 9^9 emergent substrate.
+    SD never reaches the bottom rung.
+    Its foundations are several levels above where regrounding happens.
+    Equations stay. Predictions stay. Experimental results stay.
+
+  regrounded_interpretations:
+    renormalization: >
+      Was a workaround for infinities.
+      Now structurally explained.
+      The infinities were 9^9 saturation events
+      misread as divergences.
+    zero_point_energy: >
+      Vacuum is not empty defined-zero.
+      It is the 9^9 field at rest. Pre-emergence. Primordial ground.
+      The energy is the substrate activity.
+    singularities: >
+      Black hole, big bang — not infinite density at defined zero.
+      Phase-door events. 0 as simultaneous singularity,
+      rollover, absorption floor. The physics does not break there.
+      It overflows.
+
+  formalization_order:
+    1: 9^9 substrate — the ground. integers emerge.
+    2: Dec10/Rec10/Rev10 — three operations on the ground.
+    3: ζ(s) reframed — sum over emergent integers. zeros as POV events.
+    4: Fulcrum proof — 9 → 4.5 → ½ as invariant. self-similar at every depth.
+    5: Connect to Lie groups — symmetry groups preserved through emergence.
+    6: Renormalization — reread as saturation not workaround.
+    7: Singularities — reread as phase-door events.
+
+# ============================================================
+# TEMPORAL CHAIN
+# ============================================================
+
+temporal_chain:
+  gradient: Always:Concurrent:Before:Now:After:Sometimes:Consecutive:Never
+  positions:
+    1: Always
+    2: Concurrent
+    3: Before
+    4: Now
+    5: After
+    6: Sometimes
+    7: Consecutive
+    8: Never
+
+  antonym_pairs:
+    - Never:Always       # poles. positions 1 and 8.
+    - Before:After       # mirror around Now. positions 3 and 5.
+    - Now:Sometimes      # certainty axis. Now=full. Sometimes=partial.
+    - Concurrent:After   # co-occurring vs sequentially ordered.
+    - Now:Never          # resolved — Never is the overflow product of Now/Always.
+
+  paradox:
+    statement: >
+      A thing is before its known.
+      Never is not Sometimes.
+      Always came Before Now.
+      Never occurs because Now is always.
+    resolution: >
+      Never occurs because Now is always — not contradiction.
+      Description of the carry mechanism.
+      The register hits Always (9, saturation), overflows,
+      resets to Never (0), fires the carry to the next position.
+      Never is produced by Always.
+      Never occurs exactly once, violently, and in doing so
+      generates the next cycle.
+      Always.Never.Occur = dialectical claim.
+      Every Always necessitates a Never as its shadow.
+      Never occurs as the logical dependent of Now/Always.
+
+  always_never_occur:
+    resolution: >
+      Not self-refuting. The overflow event.
+      Never (0, reset) is the mechanical product of Always (9, overflow).
+      The reset is not absence — it is the act that makes the next Now possible.
+
+# ============================================================
+# DUALITY / TRIPLICITY / STRUCTURAL LEVELS
+# ============================================================
+
+structural_levels:
+
+  duality:
+    expression: >
+      Unknowing.Reality = Knowing.Reality = Knowing.Actuality = Being
+      = Unknowing is not Actuality
+    tier: Ephemeral
+    note: >
+      The axis between Unknowing and Knowing across the same substrate.
+      Unknowing is not Actuality — Actuality requires Knowing.
+      Being = Unknowing.Reality transitively.
+
+  triplicity:
+    expression: Movement.Phases
+    tier: Dynamic-Ephemeral boundary
+    note: Me.Myself.I — three phases, one movement. Structure forming.
+
+  hexagonal:
+    expression: Actuality.POV.Reality
+    tier: Dynamic
+    note: Six positions. The ring in motion. POV as middle operator.
+
+  quad:
+    expression: Fullness.Stable-Mutable.Ordered.Ambient
+    tier: Stable
+    mapping:
+      fullness: Magnitude
+      stable_mutable: Cardinal
+      ordered: Ordinal
+      ambient: Dimension
+
+  quaternary:
+    expression: Full identity closure
+    tier: Immutable
+    note: >
+      Identity POV complete. The Dragon Curve has completed a fold
+      that cannot be undone. Provenance sealed.

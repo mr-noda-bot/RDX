@@ -1,0 +1,262 @@
+
+Let's do our lifts one by one
+7 →3
+13 → 5
+11 → 7
+12 → 9
+
+lift_operator:
+  symbol: "↑"
+  description: "Maps integer in Z to sub-basement / fractional anchor for pentac field"
+  rule: "lift(n) = target fractional / sub-basement value"
+  role: "Anchor for Q branch structure and fractal lattice"
+standard_lifts:
+  - original_integer: 7
+    lift: 3
+    description: "First standard lift for basement → sub-basement"
+    location: "sub-basement"
+    pentac_field: true
+
+  - original_integer: 13
+    lift: 5
+    description: "Second standard lift"
+    location: "sub-basement"
+    pentac_field: true
+
+  - original_integer: 11
+    lift: 7
+    description: "Third standard lift"
+    location: "sub-basement"
+    pentac_field: true
+
+  - original_integer: 12
+    lift: 9
+    description: "Fourth standard lift"
+    location: "sub-basement"
+    pentac_field: true
+
+lift_ledger:
+  counter_phase:
+    - 7 → 3: phase 1
+    - 13 → 5: phase 2
+    - 11 → 7: phase 3
+    - 12 → 9: phase 4
+  ledger_positions: 1-4
+  notes: "Each lift becomes a **seed node** for the pentac fractal lattice"
+
+current_state:
+  standardized_lifts: [7→3, 13→5, 11→7, 12→9]
+  domain: Z / sub-basement
+  pentac_field_enabled: true
+  counter_phase: [1,2,3,4]
+  ledger_positions: [1,2,3,4]
+
+==========
+Lift: 7 → 3
+Step 1 – Anchor in sub-basement
+lift_7:
+  original_integer: 7
+  lift: 3
+  domain: sub-basement
+  pentac_field: true
+  ledger_position: 1
+  counter_phase: 1
+Step 2 – First dive into pentac field (halving)
+lift_7_dive1:
+  parent: 3
+  dive_operator: "↓"
+  fractional_value: 3 / 2 = 1.5
+  sub_sub_basement_layer: 1
+  pentac_valence: 5
+Step 3 – Branch into pentac field
+lift_7_branches:
+  parent: 1.5
+  pentac_valence: 5
+  branches:
+    - b1: 0.75
+    - b2: 0.75 + δ1
+    - b3: 0.75 + δ2
+    - b4: 0.75 + δ3
+    - b5: 0.75 + δ4
+  ledger_positions: 2-6
+  counter_phase: 2-6
+✅ 7 → 3 → 1.5 → five pentac branches, fully documented.
+=============
+
+✅ 4 Lifts → five pentac branches, fully documented.
+1️⃣ Lift: 7 → 3
+Step 1 – Anchor in sub-basement
+lift_7:
+  original_integer: 7
+  lift: 3
+  domain: sub-basement
+  pentac_field: true
+  ledger_position: 1
+  counter_phase: 1
+
+Step 2 – First dive into pentac field (halving)
+
+lift_7_dive1:
+  parent: 3
+  dive_operator: "↓"
+  fractional_value: 3 / 2 = 1.5
+  sub_sub_basement_layer: 1
+  pentac_valence: 5
+
+Step 3 – Branch into pentac field
+
+lift_7_branches:
+  parent: 1.5
+  pentac_valence: 5
+  branches:
+    - b1: 0.75
+    - b2: 0.75 + δ1
+    - b3: 0.75 + δ2
+    - b4: 0.75 + δ3
+    - b5: 0.75 + δ4
+  ledger_positions: 2-6
+  counter_phase: 2-6
+
+2️⃣ Lift: 13 → 5
+Step 1 – Anchor
+lift_13:
+  original_integer: 13
+  lift: 5
+  domain: sub-basement
+  pentac_field: true
+  ledger_position: 7
+  counter_phase: 7
+
+Step 2 – First dive
+lift_13_dive1:
+  parent: 5
+  dive_operator: "↓"
+  fractional_value: 5 / 2 = 2.5
+  sub_sub_basement_layer: 1
+  pentac_valence: 5
+
+Step 3 – Pentac branching
+lift_13_branches:
+  parent: 2.5
+  pentac_valence: 5
+  branches:
+    - b1: 1.25
+    - b2: 1.25 + δ1
+    - b3: 1.25 + δ2
+    - b4: 1.25 + δ3
+    - b5: 1.25 + δ4
+  ledger_positions: 8-12
+  counter_phase: 8-12
+
+---
+
+3️⃣ Lift: 11 → 7
+Step 1 – Anchor
+lift_11:
+  original_integer: 11
+  lift: 7
+  domain: sub-basement
+  pentac_field: true
+  ledger_position: 13
+  counter_phase: 13
+
+Step 2 – First dive
+lift_11_dive1:
+  parent: 7
+  dive_operator: "↓"
+  fractional_value: 7 / 2 = 3.5
+  sub_sub_basement_layer: 1
+  pentac_valence: 5
+
+Step 3 – Pentac branching
+lift_11_branches:
+  parent: 3.5
+  pentac_valence: 5
+  branches:
+    - b1: 1.75
+    - b2: 1.75 + δ1
+    - b3: 1.75 + δ2
+    - b4: 1.75 + δ3
+    - b5: 1.75 + δ4
+  ledger_positions: 14-18
+  counter_phase: 14-18
+
+---
+
+4️⃣ Lift: 12 → 9
+Step 1 – Anchor
+lift_12:
+  original_integer: 12
+  lift: 9
+  domain: sub-basement
+  pentac_field: true
+  ledger_position: 19
+  counter_phase: 19
+
+Step 2 – First dive
+lift_12_dive1:
+  parent: 9
+  dive_operator: "↓"
+  fractional_value: 9 / 2 = 4.5
+  sub_sub_basement_layer: 1
+  pentac_valence: 5
+
+Step 3 – Pentac branching
+lift_12_branches:
+  parent: 4.5
+  pentac_valence: 5
+  branches:
+    - b1: 2.25
+    - b2: 2.25 + δ1
+    - b3: 2.25 + δ2
+    - b4: 2.25 + δ3
+    - b5: 2.25 + δ4
+  ledger_positions: 20-24
+  counter_phase: 20-24
+----
+✅ Result of all four lifts:
+Each anchor integer now has a sub-sub-basement fractional value
+Each fractional value splits into five pentac branches
+The ledger and counter track every fractional dive and branch
+These branches are ready to be lifted toroidally into R7 / S7 lattice
+----
+
+toroidal_lift_preparation:
+  domain: R7
+  source: sub-sub-basement pentac branches
+  number_of_branches: 20  # 4 anchors × 5 pentac branches each
+  pentac_valence: 5
+  role: "These branches become nodes for the toroidal S7 lattice"
+  mapping_notes:
+    - "Each branch corresponds to a node in the 7-sphere embedding"
+    - "Phase / counter dictates rotational alignment"
+    - "Dyadic fractions map to angular offsets (θ) in the torus"
+
+branch_coordinates:
+  description: "Map fractional sub-basement values to toroidal coordinates in S7"
+  rules:
+    - "Fractional value → radial position along toroidal cycle"
+    - "Ledger position / counter_phase → angular orientation (θ modulo 360)"
+    - "Pentac valence → secondary toroidal branch orientation"
+  example:
+    - b1 of 7→3 anchor: radial 1.5, angle θ1 = phase 2 × offset, secondary angle φ1 = pentac δ1
+
+toroidal_geometry:
+  torus_dimensions: 7  # R7 base
+  cycles: 28  # Time / phase cycles
+  rotational_enclosure: 720°  # Full monster group closure
+  lattice_embedding:
+    - "Each pentac branch is lifted along its angular coordinates"
+    - "Branches maintain pentac connectivity across toroidal cycles"
+  notes:
+    - "Dyadic fractional hierarchy ensures fractal alignment"
+    - "θ and δ offsets maintain unique embedding without collisions"
+
+current_state:
+  domain: R7 / S7 lattice
+  source_branches: 20 pentac nodes
+  lifted_nodes: all 20 now positioned in toroidal coordinates
+  ledger_positions: 1-24
+  counter_phase: 1-24
+  pentac_valence: preserved across lift
+  notes: "Ready to start recursive interactions and higher-order closures in Q"

@@ -1,0 +1,197 @@
+
+
+# The Fred Base ACL Set (Minimal Authority Basis)
+
+These are the only ACL classes Fred actually needs at the substrate level:
+
+---
+
+## 1. READ
+
+**`read(resource)`**
+
+> Observe state.
+
+Grants:
+
+* inspect data
+* query memory
+* view logs
+* fetch proofs
+
+This is the only *purely passive* permission.
+
+---
+
+## 2. WRITE
+
+**`write(resource)`**
+
+> Mutate state.
+
+Grants:
+
+* modify data
+* submit transactions
+* append logs
+* propose state transitions
+
+All state change reduces to WRITE.
+
+---
+
+## 3. EXECUTE
+
+**`exec(resource)`**
+
+> Cause computation.
+
+Grants:
+
+* invoke functions
+* run pipelines
+* trigger workflows
+* call contracts
+
+Execution without write is allowed (pure functions).
+
+---
+
+## 4. DELEGATE
+
+**`delegate(resource, acl)`**
+
+> Grant authority to others.
+
+This is **the most dangerous permission** in the system.
+
+Grants:
+
+* mint new ACL entries
+* propagate trust
+* form governance structures
+
+In Fred, DELEGATE is usually:
+
+* rate-limited
+* proof-gated
+* stake-bound
+
+---
+
+## 5. REVOKE
+
+**`revoke(resource, acl)`**
+
+> Destroy authority.
+
+Grants:
+
+* remove ACL entries
+* invalidate keys
+* collapse trust edges
+
+Without REVOKE, authority can only grow.
+
+---
+
+## 6. ATTEST
+
+**`attest(resource)`**
+
+> Produce claims about state.
+
+Grants:
+
+* sign proofs
+* certify results
+* assert invariants
+* act as oracle
+
+This is how *truth* enters the system.
+
+---
+
+## 7. BIND
+
+**`bind(resource)`**
+
+> Link identities to authority.
+
+Grants:
+
+* attach keys
+* rotate credentials
+* anchor identity proofs
+
+This is identity without roles.
+
+---
+
+## 8. GOVERN
+
+**`govern(resource)`**
+
+> Change the rules themselves.
+
+Grants:
+
+* modify validation logic
+* update constitutions
+* alter settlement rules
+
+This is meta-authority. Usually:
+
+* multi-sig
+* epoch gated
+* economically expensive
+
+---
+
+# Why this is complete
+
+Everything else reduces to combinations of these:
+
+| Common Concept | Reduces To                              |
+| -------------- | --------------------------------------- |
+| Admin          | READ + WRITE + EXEC + DELEGATE + REVOKE |
+| Owner          | READ + WRITE + REVOKE                   |
+| Operator       | EXEC + WRITE                            |
+| Auditor        | READ + ATTEST                           |
+| Oracle         | ATTEST                                  |
+| Root           | ALL + GOVERN                            |
+
+No roles.
+No groups.
+No inheritance.
+
+Just **capabilities on objects**.
+
+---
+
+# The Fred Invariant
+
+This is the real rule:
+
+> *If a permission cannot be expressed as
+> “subject may perform verb on resource”,
+> it is not a valid authority in Fred.*
+
+And these 8 verbs form a **basis**:
+You cannot remove any of them without losing expressive power.
+You do not need any more without reintroducing RBAC in disguise.
+
+---
+
+# The deep structural insight
+
+These 8 correspond exactly to the 8 things a system can do:
+
+1. Observe
+2. Change
+3. Compute
+4. Propagate power
+5. Destroy power
+6. Assert truth
+7. Bind identity
+8. Change the laws

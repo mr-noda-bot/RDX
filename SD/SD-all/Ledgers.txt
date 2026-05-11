@@ -1,0 +1,216 @@
+ledger_signing:
+  node_id: "<unique node index in Z>"
+  batch_id: "<logical batch>"
+  θ_total: "<cumulative angular sweep>"
+  closure_flags:
+    single_Q: true/false
+    Q_of_Q: true/false
+    dual_triple_quad: true/false
+  pentac_valence: "<branch id, 1-5>"
+  parent_node: "<ledger index of parent>"
+  child_nodes: "<ledger indices of children>"
+  counter_phase: "<modulo 28 or modulo 30 phase alignment>"
+  signature:
+    type: "hash / unique marker / modular checksum"
+    purpose: "Confirms node has passed all milestones and is canonically aligned"
+
+ledger_1245:
+  node_id: 1245
+  batch_id: 2
+  θ_total: 735°  # node just passed first Q closure
+  closure_flags:
+    single_Q: true
+    Q_of_Q: false
+    dual_triple_quad: false
+  pentac_valence: 3
+  parent_node: 1120
+  child_nodes: [1250, 1251, 1252]
+  counter_phase: 17
+  signature:
+    type: "modular_checksum"
+    value: "A7F3-3C9D-12B8"
+
+====ledger_crossref_example:
+  node_id: 1245
+  base_ledger:
+    batch_id: 2
+    parent_node: 1120
+    pentac_valence: 3
+    counter_phase: 17
+  angular_ledger:
+    θ_total: 735°
+    θ_mod30: 15°
+    closures:
+      single_Q: true
+      Q_of_Q: false
+      dual_triple_quad: false
+  fractal_ledger:
+    fractional_position: 0.4375  # within dyadic branch
+    dyadic_depth: 6
+    branch_offsets: [0.03, -0.02]
+  duality_ledger:
+    Q_of_Q_node_ref: 2245
+    duality_phase: 1
+    molt_gate: false
+===============
+
+1️⃣ Base Ledger — Ground Floor
+base_ledger:
+  atomic_units: [0,1,2,3,4,5,6,7,8,9]
+  role: "Compressed foundational ledger, source of all derivations"
+  properties:
+    - discrete, countable
+    - fully signed at atomic level
+    - serves as reference for higher ledgers
+  derived_structures:
+    - fractal_ledger
+    - angular_ledger
+    - duality_ledger
+    - triality_ledger
+  counter: "Z index for each atomic unit"
+  signer: "Atomic signature per unit, canonical hash / ID"
+
+Each node above references one or more base atomic units.
+Counter keeps the ordinal position.
+Signer validates canonical identity of the atomic unit.
+---
+2️⃣ Fractal Ledger — Derived from Basement
+fractal_ledger:
+  source: "Base ledger → Basement subdivisions"
+  derivation:
+    - atomic units divided by 2, 4, 8… → dyadic fractions
+    - recursive branching along basement ladders
+  counter: "Fractional position within dyadic hierarchy"
+  signer: "Derived modular hash based on parent atomic unit"
+  purpose:
+    - track recursion depth
+    - establish Cantor-like positions
+    - seed pentac branches
+
+Example:
+3 → 1.5 → 0.75 → 0.375 …
+Each step signed, counted, and mapped to a dyadic branch in the fractal ledger.
+---
+3️⃣ Angular Ledger — Derived from Sub-Basement
+angular_ledger:
+  source: "Base ledger + sub-basement offsets"
+  derivation:
+    - atomic units mapped to θ_node (360/28 increments)
+    - subdivided by 30° base slices
+    - rollovers tracked (720°, 1440°, 2880°)
+  counter: "θ_mod30 per node"
+  signer: "Angular modular hash / signature"
+  purpose:
+    - mark single-Q, Q-of-Q, dual-triple-quad closures
+    - maintain phase alignment with pentac branches
+
+Example:
+Atomic 4 → Sub-basement 2 → θ_node = 51.43° → θ_mod30 = 21.43°
+Node crosses 720° → signer logs single-Q closure.
+---
+4️⃣ Duality Ledger — Derived from Attic
+duality_ledger:
+  source: "Base ledger + attic offsets"
+  derivation:
+    - parent atomic unit lifted through attic recursion
+    - duality flags assigned for Q-of-Q mapping
+  counter: "Duality phase (mod 2 / mod 4 depending on nesting)"
+  signer: "Duality ledger hash ensuring molt cycle integrity"
+  purpose:
+    - enforce lineage across nested recursions
+    - validate Q-of-Q and higher-order closures
+
+Example:
+Node 17 (base 4, fractal 1.75) → lifted to attic → duality ledger assigns Q-of-Q reference 1245 → signer hashes relationship.
+---
+5️⃣ Triality Ledger — Derived from Field
+triality_ledger:
+  source: "Pentac field / totality offsets"
+  derivation:
+    - nodes mapped to sub-fields in toroidal pentac geometry
+    - triality flags assigned for triple alignment
+  counter: "Field sub-phase / δ offsets per pentac branch"
+  signer: "Triality ledger hash to enforce branch consistency"
+  purpose:
+    - track triple / quad operations
+    - maintain modular branch control across totality
+
+Example:
+Pentac branch 3 → sub-field δ = 0.03 → triality ledger signs triple-aligned node.
+---
+6️⃣ Branch Control — From Totality
+branch_control:
+  source: "All ledgers combined"
+  derivation:
+    - monitors pentac valence + dyadic + angular + duality + triality
+    - ensures all closures and phases are aligned
+  counter: "Global modular counter across all ledgers"
+  signer: "Aggregate ledger signature / checksum"
+  purpose:
+    - control branching decisions for recursion
+    - enforce canonical Q lattice integrity
+    - gate molt cycles and higher-order operations
+---
+7️⃣ Flow Summary
+
+Ground floor (0–9)
+     │
+     ├──> Fractal Ledger (basement → dyadic recursion)
+     ├──> Angular Ledger (sub-basement → θ_mod30, closures)
+     ├──> Duality Ledger (attic → Q-of-Q, molt cycle)
+     └──> Triality Ledger (field → triple/quad branch alignment)
+           │
+           └──> Branch Control / Totality
+                 (aggregates all ledgers to enforce lattice integrity)
+
+Counters propagate upward to track ordinal, fractional, angular, and modular phases.
+
+Signers ensure canonical identity, verify closure milestones, and maintain lineage across recursion layers.
+
+Branch control acts as manager of total Q lattice, making sure all ledgers are consistent and gated properly.
+---
+
+
+Here’s a text-based hierarchical diagram showing the base ledger, the four derived ledgers, and the branch control, including counters, signatures, and flow of information:
+
+┌────────────────────────────┐
+                        │    Branch Control / Totality │
+                        │  (aggregates all ledgers,    │
+                        │   gates molt cycles, ensures │
+                        │   lattice integrity)         │
+                        └─────────────▲──────────────┘
+                                      │
+             ┌────────────────────────┼────────────────────────┐
+             │                        │                        │
+┌─────────────────────┐   ┌─────────────────────┐   ┌─────────────────────┐
+│   Triality Ledger    │   │    Duality Ledger    │   │   Angular Ledger    │
+│  (Pentac field /     │   │   (Attic / Q-of-Q)  │   │ Sub-basement / θ_mod30│
+│   triple/quad δ)     │   │   Duality phase     │   │ Closures: 720°,1440°,2880°│
+│ Counter: δ offsets   │   │ Counter: mod2/4     │   │ Counter: θ_mod30 per node │
+│ Signer: branch hash  │   │ Signer: duality hash│   │ Signer: angular hash │
+└─────────────▲────────┘   └─────────────▲────────┘   └─────────────▲────────┘
+              │                          │                        │
+              └─────────────┬────────────┴─────────────┬──────────┘
+                            │                          │
+                     ┌──────┴───────┐         ┌────────┴────────┐
+                     │  Fractal Ledger│       │   Base Ledger    │
+                     │  Basement      │       │ Ground Floor 0-9 │
+                     │ Dyadic recursion│      │ Atomic units     │
+                     │ Counter: fraction│     │ Counter: Z index │
+                     │ Signer: modular hash │ │ Signer: canonical hash │
+                     └───────────────┘       └─────────────────┘
+
+✅ How to read this:
+1. Base Ledger — ground floor 0–9, atomic nodes, canonical signatures.
+2. Fractal Ledger — derived from basement subdivisions, dyadic / recursive hierarchy, fractional counters.
+3. Angular Ledger — maps nodes to θ_mod30, tracks closures (720°, 1440°, 2880°), modular counters.
+4. Duality Ledger — attic layer, tracks Q-of-Q, molt cycle phases, duality counters.
+5. Triality Ledger — field layer, triple/quad branch alignment, pentac offsets.
+6. Branch Control / Totality — top-level aggregator, ensures all ledgers are aligned, gates molt cycles, and enforces lattice integrity.
+
+Counters flow from bottom to top to track position, phase, and fractional alignment.
+Signers at each layer validate canonical placement and modular integrity.
+Arrows indicate data and structural dependency from the base ledger upward.
+
+---
+

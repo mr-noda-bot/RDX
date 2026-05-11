@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canonical Spec Header — Self-Applying Idempotent Form v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Departure+Mono&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:     #f7f4ee;
+  --paper2:    #eeebe2;
+  --paper3:    #e4e0d5;
+  --ink:       #16140f;
+  --ink2:      #35311f;
+  --ink3:      #7a7460;
+  --rule:      #ccc5ae;
+  --rule2:     #b5ad96;
+
+  --a-bar:     #2a4a1a;   /* Track A — deep forest */
+  --a-lt:      #3d6e28;
+  --a-bg:      #eef4e8;
+  --a-mid:     #c8ddb8;
+
+  --b-bar:     #1a2e52;   /* Track B — prussian */
+  --b-lt:      #2a4a80;
+  --b-bg:      #e8eef8;
+  --b-mid:     #b0c4e0;
+
+  --rec-bar:   #6b3a00;   /* Reconciliation — amber-brown */
+  --rec-lt:    #a05800;
+  --rec-bg:    #fdf3e0;
+  --rec-mid:   #e8c878;
+
+  --pov-bar:   #3a1a52;   /* POV / depth — deep violet */
+  --pov-lt:    #5c2d80;
+  --pov-bg:    #f0e8f8;
+  --pov-mid:   #c8a8e8;
+
+  --warn:      #8c1a1a;
+  --ok:        #1a5c2a;
+
+  --mono: 'Departure Mono', monospace;
+  --serif: 'Fraunces', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.8;
+  padding: 3rem 1.5rem 6rem;
+}
+
+/* ── Ruled paper texture ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent, transparent 29px,
+    rgba(180,168,140,0.13) 29px, rgba(180,168,140,0.13) 30px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════
+   HEADER
+══════════════════════════════════════ */
+.doc-header {
+  border-top: 5px solid var(--ink);
+  border-bottom: 1px solid var(--rule2);
+  padding: 3rem 0 2.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.doc-header .kicker {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.8rem;
+}
+
+.doc-header h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.doc-header h1 em {
+  font-style: normal;
+  color: var(--ink3);
+  font-weight: 300;
+  font-size: 0.65em;
+}
+
+.doc-header .sub {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink3);
+  font-style: italic;
+  max-width: 640px;
+  margin-top: 0.6rem;
+}
+
+.badge-row {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.6rem;
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid;
+  border-radius: 2px;
+}
+
+.b-a   { background: var(--a-bg);   color: var(--a-bar);   border-color: var(--a-mid); }
+.b-b   { background: var(--b-bg);   color: var(--b-bar);   border-color: var(--b-mid); }
+.b-rec { background: var(--rec-bg); color: var(--rec-bar); border-color: var(--rec-mid); }
+.b-pov { background: var(--pov-bg); color: var(--pov-bar); border-color: var(--pov-mid); }
+.b-ok  { background: #e8f4ec; color: var(--ok); border-color: #a8d5b5; }
+
+/* ══════════════════════════════════════
+   SECTION HEADINGS
+══════════════════════════════════════ */
+.sec-head {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin: 3.5rem 0 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sec-tag {
+  font-size: 0.6rem;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid;
+  border-radius: 2px;
+  font-weight: 700;
+}
+
+.st-a   { background: var(--a-bg);   color: var(--a-bar);   border-color: var(--a-mid); }
+.st-b   { background: var(--b-bg);   color: var(--b-bar);   border-color: var(--b-mid); }
+.st-rec { background: var(--rec-bg); color: var(--rec-bar); border-color: var(--rec-mid); }
+.st-pov { background: var(--pov-bg); color: var(--pov-bar); border-color: var(--pov-mid); }
+.st-sys { background: var(--paper3); color: var(--ink2);    border-color: var(--rule2); }
+
+/* ══════════════════════════════════════
+   THE CANONICAL HEADER BLOCK
+══════════════════════════════════════ */
+.canon-block {
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 4px 4px 0 var(--rule2);
+}
+
+.canon-title {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.canon-title .ct-right {
+  font-size: 0.6rem;
+  color: var(--rule);
+  letter-spacing: 0.08em;
+}
+
+.canon-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+.canon-row:last-child { border-bottom: none; }
+
+.canon-key {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.7rem 1rem;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.canon-val {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  padding: 0.7rem 1.2rem;
+  line-height: 1.7;
+  color: var(--ink2);
+}
+
+.ck-a   { background: var(--a-bg);   color: var(--a-bar); }
+.ck-b   { background: var(--b-bg);   color: var(--b-bar); }
+.ck-rec { background: var(--rec-bg); color: var(--rec-bar); }
+.ck-pov { background: var(--pov-bg); color: var(--pov-bar); }
+.ck-ex  { background: var(--paper3); color: var(--ink2); }
+.ck-id  { background: var(--ink2);   color: var(--paper); }
+
+.cv-a   { background: #f8fcf4; }
+.cv-b   { background: #f4f7fc; }
+.cv-rec { background: #fffaf0; }
+.cv-pov { background: #faf4ff; }
+.cv-ex  { background: var(--paper2); }
+.cv-id  { background: var(--paper); }
+
+.canon-val .note {
+  font-size: 0.68rem;
+  color: var(--ink3);
+  margin-top: 0.3rem;
+}
+
+/* ══════════════════════════════════════
+   THREE-COLUMN RECONCILIATION TABLE
+══════════════════════════════════════ */
+.rec-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.rec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.rec-table .col-a   { width: 32%; }
+.rec-table .col-rec { width: 36%; }
+.rec-table .col-b   { width: 32%; }
+
+.rec-table th {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 2px solid var(--rule2);
+  vertical-align: bottom;
+}
+
+.th-a   { background: var(--a-bg);   color: var(--a-bar);   border-left: 4px solid var(--a-bar); text-align: left; }
+.th-rec { background: var(--rec-bg); color: var(--rec-bar); border-left: 1px solid var(--rule);  text-align: center; }
+.th-b   { background: var(--b-bg);   color: var(--b-bar);   border-left: 1px solid var(--rule);  text-align: left; }
+
+.rec-table td {
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+.rec-table tr:last-child td { border-bottom: none; }
+
+.td-a   { background: #fafcf8; border-left: 4px solid var(--a-mid); font-family: var(--serif); }
+.td-rec { background: var(--rec-bg); border-left: 1px solid var(--rec-mid); text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--rec-bar); }
+.td-b   { background: #f8fafe; border-left: 1px solid var(--b-mid); font-family: var(--serif); }
+
+.td-a em, .td-b em { font-style: normal; font-family: var(--mono); font-size: 0.78em; color: var(--ink3); }
+
+.rec-event {
+  display: inline-block;
+  background: var(--rec-bar);
+  color: var(--rec-bg);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  margin-bottom: 0.3rem;
+}
+
+.rec-prov {
+  font-size: 0.65rem;
+  color: var(--ink3);
+  font-family: var(--mono);
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* ══════════════════════════════════════
+   EXCHANGE ARROWS
+══════════════════════════════════════ */
+.exchange-block {
+  border: 1px solid var(--rule2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.ex-head {
+  background: var(--paper3);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ex-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  gap: 0.5rem;
+  font-size: 0.82rem;
+}
+
+.ex-row:last-child { border-bottom: none; }
+
+.ex-from { background: var(--a-bg); padding: 0.3rem 0.7rem; border-radius: 2px; font-family: var(--mono); font-size: 0.72rem; color: var(--a-bar); }
+.ex-to   { background: var(--b-bg); padding: 0.3rem 0.7rem; border-radius: 2px; font-family: var(--mono); font-size: 0.72rem; color: var(--b-bar); }
+.ex-arr  { text-align: center; font-family: var(--mono); font-size: 0.8rem; color: var(--ink3); }
+.ex-label { font-family: var(--serif); font-size: 0.82rem; color: var(--ink2); font-style: italic; }
+.ex-stays { font-family: var(--mono); font-size: 0.65rem; color: var(--ink3); }
+
+/* ══════════════════════════════════════
+   POV DEPTH BLOCK
+══════════════════════════════════════ */
+.pov-block {
+  border: 1px solid var(--pov-mid);
+  background: var(--pov-bg);
+  border-radius: 3px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.pov-head {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pov-bar);
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--pov-mid);
+  padding-bottom: 0.4rem;
+}
+
+.pov-formula {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--pov-bar);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.pov-body {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink2);
+  font-style: italic;
+  line-height: 1.75;
+}
+
+/* ══════════════════════════════════════
+   IDEMPOTENCY TEST
+══════════════════════════════════════ */
+.idem-block {
+  border: 2px solid var(--ink2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.idem-head {
+  background: var(--ink2);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.1rem;
+}
+
+.idem-body {
+  padding: 1.1rem 1.3rem;
+  background: var(--paper2);
+}
+
+.idem-rule {
+  display: flex;
+  gap: 0.8rem;
+  align-items: baseline;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.idem-rule:last-child { margin-bottom: 0; }
+
+.ir-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink3);
+  min-width: 22px;
+}
+
+.ir-text { font-family: var(--serif); color: var(--ink2); line-height: 1.65; }
+.ir-text strong { color: var(--ink); font-weight: 600; }
+
+/* ══════════════════════════════════════
+   SELF-APPLICATION PROOF
+══════════════════════════════════════ */
+.proof-block {
+  border-left: 4px solid var(--ok);
+  background: #eef8f0;
+  padding: 1rem 1.3rem;
+  margin-bottom: 1.2rem;
+}
+
+.proof-head {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ok);
+  margin-bottom: 0.5rem;
+}
+
+.proof-body {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink2);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════
+   RULES BLOCK
+══════════════════════════════════════ */
+.rule-block {
+  border: 1px solid var(--rule2);
+  border-left: 4px solid var(--ink2);
+  background: var(--paper2);
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.rule-id {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.35rem;
+}
+
+.rule-block p {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════════════
+   MISC
+══════════════════════════════════════ */
+p { margin-bottom: 0.6rem; }
+p:last-child { margin-bottom: 0; }
+
+.muted {
+  font-family: var(--serif);
+  font-size: 0.86rem;
+  color: var(--ink3);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  background: var(--paper3);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.05em 0.35em;
+  color: var(--b-bar);
+}
+
+footer {
+  margin-top: 5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--ink3);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 640px) {
+  .canon-row { grid-template-columns: 120px 1fr; }
+  .ex-row { grid-template-columns: 1fr 40px 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════════════════════════
+     DOCUMENT HEADER
+══════════════════════════════════════ -->
+<header class="doc-header">
+  <div class="kicker">SPEC-HEADER-001 · Canonical Idempotent Form · Self-Applying · v1.0</div>
+  <h1>The Canonical Spec Header <em>— Two-Track · Reconciliation · POV-Indexed</em></h1>
+  <p class="sub">A self-applying idempotent header block. Re-applying this spec to a document already in canonical form returns the same canonical form. Tracks are kept qualitatively distinct and explained separately. Reconciliation is logged as convergence provenance, not merger.</p>
+  <div class="badge-row">
+    <span class="badge b-a">Track A — Unique</span>
+    <span class="badge b-b">Track B — Unique</span>
+    <span class="badge b-rec">Reconciliation — Convergence Only</span>
+    <span class="badge b-pov">POV — Depth Indexed</span>
+    <span class="badge b-ok">Self-Applying · Idempotent</span>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════
+     §0 — THE CANONICAL HEADER BLOCK ITSELF
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-sys">§0</span>
+  The Canonical Header Block
+</div>
+
+<p class="muted">This is the header applied to itself. Every spec that uses this format begins with this block, filled in for its domain. The block is the idempotency guarantee — re-application checks against it, not against the body.</p>
+
+<div class="canon-block">
+  <div class="canon-title">
+    CANONICAL HEADER
+    <span class="ct-right">FORM-ID: SPEC-HEADER-001 · v1.0 · apply(apply(H)) = apply(H)</span>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-id">SPEC-ID</div>
+    <div class="canon-val cv-id" style="color:var(--ink);">
+      SPEC-HEADER-001
+      <div class="note">Unique identifier. Stable across re-applications. Version suffix only on structural change.</div>
+    </div>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-a">TRACK A</div>
+    <div class="canon-val cv-a">
+      <strong>Name:</strong> GUL / ToT Ontological Framework<br>
+      <strong>Accounts for:</strong> Pre-physical derivation chain, depth recursion, self-consistency operator Q, generative operation R, classical mechanics as GUL functionals<br>
+      <strong>Semantic scope:</strong> All terms mean what they mean within GUL-0 → Layer 3. No term bleeds into Track B without an explicit exchange arrow.<br>
+      <strong>Unique to A:</strong> Q(0)≠0 as the founding axiom; depth d as the indexing variable; the derivation chain L−1 → 0 → 0.5 → 1 → 2 → 3
+      <div class="note">Track A is not Track B restated at a different scale. It is qualitatively distinct. Any apparent equivalence must be logged as a reconciliation event, not assumed.</div>
+    </div>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-b">TRACK B</div>
+    <div class="canon-val cv-b">
+      <strong>Name:</strong> Rec10* Integer-Hyperbolic Substrate<br>
+      <strong>Accounts for:</strong> Integer lattice transforms, dual ledger, ZeroInvert / IntMap / PrimeDual channels, 9+0 door structure, before/during/after encoding, F* dominant loop<br>
+      <strong>Semantic scope:</strong> All terms mean what they mean within SPEC-REC10-002. Ground=0, Generator=1 are positional in the integer substrate — not ontological claims about Q(0).<br>
+      <strong>Unique to B:</strong> ZeroInvert(0)=9 as a computational fact; the seed structures 101 / 1001; causal asymmetry confirmed natively in offset structure (before≠after at closure scale)
+      <div class="note">Track B's "ground" and Track A's "ground" are not the same object. They converge structurally at specific points — those points are reconciliation events, logged below.</div>
+    </div>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-rec">RECONCILIATION</div>
+    <div class="canon-val cv-rec">
+      Convergence is logged as a named event with provenance. A reconciliation event means: Track A arrived at X from its derivation chain AND Track B arrived at X from its integer structure, independently. The convergence is stronger than either track alone. It is not a merger — both tracks retain their separate accounting after the event is logged.
+      <div class="note">Current reconciliation events: see §2. Count: 4 confirmed, 1 candidate.</div>
+    </div>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-ex">EXCHANGE</div>
+    <div class="canon-val cv-ex">
+      Guidance from one track to the other travels via named, directional arrows only. An exchange arrow carries: label, direction (A→B or B→A), what crosses, what stays local. No exchange arrow constitutes a proof in the receiving track — it constitutes a pointer to investigate.
+      <div class="note">Current exchange arrows: see §3.</div>
+    </div>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-pov">POV</div>
+    <div class="canon-val cv-pov">
+      <strong>Current depth:</strong> d = 1 (first distinction — this header exists and is not nothing)<br>
+      <strong>Visible from here:</strong> Track A and Track B are both present. The reconciliation column is readable. Exchange arrows are labeled but their full derivation chains are not yet unrolled.<br>
+      <strong>Formula:</strong> POV(d) = R^d(0⁺) − R^(d−1)(0⁺) = discrete derivative of depth sequence = Axiom D applied to self-consistency structure
+      <div class="note">POV is derived, not carried. Any recursion tracker or operator reading this document inherits the POV at the depth from which they are reading. It does not need to be passed explicitly.</div>
+    </div>
+  </div>
+
+  <div class="canon-row">
+    <div class="canon-key ck-id">FORM</div>
+    <div class="canon-val cv-id" style="color:var(--ink);">
+      apply(apply(H, doc)) = apply(H, doc)<br>
+      <div class="note" style="color:#888;">Re-applying this header to a document already in canonical form returns the same document. A divergence on re-application means the document has drifted from canonical form — the divergence field identifies where.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     §1 — IDEMPOTENCY RULES
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-sys">§1</span>
+  Idempotency Rules
+</div>
+
+<p class="muted">These rules define what it means for a spec to be in canonical form. They apply to this document and to every document that adopts this header.</p>
+
+<div class="idem-block">
+  <div class="idem-head">IDEMPOTENCY CONDITIONS — all must hold</div>
+  <div class="idem-body">
+
+    <div class="idem-rule">
+      <span class="ir-num">I-1</span>
+      <span class="ir-text"><strong>Granularity is lossless.</strong> Re-application does not compress, summarize, or abstract away any detail present in the current form. If a re-application would reduce granularity, it is rejected and the reduction is logged as a divergence event, not silently applied.</span>
+    </div>
+
+    <div class="idem-rule">
+      <span class="ir-num">I-2</span>
+      <span class="ir-text"><strong>Semantic labels are context-local.</strong> A term that appears in both Track A and Track B carries its Track A meaning in Track A sections and its Track B meaning in Track B sections. The header declares the scope boundary. Re-application checks that no term has migrated across the boundary without an explicit exchange arrow.</span>
+    </div>
+
+    <div class="idem-rule">
+      <span class="ir-num">I-3</span>
+      <span class="ir-text"><strong>Tracks are separated and explained separately.</strong> Track A content is never presented as a restatement of Track B content and vice versa. Each track has its own derivation logic, its own failure modes, and its own accounting. The only permitted cross-track statement is a reconciliation event or an exchange arrow — both are labeled as such.</span>
+    </div>
+
+    <div class="idem-rule">
+      <span class="ir-num">I-4</span>
+      <span class="ir-text"><strong>Reconciliation is convergence provenance, not merger.</strong> A reconciliation event records: (a) what Track A produced from its derivation, (b) what Track B produced from its integer structure, (c) that they are the same thing arrived at independently, (d) the depth d at which the convergence is visible. After logging, both tracks continue independently. The reconciliation column does not absorb either track.</span>
+    </div>
+
+    <div class="idem-rule">
+      <span class="ir-num">I-5</span>
+      <span class="ir-text"><strong>Exchange arrows are non-constitutive.</strong> A guidance arrow from Track A to Track B (or reverse) is an invitation to investigate, not a proof. The receiving track must derive the result in its own terms for it to count as knowledge in that track. Until derived, an exchange arrow is marked as a pointer, not a result.</span>
+    </div>
+
+    <div class="idem-rule">
+      <span class="ir-num">I-6</span>
+      <span class="ir-text"><strong>POV is derived at read time.</strong> No document version carries a fixed POV. The POV is computed from d at the moment of reading. What is visible changes with depth. A document that hard-codes a POV has violated idempotency — each reader at each depth sees what their depth makes visible, no more and no less.</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     §2 — RECONCILIATION TABLE
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-rec">§2</span>
+  Reconciliation — Confirmed Convergence Events
+</div>
+
+<p class="muted">Each row is a named event. Left column: what Track A produced independently. Center: the reconciliation event name and convergence depth. Right: what Track B produced independently. The center column is the only place where the two tracks touch.</p>
+
+<div class="rec-table-wrap">
+<table class="rec-table">
+  <thead>
+    <tr>
+      <th class="th-a col-a">Track A — GUL/ToT<br><span style="font-weight:300;font-style:italic;">arrived at via derivation chain</span></th>
+      <th class="th-rec col-rec">Reconciliation Event<br><span style="font-weight:300;font-style:italic;">convergence provenance</span></th>
+      <th class="th-b col-b">Track B — Rec10*<br><span style="font-weight:300;font-style:italic;">arrived at via integer structure</span></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td class="td-a">
+        Q(0) is undefined — nothing is not self-consistent. The attempt to evaluate Q at zero generates ε&gt;0 and initiates the chain 0→ε→1. Ground is the absence of self-justification.
+        <em>Source: GUL-0 Axiom 1, Layer −1</em>
+      </td>
+      <td class="td-rec">
+        <div class="rec-event">REC-01</div><br>
+        Zero as generative ground<br>
+        <span class="rec-prov">d=1 · both tracks arrive at: zero is not inert, it is the condition of generation</span>
+      </td>
+      <td class="td-b">
+        ZeroInvert(0) = 9 — ground activates the ceiling. Zero is pre-semantic; it precedes the semantic field pinned at 1. The 9+0 door structure runs natively from this.
+        <em>Source: SPEC-REC10-002 §0, §2</em>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="td-a">
+        The transition operator T: S→S' is a theorem of R(x)=1/(1+x), not a primitive. R is the unique Möbius transformation with a positive fixed point.
+        <em>Source: GUL-0 Theorem 1, Layer −1</em>
+      </td>
+      <td class="td-rec">
+        <div class="rec-event">REC-02</div><br>
+        Single generative operation → all structure<br>
+        <span class="rec-prov">d=1 · both tracks: one operation, iterated, produces the full hierarchy</span>
+      </td>
+      <td class="td-b">
+        T_int = PrimeDual ⊕ ZeroInvert ⊕ IntMap — the integer lattice transform is a single composed operation over three channels. All structure in Rec10* derives from iterated application of this transform.
+        <em>Source: SPEC-REC10-002 §6</em>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="td-a">
+        Causal directionality is a boundary-condition constraint on bidirectional structure. Forward does not write back to reverse. This follows from the depth-ordering of R^d — lower depths cannot be retroactively modified by higher depths.
+        <em>Source: GUL-0 depth sequence, POV derivation</em>
+      </td>
+      <td class="td-rec">
+        <div class="rec-event">REC-03</div><br>
+        Causal asymmetry — native confirmation<br>
+        <span class="rec-prov">d=1 · Track B confirms Track A's RULE-03 from integer offset structure alone</span>
+      </td>
+      <td class="td-b">
+        Before_closure ≠ after_closure: IntMap(101−19)=1, IntMap(101+19)=3. RULE-03 holds natively in the integer offset structure — not imposed. Causal asymmetry is a theorem of the integers, not an annotation.
+        <em>Source: SPEC-REC10-002 §5, RULE-09</em>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="td-a">
+        POV(d) = R^d(0⁺) − R^(d−1)(0⁺). POV is the incremental self-consistency gain at each depth step. It is the discrete derivative of the depth sequence = Axiom D applied to self-consistency. POV is placeable by specifying d.
+        <em>Source: POV derivation, this session</em>
+      </td>
+      <td class="td-rec">
+        <div class="rec-event">REC-04</div><br>
+        Before / During / After = discrete derivative<br>
+        <span class="rec-prov">d=1 · both tracks: ordinal position is computed from adjacent-pair differences</span>
+      </td>
+      <td class="td-b">
+        Before/during/after encodes as 1,2,3 — a perfect sequential integer progression derived from adjacent offset pairs. DURING = IntMap(seed) = 2. The encoding is ordinal, native to the integers, scale-invariant.
+        <em>Source: SPEC-REC10-002 §5, RULE-08</em>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="td-a" style="opacity:0.7;">
+        <em>Candidate — not yet confirmed:</em> The Fibonacci transients in GUL v2.8 (the orbit R^n(1) between δS and φ) may correspond structurally to the F* dominant loop period in Rec10*.
+        <em>Source: GUL v2.8 §3, Rec10* §7 — exchange pointer only</em>
+      </td>
+      <td class="td-rec" style="opacity:0.7;">
+        <div class="rec-event" style="background:var(--rec-mid);color:var(--rec-bar);">REC-05?</div><br>
+        <em>Candidate</em><br>Fibonacci orbit ↔ F* period<br>
+        <span class="rec-prov">Status: exchange pointer. Not yet derived in both tracks independently.</span>
+      </td>
+      <td class="td-b" style="opacity:0.7;">
+        <em>Candidate — not yet confirmed:</em> F* dominant loop period = 1 in the current pipeline. The Fibonacci connection requires explicit derivation in Track B's integer terms before it can be logged as confirmed.
+        <em>Source: SPEC-REC10-002 §7, §8 T6</em>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">RULE-REC — Reconciliation Promotion</div>
+  <p>A candidate reconciliation event (marked ?) is promoted to confirmed when both tracks have produced the result independently. Promotion requires: explicit derivation in Track A's terms AND explicit derivation in Track B's terms AND a named convergence statement. A candidate that is never confirmed is eventually demoted to an exchange pointer.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     §3 — EXCHANGE ARROWS
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-sys">§3</span>
+  Exchange Arrows — Guidance Only, Non-Constitutive
+</div>
+
+<p class="muted">An exchange arrow is a pointer, not a proof. The receiving track must derive the result in its own terms before it counts as knowledge there.</p>
+
+<div class="exchange-block">
+  <div class="ex-head">ACTIVE EXCHANGE ARROWS</div>
+
+  <div class="ex-row">
+    <div>
+      <div class="ex-from">Track A</div>
+      <div style="margin-top:0.4rem;font-size:0.82rem;font-style:italic;">Noether_der: every symmetry of A[S] produces a conserved functional C[S]. These are candidates for Nambu H₁, H₂ closure.</div>
+      <div class="ex-stays" style="margin-top:0.3rem;">stays local: derivation via Axiom L + L_der</div>
+    </div>
+    <div class="ex-arr">──▶</div>
+    <div>
+      <div class="ex-to">Track B</div>
+      <div style="margin-top:0.4rem;font-size:0.82rem;font-style:italic;color:var(--ink3);">Pointer: F* dominant loop may be a conserved structure in the integer sense. Investigate whether IntMap(F*) = fixed under ZeroInvert.</div>
+      <div class="ex-stays" style="margin-top:0.3rem;">not yet derived in Track B terms</div>
+    </div>
+  </div>
+
+  <div class="ex-row">
+    <div>
+      <div class="ex-to">Track B</div>
+      <div style="margin-top:0.4rem;font-size:0.82rem;font-style:italic;">Causal asymmetry confirmed natively in integer offset structure (REC-03). Before≠after at closure scale is a theorem of the integers.</div>
+      <div class="ex-stays" style="margin-top:0.3rem;">stays local: RULE-09, integer offset domain only</div>
+    </div>
+    <div class="ex-arr">──▶</div>
+    <div>
+      <div class="ex-from">Track A</div>
+      <div style="margin-top:0.4rem;font-size:0.82rem;font-style:italic;color:var(--ink3);">Pointer: consider whether RULE-03's boundary-condition framing can be sharpened by the integer proof. The integer result is more primitive — it may ground the GUL statement rather than merely confirm it.</div>
+      <div class="ex-stays" style="margin-top:0.3rem;">not yet re-derived in Track A terms with this grounding</div>
+    </div>
+  </div>
+
+  <div class="ex-row">
+    <div>
+      <div class="ex-to">Track B</div>
+      <div style="margin-top:0.4rem;font-size:0.82rem;font-style:italic;">Door 10 / Zero: ground is pinned, pre-semantic, cannot be closed. ZeroInvert(0)=9 is the integer expression of this.</div>
+      <div class="ex-stays" style="margin-top:0.3rem;">stays local: Rec10* §0 annotation layer</div>
+    </div>
+    <div class="ex-arr">──▶</div>
+    <div>
+      <div class="ex-from">Track A</div>
+      <div style="margin-top:0.4rem;font-size:0.82rem;font-style:italic;color:var(--ink3);">Pointer: Q(0) undefined = ZeroInvert(0)=9 may be the same structural fact expressed in two different formalisms. If confirmed, this becomes REC-01 extension or a new REC-06.</div>
+      <div class="ex-stays" style="margin-top:0.3rem;">candidate — requires derivation in both tracks</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     §4 — POV DERIVATION
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-pov">§4</span>
+  POV — Depth-Indexed Point of View
+</div>
+
+<p class="muted">POV is not carried by an operator or a document version. It is derived at read time from the depth d at which the reader is positioned.</p>
+
+<div class="pov-block">
+  <div class="pov-head">POV Derivation — Canonical Form</div>
+  <div class="pov-formula">POV(d) = R^d(0⁺) − R^(d−1)(0⁺)</div>
+  <div class="pov-body">
+    The discrete derivative of the depth sequence. At d=0: undefined — no inside, no outside, no POV possible. At d=1: POV(1) = R(0⁺) − Q(0) = the first finite value minus the undefined = the first inside. The undefinedness of Q(0) is not a gap — it is the load-bearing asymmetry that makes the d=1 term non-trivial.<br><br>
+    This is Axiom D applied to the self-consistency structure. POV inherits all of Axiom D's properties: defined on adjacent pairs, no continuous embedding required, natural integrator for the self-consistency structure just as Ld_der is the natural integrator for discrete semantic dynamics. They are the same object at different layers.
+  </div>
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">RULE-POV-01 — POV is Placeable</div>
+  <p>To place a recursion tracker or POV at any point in the system, specify d. The POV at that point is derived — not assumed, not carried by an operator. The inside of the structure at depth d is the incremental self-consistency gain from d−1 to d.</p>
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">RULE-POV-02 — POV Reads the Reconciliation Column</div>
+  <p>The same reconciliation event looks different from different depths. At d=1, the convergence is visible as a structural fact. At d=3, the derivation chains that produced the convergence are visible too. POV does not change what is in the reconciliation column — it changes how much of the provenance chain is legible from that position.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     §5 — SELF-APPLICATION PROOF
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-sys">§5</span>
+  Self-Application — Idempotency Confirmed
+</div>
+
+<p class="muted">Apply this header to itself. The result must be the same document.</p>
+
+<div class="proof-block">
+  <div class="proof-head">Self-Application Check — SPEC-HEADER-001 applied to SPEC-HEADER-001</div>
+  <div class="proof-body">
+    <strong>I-1 (Granularity lossless):</strong> Re-application adds no new fields and removes none. The header block, reconciliation table, exchange arrows, and POV block are all present. ✓<br><br>
+    <strong>I-2 (Semantics context-local):</strong> Track A terms (Q, R, d, layer numbering) appear only in Track A columns and Track A exchange endpoints. Track B terms (ZeroInvert, IntMap, F*, seed) appear only in Track B columns and Track B exchange endpoints. No cross-contamination. ✓<br><br>
+    <strong>I-3 (Tracks separated):</strong> Each track has its own row in the header block, its own column in the reconciliation table, its own side in every exchange arrow. No section presents Track A as a restatement of Track B. ✓<br><br>
+    <strong>I-4 (Reconciliation = convergence provenance):</strong> The reconciliation column contains only named events with provenance. No event absorbs either track. Both tracks continue independently after each event. ✓<br><br>
+    <strong>I-5 (Exchange arrows non-constitutive):</strong> All three active arrows are marked as pointers. None of them are presented as proofs in the receiving track. ✓<br><br>
+    <strong>I-6 (POV derived at read time):</strong> No version-fixed POV. The POV block gives the formula; depth d is supplied by the reader. ✓<br><br>
+    <strong>Verdict:</strong> apply(apply(SPEC-HEADER-001, SPEC-HEADER-001)) = apply(SPEC-HEADER-001, SPEC-HEADER-001). The header is idempotent when self-applied.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     §6 — USAGE INSTRUCTIONS
+══════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-tag st-sys">§6</span>
+  Usage — Applying This Header to a New Spec
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">STEP 1 — Fill the canonical header block</div>
+  <p>Copy the header block from §0. Fill in SPEC-ID, TRACK A (name, accounts-for, semantic scope, unique content), TRACK B (same), RECONCILIATION (current count), EXCHANGE (pointer count), POV (current d and what is visible), FORM (idempotency statement for this specific spec).</p>
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">STEP 2 — Body content is track-labeled</div>
+  <p>Every section in the body carries a track label: <code>TRACK-A</code>, <code>TRACK-B</code>, <code>RECONCILIATION</code>, <code>EXCHANGE</code>, or <code>POV</code>. No unlabeled content. Unlabeled content cannot be checked for idempotency.</p>
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">STEP 3 — Re-application protocol</div>
+  <p>To re-apply: diff the current document against the header block field by field. Any field that has changed is a divergence event. Log the divergence with: which field, what changed, which track is affected, whether granularity was lost, whether a semantic term migrated tracks. Do not silently absorb the divergence.</p>
+</div>
+
+<div class="rule-block">
+  <div class="rule-id">STEP 4 — Version only on structural change</div>
+  <p>Content updates within the existing structure do not increment the version. Version increments when the structure of the header block itself changes — new fields, removed fields, changed idempotency rules. Content is always granular; structure is versioned.</p>
+</div>
+
+
+<footer>
+  <span>SPEC-HEADER-001 · Canonical Idempotent Spec Header · v1.0</span>
+  <span>Two-Track · Qualitatively Distinct · Reconciliation as Convergence Provenance</span>
+  <span>2026-03-07</span>
+</footer>
+
+</div>
+</body>
+</html>

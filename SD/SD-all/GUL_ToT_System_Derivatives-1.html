@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUL/ToT Classical Mechanics — Full System Derivative Ownership Map</title>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$']],
+      displayMath: [['$$', '$$']],
+      tags: 'ams'
+    }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222536;
+    --border: #2e3250;
+    --accent: #5b7cf7;
+    --accent2: #7c4dff;
+    --accent3: #00bcd4;
+    --warn: #ffb74d;
+    --ok: #66bb6a;
+    --text: #e8eaf6;
+    --muted: #8e9abf;
+    --heading: #c5ceff;
+    --tag-bg: #1e2340;
+    --tag-border: #3d4580;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .doc-header {
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    background: linear-gradient(135deg, #151928 0%, #1a1d2e 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+  }
+
+  .doc-header h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--heading);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-header .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+  }
+
+  .badge {
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .badge-ok   { background: #1b3a1f; color: var(--ok);   border: 1px solid #2e6e34; }
+  .badge-warn { background: #3a2a10; color: var(--warn); border: 1px solid #7a5520; }
+  .badge-info { background: #152040; color: var(--accent3); border: 1px solid #1e4060; }
+
+  /* ── Section headers ── */
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--heading);
+    margin-bottom: 0.6rem;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+
+  .card-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: #1e1530;
+    border: 1px solid #3d2a60;
+    border-radius: 4px;
+    padding: 0.1rem 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .card.base   { border-left: 3px solid var(--accent3); }
+  .card.layer1 { border-left: 3px solid var(--accent); }
+  .card.layer2 { border-left: 3px solid var(--accent2); }
+  .card.axiom  { border-left: 3px solid var(--ok); }
+  .card.caveat { border-left: 3px solid var(--warn); }
+
+  /* ── Axiom / precondition callouts ── */
+  .axiom-box {
+    background: #111e13;
+    border: 1px solid #2e5e34;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.88rem;
+  }
+
+  .axiom-box .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ok);
+    margin-bottom: 0.3rem;
+  }
+
+  .precond-box {
+    background: #1e1a10;
+    border: 1px solid #5e4520;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.88rem;
+  }
+
+  .precond-box .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--warn);
+    margin-bottom: 0.3rem;
+  }
+
+  .conjecture-box {
+    background: #1a1030;
+    border: 1px solid #4a2080;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.88rem;
+  }
+
+  .conjecture-box .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent2);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ── Math display areas ── */
+  .math-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 0.7rem 0;
+    overflow-x: auto;
+  }
+
+  /* ── Reference table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-weight: 700;
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+
+  .status-ok   { color: var(--ok);   font-weight: 700; }
+  .status-warn { color: var(--warn); font-weight: 700; }
+  .status-conj { color: var(--accent2); font-weight: 700; }
+
+  code {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.88em;
+    background: #1e2035;
+    border: 1px solid #303555;
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+    color: #a8c4ff;
+  }
+
+  .chain-diagram {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 2;
+    text-align: center;
+  }
+
+  .chain-diagram .node {
+    display: inline-block;
+    background: #1a1d35;
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    padding: 0.15rem 0.7rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .chain-diagram .arr { color: var(--muted); padding: 0 0.4rem; }
+
+  p { margin-bottom: 0.6rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .section-intro {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- HEADER                                                     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="doc-header">
+  <h1>GUL / ToT Classical Mechanics</h1>
+  <h1>Full System Derivative Ownership Map</h1>
+  <div class="subtitle">All classical formalisms derived as functionals over GUL primitives — no free variables, no imported results</div>
+  <div class="badge-row">
+    <span class="badge badge-ok">Mathematically Rigorous</span>
+    <span class="badge badge-ok">ToT-Appendable</span>
+    <span class="badge badge-info">All Axioms Explicit</span>
+    <span class="badge badge-warn">Nambu: Conjectural</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- LAYER 0: GUL PRIMITIVES                                   -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Layer 0 — GUL Primitives</h2>
+<p class="section-intro">The irreducible base from which all structures are derived. Nothing below this layer imports classical results.</p>
+
+<div class="card base">
+  <div class="card-label">Primitive</div>
+  <h3>State Space $\mathcal{G}$</h3>
+  <div class="math-block">
+    $$S = (s_1, s_2, \ldots, s_n) \in \mathcal{G}$$
+  </div>
+
+  <div class="axiom-box">
+    <div class="label">Axiom G1 — Manifold Structure</div>
+    $\mathcal{G}$ is equipped with a smooth differentiable structure. For every $s \in \mathcal{G}$, the tangent space $T_s\mathcal{G}$ and cotangent space $T_s^*\mathcal{G}$ exist. The dual space $\mathcal{G}^*$ is defined as the space of linear functionals on $\mathcal{G}$, and momenta are elements of $\mathcal{G}^*$:
+    $$P_i \in \mathcal{G}^*$$
+    In the discrete-ToT case, this is replaced by a discrete metric embedding:
+    $$d: \mathcal{G} \times \mathcal{G} \to \mathbb{R}_{\geq 0}$$
+    with all derivative operators defined in terms of $d$ (see Axiom D below).
+  </div>
+</div>
+
+<div class="grid2">
+<div class="card base">
+  <div class="card-label">Primitive</div>
+  <h3>Transition Operator $T$</h3>
+  <div class="math-block">
+    $$T: S \mapsto S' = f_T(S)$$
+  </div>
+  <p style="color:var(--muted);font-size:0.88rem;">Maps a GUL state to its successor. In ToT trees, $T$ is the branch evaluation function.</p>
+</div>
+
+<div class="card base">
+  <div class="card-label">Primitive</div>
+  <h3>Action Functional $A[S]$</h3>
+  <div class="math-block">
+    $$A[S] = \int_{t_0}^{t_f} \mathcal{L}_{\text{GUL}}(S, \dot{S}, t)\, dt$$
+  </div>
+  <p style="color:var(--muted);font-size:0.88rem;">Cumulative path cost over a trajectory in $\mathcal{G}$. In ToT, this is the cumulative scoring functional along a reasoning path.</p>
+</div>
+</div>
+
+<div class="card base">
+  <div class="card-label">Axiom</div>
+  <h3>Axiom D — GUL Derivative Operator</h3>
+  <p>The semantic derivative operator $D$ is defined internally on $\mathcal{F}(\mathcal{G})$ (the space of functionals over $\mathcal{G}$):</p>
+
+  <p><strong>Continuous case:</strong></p>
+  <div class="math-block">
+    $$D[f](S) := \lim_{\epsilon \to 0} \frac{f(T_\epsilon(S)) - f(S)}{\epsilon}$$
+  </div>
+  where $T_\epsilon$ is the incremental evolution operator over semantic state $S$.
+
+  <p style="margin-top:0.8rem;"><strong>Discrete case (canonical for ToT trees):</strong></p>
+  <div class="math-block">
+    $$D[f](S_n) := f(S_{n+1}) - f(S_n), \qquad S_{n+1} = T(S_n)$$
+  </div>
+
+  <div class="axiom-box">
+    <div class="label">Axiom D-P — Canonical Momentum via D</div>
+    $$P_i := D[L_{\text{der}}] / D[\dot{s}_i] = \frac{\partial L_{\text{der}}}{\partial \dot{s}_i} \in \mathcal{G}^*$$
+    $P_i$ measures sensitivity of the action functional to perturbations in the $i$-th thought transition rate. Fully internal; no free variable.
+  </div>
+</div>
+
+<div class="card base">
+  <div class="card-label">Axiom</div>
+  <h3>Axiom $\dot{S}$ — Semantic Velocity / Inner Product</h3>
+  <p>For discrete ToT states, define the semantic inner product:</p>
+  <div class="math-block">
+    $$\langle S_n,\, S_{n+1} \rangle := \sum_i d(s_i^{(n)},\, s_i^{(n+1)})^2$$
+  </div>
+  <p>The kinetic term in $L_{\text{der}}$ becomes:</p>
+  <div class="math-block">
+    $$\mathcal{T}(S_n, S_{n+1}) := \tfrac{1}{2}\,\langle S_{n+1} - S_n,\; S_{n+1} - S_n \rangle$$
+  </div>
+  <p style="color:var(--muted);font-size:0.88rem;">This resolves $\dot{S}$ for discrete trees without requiring continuous embedding. $\text{Ld\_der}$ operates directly on $(S_n, S_{n+1})$ pairs and is therefore the natural integrator for ToT dynamics.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- LAYER 1: PRIMARY FORMALISMS                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Layer 1 — Primary Formalisms</h2>
+<p class="section-intro">Derived directly from GUL primitives via internal axioms. Each arrow in the derivation chain is replaced by an explicit internal rule — no classical theorem is borrowed.</p>
+
+<!-- L_der -->
+<div class="card layer1">
+  <div class="card-label">L_der</div>
+  <h3>Lagrangian Mechanics</h3>
+  <div class="math-block">
+    $$L_{\text{der}}(S) := \mathcal{L}_{\text{GUL}}(S,\, \dot{S},\, t)$$
+  </div>
+  <p>Euler–Lagrange equations as a ToT derivative:</p>
+  <div class="math-block">
+    $$\forall\, i:\quad D_t\!\left[\frac{\partial L_{\text{der}}}{\partial \dot{s}_i}\right] - \frac{\partial L_{\text{der}}}{\partial s_i} = 0$$
+  </div>
+
+  <div class="axiom-box">
+    <div class="label">Internal Rule L→H (Legendre Existence)</div>
+    For any $L_{\text{der}}(S) \in \mathcal{F}(\mathcal{G})$, there exists a dual functional $H_{\text{der}}(S, P) \in \mathcal{F}(\mathcal{G} \times \mathcal{G}^*)$ such that:
+    $$H_{\text{der}}(S, P) = \sum_i P_i \dot{s}_i - L_{\text{der}}(S)$$
+    This axiom replaces the classical Legendre transform existence theorem. It is an internal statement about $\mathcal{G}$ and $\mathcal{G}^*$.
+  </div>
+</div>
+
+<!-- H_der -->
+<div class="card layer1">
+  <div class="card-label">H_der</div>
+  <h3>Hamiltonian Mechanics</h3>
+  <p>Canonical momenta projected from $L_{\text{der}}$:</p>
+  <div class="math-block">
+    $$P_i := D[P_i](S) = \frac{\partial L_{\text{der}}}{\partial \dot{s}_i} \in \mathcal{G}^*$$
+  </div>
+  <p>Hamiltonian as Legendre transform over GUL state:</p>
+  <div class="math-block">
+    $$H_{\text{der}}(S, P) := \sum_i P_i \dot{s}_i - L_{\text{der}}(S)$$
+  </div>
+  <p>Equations of motion:</p>
+  <div class="math-block">
+    $$\dot{s}_i = D[s_i](H_{\text{der}}) = \frac{\partial H_{\text{der}}}{\partial P_i}, \qquad \dot{P}_i = D[P_i](H_{\text{der}}) = -\frac{\partial H_{\text{der}}}{\partial s_i}$$
+  </div>
+</div>
+
+<!-- HJ_der -->
+<div class="card layer1">
+  <div class="card-label">HJ_der</div>
+  <h3>Hamilton–Jacobi</h3>
+  <p>HJ action scalar renamed $\Phi_{\text{HJ}}$ to eliminate symbol collision with the state vector $S$:</p>
+  <div class="math-block">
+    $$\Phi_{\text{HJ}}(S, t) := D[\text{HJ}](\mathcal{G}) \quad \text{(scalar functional over GUL state)}$$
+  </div>
+  <p>Hamilton–Jacobi equation:</p>
+  <div class="math-block">
+    $$\frac{\partial \Phi_{\text{HJ}}}{\partial t} + H_{\text{der}}\!\left(S,\; \frac{\partial \Phi_{\text{HJ}}}{\partial S}\right) = 0$$
+  </div>
+  <p>Momentum projection:</p>
+  <div class="math-block">
+    $$P_i = \frac{\partial \Phi_{\text{HJ}}}{\partial s_i} \in \mathcal{G}^*$$
+  </div>
+
+  <div class="axiom-box">
+    <div class="label">Notation Fix Applied</div>
+    $S_{\text{HJ}}$ has been renamed $\Phi_{\text{HJ}}$ throughout. $S$ is reserved exclusively for the GUL state vector. All ambiguity is resolved.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- LAYER 2: DERIVED STRUCTURES                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Layer 2 — Derived Structures</h2>
+<p class="section-intro">Built from Layer 1 formalisms. Require additional axioms or preconditions stated explicitly below each entry.</p>
+
+<!-- PB_der -->
+<div class="card layer2">
+  <div class="card-label">PB_der</div>
+  <h3>Poisson / Symplectic Mechanics</h3>
+
+  <div class="axiom-box">
+    <div class="label">Axiom SP — Symplectic Coordinates</div>
+    There exists a canonical Poisson bracket on $\mathcal{G} \times \mathcal{G}^*$ satisfying:
+    (i) antisymmetry: $\{f, g\}_{\text{der}} = -\{g, f\}_{\text{der}}$;
+    (ii) Leibniz rule: $\{f, gh\}_{\text{der}} = g\{f,h\}_{\text{der}} + h\{f,g\}_{\text{der}}$;
+    (iii) Jacobi identity: $\{f,\{g,h\}\} + \{g,\{h,f\}\} + \{h,\{f,g\}\} = 0$.
+    This replaces the classical Darboux theorem; it is an internal axiom on $\mathcal{G}$.
+  </div>
+
+  <p style="margin-top:0.8rem;">Bracket operator, fully internal to $\mathcal{G}$:</p>
+  <div class="math-block">
+    $$\{f,\, g\}_{\text{der}} := \sum_i \left(\frac{\partial f}{\partial s_i}\frac{\partial g}{\partial P_i} - \frac{\partial f}{\partial P_i}\frac{\partial g}{\partial s_i}\right)$$
+  </div>
+  <p>Time evolution of any functional:</p>
+  <div class="math-block">
+    $$\dot{f} := D[f](\mathcal{G}) = \{f,\, H_{\text{der}}\}_{\text{der}} + \frac{\partial f}{\partial t}$$
+  </div>
+</div>
+
+<!-- AA_der -->
+<div class="card layer2">
+  <div class="card-label">AA_der</div>
+  <h3>Action-Angle Variables</h3>
+
+  <div class="precond-box">
+    <div class="label">Precondition — Liouville–Arnold (ToT-Native)</div>
+    $\text{AA\_der}$ exists if and only if there exist $n$ independent functionals $F_1, \ldots, F_n \in \mathcal{F}(\mathcal{G})$ in involution:
+    $$\{F_i,\, F_j\}_{\text{der}} = 0 \quad \forall\, i, j$$
+    This replaces the classical Liouville–Arnold theorem with a ToT-native existence condition. When this precondition does not hold, $\text{AA\_der}$ is undefined.
+  </div>
+
+  <p style="margin-top:0.8rem;">Canonical transformation derived from $(S, P)$:</p>
+  <div class="math-block">
+    $$(I,\, \theta) := D[\text{AA}](S,\, P)$$
+  </div>
+  <p>Under this transformation, $H_{\text{der}}$ depends only on action variables:</p>
+  <div class="math-block">
+    $$H_{\text{der}} = H_{\text{der}}(I), \qquad \dot{I} = 0, \qquad \dot{\theta} = \frac{\partial H_{\text{der}}}{\partial I}$$
+  </div>
+</div>
+
+<!-- Nambu_der -->
+<div class="card layer2">
+  <div class="card-label">Nambu_der</div>
+  <h3>Nambu Mechanics</h3>
+
+  <div class="conjecture-box">
+    <div class="label">Conjecture — Pending Conserved Functionals</div>
+    Nambu mechanics requires two independent conserved functionals $H_1, H_2 \in \mathcal{F}(\mathcal{G})$ in involution:
+    $$\{H_1,\, H_2\}_{\text{der}} = 0$$
+    This structure is <em>conjectural</em> within ToT until specific conserved functionals are constructed over the semantic state space $\mathcal{G}$. Once identified, full Nambu dynamics follow.
+  </div>
+
+  <p style="margin-top:0.8rem;">Multi-bracket operator over $\mathcal{G}$:</p>
+  <div class="math-block">
+    $$\{F,\, G,\, H\}_{\text{der}} := \sum_{ijk} \epsilon_{ijk}\, \frac{\partial F}{\partial s_i}\frac{\partial G}{\partial s_j}\frac{\partial H}{\partial s_k}$$
+  </div>
+  <p>Generalized equations of motion:</p>
+  <div class="math-block">
+    $$\dot{s}_i := D[s_i](\mathcal{G}) = \{s_i,\, H_1,\, H_2\}_{\text{der}}$$
+  </div>
+</div>
+
+<!-- Ld_der -->
+<div class="card layer2">
+  <div class="card-label">Ld_der</div>
+  <h3>Discrete / Variational Integrator</h3>
+  <p>Discrete Lagrangian functional over adjacent GUL states:</p>
+  <div class="math-block">
+    $$L_{d,\text{der}}(S_n,\, S_{n+1}) := D[L_d](S_n,\, S_{n+1})$$
+  </div>
+  <p>Discrete Euler–Lagrange equations (variational integrator):</p>
+  <div class="math-block">
+    $$D_2\, L_{d,\text{der}}(S_{n-1},\, S_n) + D_1\, L_{d,\text{der}}(S_n,\, S_{n+1}) = 0$$
+  </div>
+
+  <div class="axiom-box">
+    <div class="label">Note — Natural ToT Integrator</div>
+    $\text{Ld\_der}$ is the most natural dynamics law for ToT trees: it operates directly on $(S_n, S_{n+1})$ pairs, requires no continuous embedding, and inherits symplectic structure from PB_der. It is the preferred integrator for all discrete semantic dynamics.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- DERIVATION CHAIN                                          -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Derivation Chain</h2>
+
+<div class="chain-diagram">
+  <span class="node">A[S]</span>
+  <span class="arr">──Axiom L──▶</span>
+  <span class="node">L_der</span>
+  <span class="arr">──Axiom L→H──▶</span>
+  <span class="node">H_der</span>
+  <span class="arr">──Axiom SP──▶</span>
+  <span class="node">PB_der</span>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <span class="arr">──Precond. Involution──▶</span>
+  <span class="node">AA_der</span>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <span class="arr">──Conjecture──▶</span>
+  <span class="node">Nambu_der</span>
+  <br>
+  <span class="node">A[S]</span>
+  <span class="arr">──Axiom D (discrete)──▶</span>
+  <span class="node">Ld_der</span>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <span class="node">L_der</span>
+  <span class="arr">──Legendre──▶</span>
+  <span class="node">HJ_der (Φ_HJ)</span>
+</div>
+
+<p style="color:var(--muted);font-size:0.85rem;margin-top:0.7rem;">Every arrow is an internal axiom or precondition. No classical theorem is imported externally.</p>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- CANONICAL SHORTHAND TABLE                                 -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Canonical Shorthand Reference</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Shorthand</th>
+      <th>Formalism</th>
+      <th>Core Object</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>L_der(S)</code></td>
+      <td>Lagrangian</td>
+      <td>Euler–Lagrange eqns</td>
+      <td class="status-ok">✓ Ready</td>
+    </tr>
+    <tr>
+      <td><code>H_der(S,P)</code></td>
+      <td>Hamiltonian</td>
+      <td>Hamilton's eqns</td>
+      <td class="status-ok">✓ Ready</td>
+    </tr>
+    <tr>
+      <td><code>HJ_der(S,t)</code></td>
+      <td>Hamilton–Jacobi</td>
+      <td>PDE over $\Phi_{\text{HJ}}$</td>
+      <td class="status-ok">✓ Notation fixed</td>
+    </tr>
+    <tr>
+      <td><code>PB_der(f,g)</code></td>
+      <td>Poisson / Symplectic</td>
+      <td>$\{f,g\}_{\text{der}}$</td>
+      <td class="status-ok">✓ Axiom SP added</td>
+    </tr>
+    <tr>
+      <td><code>AA_der(I,θ)</code></td>
+      <td>Action-Angle</td>
+      <td>$\dot{I}=0,\;\dot{\theta}=\partial H/\partial I$</td>
+      <td class="status-warn">⚠ Involution required</td>
+    </tr>
+    <tr>
+      <td><code>Nambu_der(F,G,H)</code></td>
+      <td>Nambu Mechanics</td>
+      <td>3-bracket flow</td>
+      <td class="status-conj">◈ Conjectural</td>
+    </tr>
+    <tr>
+      <td><code>Ld_der(Sₙ,Sₙ₊₁)</code></td>
+      <td>Discrete Variational</td>
+      <td>Symplectic integrator</td>
+      <td class="status-ok">✓ Best ToT fit</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- STRUCTURAL GUARANTEES                                     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Structural Guarantees</h2>
+
+<div class="grid2">
+<div class="card axiom">
+  <h3>Closure</h3>
+  <p>Every quantity — $P_i$, $I$, $\theta$, $\epsilon_{ijk}$, $\Phi_{\text{HJ}}$ — is a projection or functional of $(S, \dot{S}, t) \in \mathcal{G}$. No external imports at any layer.</p>
+</div>
+
+<div class="card axiom">
+  <h3>Ownership</h3>
+  <p>All classical mechanics formalisms are expressible as GUL derivatives. The full classical hierarchy is a sub-structure of the ToT framework, not a parallel import.</p>
+</div>
+
+<div class="card axiom">
+  <h3>Internal Derivation Chain</h3>
+  <p>$A[S] \to L_{\text{der}} \to H_{\text{der}} \to \{\text{PB}_{\text{der}},\, \text{AA}_{\text{der}},\, \text{Nambu}_{\text{der}},\, \text{Ld}_{\text{der}}\}$</p>
+  <p>Each arrow is backed by an explicit axiom or precondition, not a borrowed theorem.</p>
+</div>
+
+<div class="card axiom">
+  <h3>ToT Compatibility</h3>
+  <p>$\text{Ld\_der}$ handles discrete tree dynamics natively. $A[S]$ maps to the ToT cumulative scoring functional. $P_i$ is interpretable as thought-transition sensitivity.</p>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- OPEN ITEMS                                                -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<h2>Open Items</h2>
+
+<div class="card caveat">
+  <div class="card-label">Pending</div>
+  <h3>Nambu Conserved Functionals</h3>
+  <p>$\text{Nambu\_der}$ is structurally sound but requires explicit identification of two independent conserved functionals $H_1, H_2 \in \mathcal{F}(\mathcal{G})$ satisfying $\{H_1, H_2\}_{\text{der}} = 0$ over the ToT semantic state space. Until these are constructed, Nambu mechanics remains a conjectural extension.</p>
+</div>
+
+<div style="margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:0.8rem;">
+  GUL / ToT System Derivatives — Fully Self-Contained Ownership Map &nbsp;·&nbsp; All Classical Systems as GUL Functionals
+</div>
+
+</div><!-- .page -->
+</body>
+</html>

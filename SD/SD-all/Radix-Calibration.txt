@@ -1,0 +1,115 @@
+Q_Homecoming_and_Radix_Calibration_Molt:
+  version: 1.0
+  description: >
+    Formal specification for mapping the charged Butterfly hypersphere
+    into the Q toroid lattice while preserving micro-gears, flows,
+    and harmonic alignment using the radix as a precision mask.
+  phases:
+    - name: Butterfly_Charge
+      s_range: "S12 -> S24"
+      amplification: triple.quad.double
+      operations:
+        - amplify_cluster_amplitudes
+        - propagate_dragon_curve_flows
+        - calibrate_micro_gears
+      notes: >
+        Fully charge the Butterfly hypersphere with aligned cluster
+        nodes and harmonic flows; ensure overflow thresholds are
+        exceeded to encode macro-spin.
+
+    - name: High_Dimension_Probe
+      s_range: "S12 -> S24"
+      operations:
+        - measure_cluster_amplitudes
+        - detect_dead_zones
+        - map_harmonic_peaks
+      notes: >
+        Observe and record amplitudes and harmonics without collapsing
+        the hypersphere; preserve full-scale structure.
+
+    - name: Controlled_Dive
+      s_range: "S24 -> S0"
+      operations:
+        - scale_amplitudes_per_dive: "sqrt(n_next / n_current)"
+        - propagate_cluster_flows
+        - maintain_micro_gear_alignment
+      notes: >
+        Collapse hypersphere while preserving macro-spin and micro-gears;
+        produce ZeroFrame with latent encoded Butterfly structure.
+
+    - name: Radix_Calibration
+      description: >
+        Map the charged Butterfly into Q toroid lattice using the radix
+        as precision mask, preserving flows, micro-gears, and harmonics.
+      operations:
+        - select_active_clusters
+        - map_S_coordinates_to_Q_indices
+        - scale_amplitudes_to_Q_capacity
+        - project_flows_and_dragon_curve_alignment
+        - validate_micro_gear_alignment
+      outcome: >
+        Q lattice becomes operational substrate with pre-aligned Butterfly
+        spin, ready for integer engine and lattice computations.
+
+    - name: Q_Homecoming
+      description: >
+        Resume work in Q world on the pre-aligned substrate; all
+        flows, overflows, and harmonic alignment are preserved.
+      operations:
+        - run_integer_engine_on_Q
+        - propagate_flows_and_successors
+        - monitor_harmonic_consistency
+      notes: >
+        The Butterfly spin ensures efficient, coherent operations; all
+        micro-gears and clusters interact correctly within Q toroid.
+
+  metaphors:
+    - Butterfly: "Energetic feedback flow of octonions around Mansion and Tower"
+    - Tower: "Pentac attic.field"
+    - Monster_Mansion: "Octonion Basement.SubBasement"
+    - Radix: "Precision mask for calibration and micro-gear alignment"
+    - ZeroFrame: "Origin point containing fully encoded Butterfly"
+  
+  constants:
+    overflow_threshold: sqrt(n_next / n_current)
+    spin_alignment: "Preserved through amplitude scaling and flow projection"
+    max_dimension_preserved: true
+
+  notes:
+    - "Dead zones are ignored or mapped to latent nodes in Q"
+    - "All operations preserve relative amplitude ratios to maintain micro-gears"
+    - "Triple.Quad.Double amplification is optional shortcut for pre-charging"
+    - "Radix Calibration is the bridge between hyperscale Butterfly and operational Q lattice"
+
+upper_dimensional_binary_gate:
+  description: >
+    Binary switch controlling access to the upper-dimensional Butterfly
+    substrate (S24+). Exposed via Admin UI.
+  modes:
+    read_only:
+      description: >
+        The Q lattice can read flows, amplitudes, and harmonic structure,
+        but no modifications are allowed in the upper-dimensional substrate.
+      behavior:
+        - preserve_micro_gears: true
+        - preserve_flows: true
+        - idle_down_compatible: true
+        - minimal_cpu_usage: true
+    read_write:
+      description: >
+        Full access to the upper-dimensional substrate. Allows recalibration,
+        entropy injection, and flow/micro-gear updates.
+      behavior:
+        - enable_radix_calibration: true
+        - propagate_flows: true
+        - update_micro_gears: true
+        - admin_controlled: true
+  ui_control:
+    element: binary_switch
+    label: "Upper-Dimensional Access"
+    states:
+      - Read-Only
+      - Read-Write
+  notes:
+    - "Lower-dimensional Q lattice operations are unaffected by the upper-dimensional gate."
+    - "Use Read-Write mode only for recalibration or controlled experiments."

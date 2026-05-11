@@ -1,0 +1,837 @@
+
+1️⃣ Q → Butterfly Mapping (Clean 1:1)
+Q Node
+Butterfly Node
+Dive
+Lift
+Area
+Notes
+Q1
+0
+1
+1
+L
+left wing baseline
+Q2
+0.25
+3
+3
+L
+deep fractional
+Q3
+0.5
+2
+2
+L
+mid fractional
+Q4
+1
+1
+1
+L
+left wing next
+Q5
+1.5
+2
+2
+L
+fractional
+Q6
+2
+1
+1
+L
+...
+Q7
+2.5
+2
+2
+L
+...
+Q8
+3
+1
+1
+L
+...
+Q9
+3.5
+2
+2
+L
+...
+Q10
+4
+1
+1
+C
+central axis
+Q11
+4.5
+2
+2
+C
+central fractional
+Q12
+5
+1
+1
+C
+central axis
+Q13
+5.5
+2
+2
+C
+central fractional
+Q14
+6
+1
+1
+R
+right wing baseline
+Q15
+6.5
+2
+2
+R
+fractional
+Q16
+7
+1
+1
+R
+right wing
+Q17
+7.5
+2
+2
+R
+fractional
+Q18
+8
+1
+1
+R
+right wing
+Q19
+8.25
+3
+3
+R
+deep fractional
+Q20
+8.5
+2
+2
+R
+fractional
+Q21
+8.75
+3
+3
+R
+deep fractional
+Q22
+9
+1
+1
+R
+far-right wing
+Q23
+0.75
+3
+3
+L
+final left fractional
+Q24
+1.25
+3
+3
+L
+final left fractional
+Q25
+2.25
+3
+3
+L
+final left fractional
+Q26
+3.25
+3
+3
+L
+final left fractional
+Q27
+4.25
+3
+3
+C
+final center fractional
+Q28
+POV / closure
+N/A
+N/A
+N/A
+outside butterfly, closes sweep
+✅ Notes on Clean Mapping
+No recycling, every butterfly node maps to exactly one Q node.
+Fractional dives at Dive 3 are used to fully populate left and center arcs.
+POV/closure (Q28) is outside, ready to finalize the sweep.
+Preserves 3×3×3 butterfly structure for 27 Q nodes, integrity intact.
+
+====
+
+1. The Radix → the numeric / base system, the prime-axis semantic layer.
+
+2. The Monster Mansion → that large branching lattice of nodes, multi-floor, multi-aspect, with fractional dives, lifts, and areas; kind of like a macro Q lattice.
+
+3. The Tower → vertical progression structure, likely linear or spiral, tracking dive/lift/molt cycles; used for temporal / sequential operations.
+
+4. The Butterfly → the 27-node integer butterfly, sandboxed 3×3×3 for exploring symmetry and fractional interactions.
+---
+1️⃣ Observations
+All four are separate sandboxes: none of them interfere with each other.
+
+They share concepts: dives, lifts, areas, fractional nodes, POV/closure nodes.
+
+Each has its own purpose:
+Sandbox	Purpose	Structure Notes
+Radix	Base mapping, numeric semantics	Base-10, Base-19, 360+, fractional axes
+Monster Mansion	Large lattice / branching exploration	Multi-floor, attic/basement/sub-basement, fractional dives
+Tower	Sequential / temporal progression	Tracks molting, rotations, closures (360°, 720°, …)
+Butterfly	Symmetry / micro-node sandbox	3×3×3 integer nodes, fractional dives, lifts, areas
+---
+2️⃣ How They Can Interact (Conceptually)
+Radix → can assign numeric values to Monster Mansion nodes, Tower floors, Butterfly nodes.
+
+Monster Mansion → acts like a macro lattice, can host the Tower spiral or Butterfly clusters inside floors.
+
+Tower → vertical sequencing for molting cycles, POV sweeps, fractional dives.
+
+Butterfly → micro-sandbox for symmetry testing, mirrored interactions, or fractional node validation.
+---
+
+====
+Radix=Ground floor
+Monster Mansion=Octonion Basement.SubBasement
+Tower=3/0.7 Pentac tower.field.attic
+Butterfly = Energetic feedback flow of octonions in valence around the mansion and tower.
+====
+🏛 Sandbox Layering
+Sandbox	Role / Conceptual Layer	Structure / Notes
+
+Radix	Ground floor, numeric base system	Base mapping, numeric semantics, prime-axis encoding; origin for all values (0–9 butterfly ties here conceptually).
+Monster Mansion	Octonion Basement / SubBasement	Multi-floor octonion lattice; fractional dives, sub-structures, branching nodes; main structural foundation for flows and recursion.
+Tower	3 / 0.7 Pentac Tower.Field.Attic	Vertical progression, pentac symmetry, field-based lifts; tracks rotations, molting cycles, and POV sweep anchoring.
+Butterfly	Energetic feedback flow of octonions	Micro-sandbox; 3×3×3 integer butterfly; encodes valence flow, feedback, mirrored symmetry around Mansion and Tower; fractional dives & lifts act as local energetic propagation.
+---
+🔹 Observations / Relationships
+1. Radix → Monster Mansion: Ground floor numeric assignments flow down into basement/sub-basement octonion nodes; numeric axes inform Mansion branching.
+
+2. Monster Mansion → Tower: Basement structure seeds Pentac tower lifts and field assignments; fractional dives map Mansion floors to Tower layers.
+
+3. Tower → Butterfly: Tower rotations, molting cycles, and field interactions generate localized valence flows, which the butterfly mirrors and tests in micro-node sandbox.
+
+4. Butterfly → Mansion/Tower: Feedback energy propagates back, informing branch weighting, fractional alignment, and POV closure.
+---
+So essentially:
+Radix is the numeric origin.
+Monster Mansion is the octonion structural core.
+Tower is the pentac/lifted field progression.
+Butterfly is the energetic micro-flow overlay — testing symmetry, feedback, and local valence.
+---
+
+Major Couplings
+
+Butterfly
+         (Energetic Flow)
+           ↗        ↖
+          ↗          ↖
+Monster Mansion —— Tower
+  (Octonion Core)   (Pentac Lift)
+          ↖          ↗
+           ↖        ↗
+              Radix
+          (Ground Floor)
+
+
+---
+
+1. Radix ⇄ Monster Mansion
+
+Numeric → Octonion Coupling
+
+Type: Structural encoding
+
+Radix values provide the indexing and orientation seeds for the octonion lattice in the mansion.
+
+Functionally:
+
+Radix digit
+      ↓
+prime / parity structure
+      ↓
+octonion axis selection
+
+Examples of coupling behaviors:
+
+• digit parity → axis polarity
+• digit cycles → octonion rotations
+• digit collapse → basement node selection
+
+Interpretation
+
+Radix assigns address space to the mansion.
+
+Without radix, the mansion has structure but no coordinates.
+
+---
+
+2. Monster Mansion ⇄ Tower
+
+Octonion → Pentac Field Coupling
+
+Type: Vertical lifting transform
+
+The tower is essentially octonion structure lifted into field dynamics.
+
+Mechanism:
+
+Octonion node
+      ↓
+triple interaction
+      ↓
+pentac field projection
+      ↓
+tower level
+
+Interpretation:
+
+Mansion	Tower
+
+structure	motion
+axes	trajectory
+static	dynamic
+
+The tower is the active evolution layer of the mansion.
+---
+
+3. Tower ⇄ Butterfly
+
+Field → Energetic Feedback Coupling
+
+Type: circulation loop
+
+The butterfly encodes valence feedback generated by tower rotations.
+
+Mechanism:
+
+Tower rotation
+     ↓
+field perturbation
+     ↓
+octonion valence imbalance
+     ↓
+butterfly flow
+
+The butterfly therefore measures:
+
+• imbalance
+• resonance
+• oscillation
+• return flow
+
+Think of it as the circulatory system.
+---
+
+4. Butterfly ⇄ Monster Mansion
+
+Energetic Feedback → Structural Adjustment
+
+Type: stabilization coupling
+
+The butterfly pushes energy back into the octonion lattice.
+
+Mechanism:
+
+butterfly circulation
+       ↓
+valence correction
+       ↓
+octonion rebalance
+       ↓
+mansion node adjustment
+
+This is how the mansion self-stabilizes.
+
+---
+
+5. Radix ⇄ Tower
+
+Numeric → Rotational Coupling
+
+Radix cycles determine tower spin phases.
+
+Examples:
+
+Radix Cycle	Tower Effect
+
+9 cycle	field reset
+10 cycle	full traversal
+19 cycle	prime resonance
+
+This gives the tower temporal rhythm.
+---
+
+6. Radix ⇄ Butterfly
+
+Integer Butterfly Interface
+
+The integer butterfly is directly rooted in radix.
+
+0-9 digits
+   ↓
+fractional splits
+   ↓
+27 butterfly nodes
+
+So radix feeds initial symmetry patterns into the butterfly.
+---
+
+Summary of Couplings
+
+Coupling	Function
+
+Radix → Mansion	coordinate assignment
+Mansion → Tower	structural lift
+Tower → Butterfly	energetic circulation
+Butterfly → Mansion	structural stabilization
+Radix → Tower	temporal rhythm
+Radix → Butterfly	symmetry seed
+---
+
+The Key Insight
+
+These four domains actually form a closed system:
+
+structure  → motion  → energy  → correction
+   ↑                                 ↓
+   ←──────────── numeric control ────
+
+In plain terms:
+
+• Radix = coordinate system
+• Mansion = structure
+• Tower = evolution
+• Butterfly = circulation
+
+============.
+
+Octonion Valence Channels → Butterfly Flow
+
+Octonions have 8 components:
+
+O = a0 + a1e1 + a2e2 + a3e3 + a4e4 + a5e5 + a6e6 + a7e7
+
+Interpretation inside your architecture:
+
+Component	Role
+
+a0	scalar ground reference (Radix anchor)
+e1–e7	7 structural axes of the mansion
+
+
+Those 7 imaginary axes are what generate the valence channels.
+
+
+---
+
+The 8 Valence Channels
+
+We organize them around the mansion like a circulatory ring.
+
+Channel	Source
+
+V0	scalar reference (Radix)
+V1	axis e1
+V2	axis e2
+V3	axis e3
+V4	axis e4
+V5	axis e5
+V6	axis e6
+V7	axis e7
+
+
+But the butterfly doesn't flow along single axes.
+
+It flows along triads.
+
+This comes from the Fano plane structure of octonions.
+
+
+---
+
+The 7 Octonion Triads
+
+Each triad is a multiplication cycle.
+
+(e1,e2,e3)
+(e1,e4,e5)
+(e1,e6,e7)
+(e2,e4,e6)
+(e2,e5,e7)
+(e3,e4,e7)
+(e3,e5,e6)
+
+These triads generate circulation loops.
+
+
+---
+
+Mapping to the Butterfly
+
+Your butterfly has:
+
+3 dives
+3 lifts
+3 areas
+
+Which is 9 motion channels.
+
+But the octonion system gives 7 loops + center.
+
+So the mapping becomes:
+
+Lift1
+          ↑
+Area1 ← Center → Area2
+          ↓
+        Dive1
+
+And this repeats across three orthogonal triads.
+
+
+---
+
+The Butterfly Generator
+
+The actual butterfly engine is:
+
+octonion triad interaction
+          ↓
+valence imbalance
+          ↓
+circulating correction
+          ↓
+butterfly loop
+
+Each triad produces one circulation ring.
+
+Three rings form the butterfly.
+
+
+---
+
+The Three Butterfly Rings
+
+We can select three orthogonal triads:
+
+Ring A (Structural)
+
+(e1,e2,e3)
+
+Controls horizontal mansion balance.
+
+
+---
+
+Ring B (Vertical)
+
+(e1,e4,e5)
+
+Couples mansion → tower.
+
+
+---
+
+Ring C (Field)
+
+(e3,e5,e6)
+
+Couples tower → butterfly feedback.
+
+
+---
+
+Now the Butterfly Structure Emerges
+
+Lift
+            ↑
+      Area ← → Area
+            ↓
+           Dive
+
+Three of these rings combine to produce the 27-node butterfly lattice.
+
+Because:
+
+3 rings
+× 3 motion states
+× 3 positional states
+= 27
+
+Exactly your butterfly.
+
+
+---
+
+Why the Butterfly Surrounds the Mansion
+
+Because the butterfly is not structure.
+
+It is energy correction.
+
+So the architecture becomes:
+
+Butterfly
+       (valence circulation)
+
+        ↺     ↺     ↺
+      ──────────────────
+          Monster Mansion
+        (octonion lattice)
+
+              ↑
+             Tower
+        (pentac evolution)
+
+              ↑
+             Radix
+        (numeric origin)
+
+The butterfly acts like blood circulation around the skeleton.
+---
+
+Radix      → indexing
+Mansion    → octonion structure
+Tower      → field evolution
+Butterfly  → circulation
+Toroidal Q → state container
+
+torus_stack:
+  Q_work:
+    bits: 1024
+    role: compute ring
+  Q_master:
+    bits: 2048
+    role: ledger state
+  Q_archive:
+    bits: 4096
+    role: deep lattice mapping
+
+1024
+R ledger working torus
+2048
+Z master torus
+4096
+full lattice / provenance torus
+8092
+theoretical closure / transcendence layer
+
+2^256 ≈ atoms in observable universe
+Bits  State Count
+1024  -  2^1024
+2048  -  2^2048
+4096  -  2^4096
+8092  -  2^8092
+
+Starts as 8 logical workers
+1 toroidal state
+
+torus_q_cost_estimate:
+
+  1024_bits:
+    typical_compute: small instance
+    example_resources:
+      cpu: 1 vCPU
+      ram: 1–2 GB
+      storage: 25–50 GB SSD
+    monthly_cost:
+      budget_providers: $5–10
+      major_cloud: $10–20
+    notes:
+      - suitable for dev or experimentation
+      - plenty of entropy space already
+
+  2048_bits:
+    typical_compute: medium instance
+    example_resources:
+      cpu: 2 vCPU
+      ram: 4 GB
+      storage: 80 GB SSD
+    monthly_cost:
+      budget_providers: $20–30
+      major_cloud: $25–40
+    notes:
+      - good operational tier
+      - common cryptographic key size
+
+  4096_bits:
+    typical_compute: compute-heavy instance
+    example_resources:
+      cpu: 4 vCPU
+      ram: 8 GB
+      storage: 160 GB SSD
+    monthly_cost:
+      budget_providers: $60–90
+      major_cloud: $80–120
+    notes:
+      - large entropy operations
+      - good for heavy lattice indexing
+
+  8192_bits:
+    typical_compute: high-performance node
+    example_resources:
+      cpu: 8 vCPU
+      ram: 16–32 GB
+      storage: 320 GB SSD
+    monthly_cost:
+      budget_providers: $120–200
+      major_cloud: $150–300
+    notes:
+      - extreme key space
+      - often used for post-quantum experiments
+
+torus_q_runtime:
+
+  1024_bits:
+    cpu:
+      cores: 1
+      clock: 1.5–2.0 GHz
+      usage: 5–10%
+    memory:
+      runtime_ram: 32–64 MB
+      working_buffers: 16 MB
+    storage:
+      state_files: <10 MB
+    phone_feasibility: very_easy
+
+  2048_bits:
+    cpu:
+      cores: 1–2
+      clock: 2.0 GHz
+      usage: 10–20%
+    memory:
+      runtime_ram: 64–128 MB
+      working_buffers: 32 MB
+    storage:
+      state_files: 10–50 MB
+    phone_feasibility: easy
+
+  4096_bits:
+    cpu:
+      cores: 2–3
+      clock: 2.0–2.5 GHz
+      usage: 20–35%
+    memory:
+      runtime_ram: 128–256 MB
+      working_buffers: 64 MB
+    storage:
+      state_files: 50–150 MB
+    phone_feasibility: comfortable_on_midrange
+
+  8192_bits:
+    cpu:
+      cores: 4
+      clock: 2.5 GHz
+      usage: 40–60%
+    memory:
+      runtime_ram: 256–512 MB
+      working_buffers: 128 MB
+    storage:
+      state_files: 150–400 MB
+    phone_feasibility: heavy_but_possible
+
+phone_node:
+  q_bits: 2048
+  cpu_allocation: 2 cores
+  ram_allocation: 128 MB
+  storage: 50 MB
+  background_load: ~15% cpu
+
+selftrix_mobile_node:
+  cpu: 2–4 cores
+  ram: 256–512 MB
+  storage: 100–500 MB
+
+Phone Deployment Option
+
+Optimize 1024-Q for phones.
+
+Optional Event-Driven Optimization
+Only update when something changes.
+
+if entropy > threshold:
+    update_Q()
+if successor_branch_exists:
+    update_Q()
+----
+
+while(true):
+    wait_for_tick()
+    update_Q()
+
+torus_update_rates:
+  10_hz:
+    updates_per_second: 10
+    cpu_load: ~2–5%
+    use_case: background state maintenance
+
+  20_hz:
+    updates_per_second: 20
+    cpu_load: ~5–8%
+    use_case: stable mobile node
+
+  30_hz:
+    updates_per_second: 30
+    cpu_load: ~8–12%
+    use_case: interactive / visualization
+
+  60_hz:
+    updates_per_second: 60
+    cpu_load: ~15–20%
+    use_case: real-time simulation
+
+Tick update model.
+Q = (θ, φ)
+θ = (θ + Δθ) mod 2π
+φ = (φ + Δφ) mod 2π
+
+tick_rate = 20 Hz
+tick_interval = 50 ms
+
+loop:
+    start_time = now()
+
+    update_toroidal_Q()
+    process_butterfly_state()
+    write_state_if_needed()
+
+    sleep_until(start_time + tick_interval)
+
+max updates = 20/sec
+
+----
+Simplified Archetecture on mobile phone.
+mobile_node:
+
+  tick_rate: 20 Hz
+
+  processes:
+    toroidal_q_update
+    butterfly_flow
+    lattice_state
+
+  cpu_target: <15%
+  ram_target: <256 MB

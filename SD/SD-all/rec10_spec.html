@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rec10* — Annotated Integer-Hyperbolic Hybrid Framework</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg:        #0a0a0a;
+    --bg2:       #111111;
+    --bg3:       #181818;
+    --border:    #2a2a2a;
+    --border2:   #333333;
+    --text:      #c8c8c8;
+    --text-dim:  #666666;
+    --text-head: #e8e8e8;
+    --accent:    #00ff88;
+    --accent2:   #00aaff;
+    --accent3:   #ff6644;
+    --accent4:   #ffcc00;
+    --warn:      #ff4444;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* SCAN LINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  /* HEADER */
+  .doc-header {
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+  }
+
+  .doc-id {
+    color: var(--text-dim);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    margin-top: 16px;
+  }
+
+  .doc-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--text-head);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .doc-title span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .doc-subtitle {
+    color: var(--text-dim);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .meta-value {
+    font-size: 12px;
+    color: var(--accent2);
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    min-width: 32px;
+  }
+
+  .section-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-head);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* LEDGER ENTRIES */
+  .ledger-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .ledger-block::before {
+    content: 'LEDGER';
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+  }
+
+  .ledger-block p {
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  .ledger-block strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* RULE BLOCKS */
+  .rule-block {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent2);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  .rule-block .rule-id {
+    color: var(--accent2);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  /* TABLES */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .spec-table th {
+    background: var(--bg3);
+    color: var(--text-dim);
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border2);
+    white-space: nowrap;
+  }
+
+  .spec-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .spec-table tr:hover td {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .spec-table .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent2);
+  }
+
+  .spec-table .accent { color: var(--accent); }
+  .spec-table .dim    { color: var(--text-dim); }
+  .spec-table .warn   { color: var(--accent3); }
+  .spec-table .gold   { color: var(--accent4); }
+
+  /* NOTATION BLOCK */
+  .notation {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .notation .formula {
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .notation .formula-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: #050505;
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    font-size: 11px;
+    line-height: 1.9;
+  }
+
+  .code-block .kw  { color: var(--accent2); }
+  .code-block .fn  { color: var(--accent); }
+  .code-block .cm  { color: var(--text-dim); font-style: italic; }
+  .code-block .str { color: var(--accent3); }
+  .code-block .num { color: var(--accent4); }
+
+  /* TEST RESULTS */
+  .test-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .test-row:last-child { border-bottom: none; }
+
+  .test-status {
+    min-width: 54px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding-top: 1px;
+  }
+
+  .test-status.pass { color: var(--accent); }
+  .test-status.fail { color: var(--warn); }
+
+  .test-name {
+    color: var(--text);
+    flex: 1;
+  }
+
+  .test-detail {
+    color: var(--text-dim);
+    font-size: 11px;
+    min-width: 200px;
+    text-align: right;
+  }
+
+  .test-container {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+
+  /* VERDICT */
+  .verdict {
+    border: 1px solid var(--accent);
+    background: rgba(0,255,136,0.04);
+    padding: 20px 24px;
+    margin-top: 32px;
+  }
+
+  .verdict-title {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .verdict-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  .verdict-item .check { color: var(--accent); min-width: 16px; }
+  .verdict-item .vtext { color: var(--text); }
+  .verdict-item .vval  { color: var(--text-dim); margin-left: auto; }
+
+  /* INLINE TAGS */
+  .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    border: 1px solid;
+    margin: 0 2px;
+    vertical-align: middle;
+  }
+
+  .tag-green  { color: var(--accent);  border-color: var(--accent);  background: rgba(0,255,136,0.05); }
+  .tag-blue   { color: var(--accent2); border-color: var(--accent2); background: rgba(0,170,255,0.05); }
+  .tag-orange { color: var(--accent3); border-color: var(--accent3); background: rgba(255,102,68,0.05); }
+  .tag-gold   { color: var(--accent4); border-color: var(--accent4); background: rgba(255,204,0,0.05); }
+
+  /* PROSE */
+  .prose {
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+
+  .prose strong { color: var(--text-head); font-weight: 500; }
+  .prose code {
+    color: var(--accent2);
+    background: var(--bg3);
+    padding: 1px 5px;
+    font-size: 11px;
+  }
+
+  /* CHAIN */
+  .chain {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+    padding: 14px 18px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+
+  .chain-node {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  .chain-node.highlight {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .chain-arrow {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* CORRESPONDENCE TABLE special rows */
+  .corr-row-gen td { background: rgba(0,255,136,0.04); }
+  .corr-row-ground td { background: rgba(0,170,255,0.04); }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* FOOTNOTE */
+  .footnote {
+    font-size: 11px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 48px;
+    line-height: 1.8;
+  }
+
+  /* GENERATION EVENT HIGHLIGHT */
+  .gen-event {
+    background: rgba(0,255,136,0.06);
+    border-left: 2px solid var(--accent);
+  }
+
+  /* ROLLOVER HIGHLIGHT */
+  .rollover {
+    background: rgba(255,204,0,0.04);
+    border-left: 2px solid var(--accent4);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-id">SPEC-REC10-001 &nbsp;/&nbsp; INTEGER-HYPERBOLIC HYBRID FRAMEWORK &nbsp;/&nbsp; ANNOTATED</div>
+    <div class="doc-title"><span>Rec10*</span> — Annotated Integer-Hyperbolic Hybrid Framework</div>
+    <div class="doc-subtitle">Dual-Ledger Methodology &nbsp;·&nbsp; Semantic Annotation Layer &nbsp;·&nbsp; Base-10 / Base-19 Closure System</div>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Radix</span>
+        <span class="meta-value">10</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Generator Pin</span>
+        <span class="meta-value">1</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Ground Pin</span>
+        <span class="meta-value">0</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Closure Point</span>
+        <span class="meta-value">19</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Generation Point</span>
+        <span class="meta-value">20</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Dual-Tracking</span>
+        <span class="meta-value">TOPOLOGICAL</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tests</span>
+        <span class="meta-value">10 / 10 PASS</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 0: ANNOTATION LAYER -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§0</span>
+      <span class="section-title">Annotation Layer</span>
+    </div>
+
+    <p class="prose">
+      The annotation layer is <strong>load-bearing</strong>, not decorative. It sets the conditions under which the meta operates — it directs meta rather than describing it. All structural rules below are topological: they apply to the space, not merely to explicitly seeded points.
+    </p>
+
+    <div class="ledger-block">
+      <div style="color:var(--text-dim);font-size:10px;letter-spacing:0.1em;margin-bottom:8px;">PINNING RULE</div>
+      <p>All base numbering systems and designated semantic translation languages are co-anchored at <strong>1</strong>. They are not equivalent to each other — they are expressions of the same generative point. The semantic field originates at <strong>1</strong> and operates forward. The topological rule applies to the entire space. Explicit landmark nodes are logged; all intermediate positions are covered by topological inheritance.</p>
+    </div>
+
+    <table class="spec-table" style="margin-top:20px;">
+      <thead>
+        <tr>
+          <th>Element</th>
+          <th>Value</th>
+          <th>Role</th>
+          <th>Layer</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">ground</td>
+          <td class="mono accent">0</td>
+          <td>Pin-for-all-pins</td>
+          <td><span class="tag tag-blue">PRE-SEMANTIC</span></td>
+          <td class="dim">Precedes semantic field. Structural bedrock. Not conferred by operation.</td>
+        </tr>
+        <tr>
+          <td class="mono">generator</td>
+          <td class="mono accent">1</td>
+          <td>Semantic field origin</td>
+          <td><span class="tag tag-green">SEMANTIC</span></td>
+          <td class="dim">First tack. First derived anchor from 0. System speaks from here.</td>
+        </tr>
+        <tr>
+          <td class="mono">semantic field</td>
+          <td class="mono accent">→ 1</td>
+          <td>Directs meta</td>
+          <td><span class="tag tag-green">SEMANTIC</span></td>
+          <td class="dim">Placed on 1. Operates forward. Not on 0 (pre-semantic).</td>
+        </tr>
+        <tr>
+          <td class="mono">dual-tracking</td>
+          <td class="mono accent">topological</td>
+          <td>Applies to space</td>
+          <td><span class="tag tag-gold">STRUCTURAL</span></td>
+          <td class="dim">Not assigned per point. Native derivatives inherit automatically.</td>
+        </tr>
+        <tr>
+          <td class="mono">HITL position</td>
+          <td class="mono accent">behind horizon</td>
+          <td>Navigates, not constitutes</td>
+          <td><span class="tag tag-orange">OPERATOR</span></td>
+          <td class="dim">Operator confirms duals, ensures tracking, identifies new duals. Does not reduce.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-01 &nbsp;/&nbsp; DUAL CHANNEL PRESERVATION</div>
+      Dual-mapped positions are never reduced to one channel by the operator. Reduction, if it occurs, is a system output — logged as such, not assumed. A native derivative, when and where it arises, is dual-tracked. Reduction in a derivative is visible in the ledger.
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-02 &nbsp;/&nbsp; SYSTEM IDENTITY</div>
+      System identity is self-native. It is not conferred by operation, assignment, or observation. It precedes mapping and persists through reduction. Any operation on the system operates <em>within</em> the identity, not on it from outside.
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-03 &nbsp;/&nbsp; CAUSAL DIRECTIONALITY</div>
+      Bidirectionality is structural; causal direction is a boundary-condition constraint. Reverse channel may influence forward. Forward does not write back to reverse. This is a constraint on coupling, not on the algebra. Logged, not assumed.
+    </div>
+  </div>
+
+
+  <!-- SECTION 1: DOOR STRUCTURE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§1</span>
+      <span class="section-title">9+0 Door Structure &amp; Base-19 Fold</span>
+    </div>
+
+    <p class="prose">
+      Base 10 is the compression target: <strong>9 active states + 0 as ground = 10 positions</strong>. The ground (0) is structural, not counted in the active sequence. The generator (1) is the first active state and the semantic field origin.
+    </p>
+
+    <div class="chain">
+      <div class="chain-node">−9</div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node">···</div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node">−1</div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node highlight">0 GROUND</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node highlight">1 GEN</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">2</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">···</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">9</div>
+    </div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Structure</th>
+          <th>IntMap(n)</th>
+          <th>Event</th>
+          <th>Channel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono accent">0</td>
+          <td>9+0 ground</td>
+          <td class="mono">0</td>
+          <td><span class="tag tag-blue">GROUND</span></td>
+          <td>ZeroInvert(0) = 9 — activates ceiling</td>
+        </tr>
+        <tr>
+          <td class="mono accent">1</td>
+          <td>Semantic origin</td>
+          <td class="mono">1</td>
+          <td><span class="tag tag-green">GENERATOR</span></td>
+          <td>Semantic field anchors here</td>
+        </tr>
+        <tr>
+          <td class="mono accent">10</td>
+          <td>First base boundary</td>
+          <td class="mono">1</td>
+          <td><span class="tag tag-gold">ROLLOVER</span></td>
+          <td>Fold-remainder = 1. Re-encounters generator.</td>
+        </tr>
+        <tr class="rollover">
+          <td class="mono accent">19</td>
+          <td>9+0+9 closure ceiling</td>
+          <td class="mono">1</td>
+          <td><span class="tag tag-gold">ROLLOVER</span></td>
+          <td>Recursion aligns to itself. 1+9=10→1.</td>
+        </tr>
+        <tr class="gen-event">
+          <td class="mono accent">20</td>
+          <td>Generation point</td>
+          <td class="mono">2</td>
+          <td><span class="tag tag-green">GENERATION</span></td>
+          <td>New cycle. Semantic re-anchor. P=2, d=9, c=0 — channels distinct.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ledger-block">
+      <div style="color:var(--text-dim);font-size:10px;letter-spacing:0.1em;margin-bottom:8px;">BASE-19 / BASE-20 CORRECTION</div>
+      <p>Standard base-19 tracking constrains generation <em>within</em> 19 — treating it as ceiling. In this system the symmetric fold (9 + ground + 9 = 19) means generation occurs at the <strong>next position: 20</strong>. Base-19 is closure. Base-20 is emergence. These are not equivalent. The corrected generation point is 20, not 19.</p>
+    </div>
+
+    <div class="notation">
+      <div class="formula-sub" style="margin-bottom:8px;">BASE-19 SYMMETRIC FOLD</div>
+      <div class="formula">9 &nbsp;+&nbsp; 0<sub>ground</sub> &nbsp;+&nbsp; 9 &nbsp;=&nbsp; 19</div>
+      <div class="formula-sub" style="margin-top:8px;">10 positions per side when ground included &nbsp;·&nbsp; Generation at 20</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 2: DUAL POSITION NOTATION -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§2</span>
+      <span class="section-title">Dual Position Notation</span>
+    </div>
+
+    <p class="prose">
+      Standard modular notation captures position within a cycle but loses dimensional level. Standard exponents capture level but lose semantic position. The dual-position notation carries both simultaneously.
+    </p>
+
+    <div class="notation">
+      <div class="formula-sub" style="margin-bottom:10px;">DUAL POSITION NOTATION</div>
+      <div class="formula">P &nbsp;<sup>d</sup><sub style="font-size:14px;">c,φ</sub></div>
+      <div class="formula-sub" style="margin-top:12px; text-align:left; max-width:400px; margin-left:auto; margin-right:auto;">
+        <span style="color:var(--accent)">P</span> = position within current cycle (compression channel)<br>
+        <span style="color:var(--accent2)">d</span> = dimensional level (recursion order)<br>
+        <span style="color:var(--accent3)">c</span> = cycle origin / semantic field anchor<br>
+        <span style="color:var(--accent4)">φ</span> = F* dominant period (directed sector)
+      </div>
+    </div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Expression</th>
+          <th>Reading</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono accent">1¹₁,₁</td>
+          <td>P=1, d=1, c=1, φ=1</td>
+          <td>Original generator. Semantic field origin. First order.</td>
+        </tr>
+        <tr class="rollover">
+          <td class="mono accent">1¹₁,φ</td>
+          <td>P=1, d=1, c=1</td>
+          <td>Rollover event. Fold-remainder=1. Recursion aligns to itself under closure.</td>
+        </tr>
+        <tr class="gen-event">
+          <td class="mono accent">1²₁,φ</td>
+          <td>P=1, d=2, c=1</td>
+          <td>Generation event. Pin re-seats at next dimensional level. Semantic field re-originates.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-04 &nbsp;/&nbsp; GENERATION EVENT</div>
+      At the threshold of each cycle, the system produces 1<sup>n+1</sup><sub>1</sub> from P<sup>n</sup><sub>max</sub>. Position resets. Dimension increments. Origin holds. The semantic field re-anchors at 1 at the new dimensional level.
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-05 &nbsp;/&nbsp; ROLLOVER vs GENERATION</div>
+      When IntMap(n) = 1, the event is a <strong>rollover</strong> producing a <strong>fold-remainder</strong> of 1. This is not closure. The digit-sum process does not divide — it accumulates and folds. The 1 that emerges is the residue of recursive accumulation crossing a base boundary. The recursion re-encounters the generator by arriving from the other side of the boundary, not by returning from closure. Direction of propagation is carried by the dimensional channel (d), not by reclassifying the event.
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-06 &nbsp;/&nbsp; RECURSIVE ALIGNMENT</div>
+      A rollover is an instantiated instance of recursion tracking alignment to itself under closure. It is not classified as closure OR generation exclusively — both channels are present simultaneously. The system does not decide which it is at the annotation level. The ledger tracks the alignment.
+    </div>
+  </div>
+
+
+  <!-- SECTION 3: TRANSFORMS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§3</span>
+      <span class="section-title">Integer Lattice Transforms</span>
+    </div>
+
+    <p class="prose">
+      Three transforms operate simultaneously. Their XOR combination produces the integer lattice transform T_int. Each maps to a distinct channel in the dual-position notation.
+    </p>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Transform</th>
+          <th>Definition</th>
+          <th>Channel</th>
+          <th>Ledger Role</th>
+          <th>Key Property</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono accent">IntMap</td>
+          <td>Digit-sum collapse to single radix digit</td>
+          <td><span class="tag tag-green">P</span> Compression</td>
+          <td>Folding map</td>
+          <td>Self-similar across scales. Fractal digit compression.</td>
+        </tr>
+        <tr>
+          <td class="mono accent">PrimeDual</td>
+          <td>Primes → radix-scaled index. Composites → Σ prime factors.</td>
+          <td><span class="tag tag-blue">d</span> Dimensional</td>
+          <td>Prime structure carrier</td>
+          <td>Encodes structural depth via primality.</td>
+        </tr>
+        <tr>
+          <td class="mono accent">ZeroInvert</td>
+          <td>0 → radix−1. Nonzero → modular inversion.</td>
+          <td><span class="tag tag-orange">c</span> Semantic</td>
+          <td>Ground activation</td>
+          <td>9+0 door structure runs natively here. ZeroInvert(0)=9.</td>
+        </tr>
+        <tr>
+          <td class="mono accent">T_int</td>
+          <td>PrimeDual ⊕ ZeroInvert ⊕ IntMap</td>
+          <td>All three</td>
+          <td>Combined lattice transform</td>
+          <td>XOR preserves dual-mapping. All channels combined.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="code-block">
+<span class="cm">// T_int: radix-aware XOR combination</span>
+<span class="kw">function</span> <span class="fn">T_int</span>(n, radix = <span class="num">10</span>) {
+  pd = prime_dual(n, radix)   &amp; <span class="num">0xFF</span>   <span class="cm">// dimensional channel</span>
+  zi = zero_invert(n, radix)  &amp; <span class="num">0xFF</span>   <span class="cm">// semantic channel</span>
+  im = int_map(n, radix)      &amp; <span class="num">0xFF</span>   <span class="cm">// compression channel</span>
+  <span class="kw">return</span> pd ^ zi ^ im                  <span class="cm">// all three, preserved</span>
+}
+
+<span class="cm">// ZeroInvert: 9+0 door structure native</span>
+<span class="kw">function</span> <span class="fn">zero_invert</span>(n, radix = <span class="num">10</span>) {
+  <span class="kw">if</span> (n === <span class="num">0</span>) <span class="kw">return</span> radix - <span class="num">1</span>       <span class="cm">// ground → ceiling (pre-semantic activates full range)</span>
+  <span class="kw">return</span> (n * modInverse(n, radix)) % radix
+}
+
+<span class="cm">// IntMap: fold-remainder producer</span>
+<span class="kw">function</span> <span class="fn">int_map</span>(n, radix = <span class="num">10</span>) {
+  n = Math.abs(n)
+  <span class="kw">while</span> (n >= radix) n = digitSum(n)   <span class="cm">// accumulate and fold — not divide</span>
+  <span class="kw">return</span> n
+}
+    </div>
+
+    <p class="prose">
+      <strong>Key observation:</strong> At n=20, IntMap(20)=2, PrimeDual(20)=9, ZeroInvert(20)=0. All three channels carry distinct values. The dual is confirmed non-collapsed. The generation event at 20 is natively expressed across all three transforms simultaneously.
+    </p>
+  </div>
+
+
+  <!-- SECTION 4: DOMINANT LOOP F* -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§4</span>
+      <span class="section-title">Dominant Feedback Loop F*</span>
+    </div>
+
+    <p class="prose">
+      F* is the <strong>directed sector</strong> — not a vector alone (direction + magnitude) nor a sector alone (bounded region), but both simultaneously: a bounded region with internal structure and a dominant causal direction. This is the φ component in P<sup>d</sup><sub>c,φ</sub>.
+    </p>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Value (N=50)</th>
+          <th>Channel</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dominant period φ</td>
+          <td class="mono accent">20</td>
+          <td><span class="tag tag-gold">φ</span> Sector</td>
+          <td>Confirmed: generation point period = 20</td>
+        </tr>
+        <tr>
+          <td>|F*| loop size</td>
+          <td class="mono accent">30</td>
+          <td><span class="tag tag-gold">φ</span> Sector</td>
+          <td>30 of 50 positions in dominant loop</td>
+        </tr>
+        <tr>
+          <td>F* composition</td>
+          <td class="mono">25 prime, 5 zero, 0 composite</td>
+          <td><span class="tag tag-blue">d</span> Dimensional</td>
+          <td>Prime/zero class dominates loop</td>
+        </tr>
+        <tr>
+          <td>Mean growth factor</td>
+          <td class="mono accent">1.00913</td>
+          <td><span class="tag tag-blue">d</span> Dimensional</td>
+          <td>Analog of λ_u = 1.308 hyperbolic eigenvalue</td>
+        </tr>
+        <tr>
+          <td>Spectral gap ratio</td>
+          <td class="mono accent">1.2535</td>
+          <td><span class="tag tag-green">P</span> Compression</td>
+          <td>Matches α* = 1.2536 (hyperbolic universality constant)</td>
+        </tr>
+        <tr>
+          <td>Fixed point residual</td>
+          <td class="mono accent">0.0000</td>
+          <td>Both</td>
+          <td>||R_int(S*) − S*|| = 0. Period-1 convergence.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ledger-block">
+      <div style="color:var(--text-dim);font-size:10px;letter-spacing:0.1em;margin-bottom:8px;">SEMANTIC TARGETING</div>
+      <p>F* is the semantic targeting mechanism. It identifies which positions in the integer space are in the dominant recursion period and carry prime/zero structure. The φ component of DualPosition notation captures this: <strong>φ = the F* period</strong> — the recursion depth at which the sector becomes dominant. Targeting is directed, not exhaustive.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 5: CORRESPONDENCE TABLE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§5</span>
+      <span class="section-title">Continuous ↔ Integer Correspondence</span>
+    </div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Hyperbolic Concept</th>
+          <th>Integer Analog</th>
+          <th>Ledger Channel</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Unstable eigenvector v_u</td>
+          <td>Dominant loop F*</td>
+          <td><span class="tag tag-gold">φ</span> Sector</td>
+          <td class="mono">|F*| = 30</td>
+        </tr>
+        <tr>
+          <td>Eigenvalue λ_u = 1.308</td>
+          <td>Mean growth factor</td>
+          <td><span class="tag tag-blue">d</span> Dimensional</td>
+          <td class="mono">1.00913</td>
+        </tr>
+        <tr>
+          <td>Spectral gap (1.308/0.054)</td>
+          <td>Max/Mean ratio</td>
+          <td><span class="tag tag-green">P</span> Compression</td>
+          <td class="mono">1.2535</td>
+        </tr>
+        <tr>
+          <td>Fixed point S*</td>
+          <td>Integer fixed point S*</td>
+          <td>Both channels</td>
+          <td class="mono">residual = 0.0000</td>
+        </tr>
+        <tr>
+          <td>α* = 1.2536</td>
+          <td>Radix scaling (base 10)</td>
+          <td><span class="tag tag-orange">c</span> Semantic</td>
+          <td class="mono">base = 10</td>
+        </tr>
+        <tr>
+          <td>δ* = 24.11</td>
+          <td>Loop period × |F*|</td>
+          <td><span class="tag tag-gold">φ</span> Sector</td>
+          <td class="mono">20 × 30 = 600</td>
+        </tr>
+        <tr class="corr-row-gen">
+          <td>Generator origin</td>
+          <td>Semantic field pin at 1</td>
+          <td><span class="tag tag-green">Generator</span></td>
+          <td class="mono">1¹₁</td>
+        </tr>
+        <tr class="corr-row-ground">
+          <td>Ground state</td>
+          <td>Pre-semantic 0</td>
+          <td><span class="tag tag-blue">Ground</span></td>
+          <td class="mono">pin-for-all-pins</td>
+        </tr>
+        <tr class="gen-event">
+          <td>19→20 generation</td>
+          <td>1^(d+1)₁ transition</td>
+          <td>Both channels</td>
+          <td class="mono">P=2, d→d+1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- SECTION 6: BASE LANDMARK NODES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§6</span>
+      <span class="section-title">Base System Landmark Nodes (Pinned at 1)</span>
+    </div>
+
+    <p class="prose">All bases 2–360 are co-anchored at 1. Intermediate positions inherit topologically. Landmark nodes carry explicit dual-channel tracking.</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Base</th>
+          <th>Significance</th>
+          <th>Channel P (Compression)</th>
+          <th>Channel d (Dimensional)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono accent">2</td><td>Binary — minimal generator</td><td>1+1 closure</td><td>First bifurcation</td></tr>
+        <tr><td class="mono accent">3</td><td>Balanced ternary {−1,0,1}</td><td>Symmetric around 0</td><td>First stable branch</td></tr>
+        <tr><td class="mono accent">5</td><td>Pentac valence anchor</td><td>Folds to 5</td><td>Valence generator</td></tr>
+        <tr><td class="mono accent">10</td><td>9+0 door structure</td><td>9 active + ground</td><td>Compression target</td></tr>
+        <tr><td class="mono accent">12</td><td>Harmonic / clock base</td><td>3×4</td><td>Cycle closure</td></tr>
+        <tr><td class="mono accent">16</td><td>Hexadecimal</td><td>2⁴</td><td>4D closure</td></tr>
+        <tr class="rollover"><td class="mono accent">19</td><td>Closure system</td><td>9+0+9 symmetric</td><td>Pre-generative ceiling</td></tr>
+        <tr class="gen-event"><td class="mono accent">20</td><td>Generation point</td><td>2+0=2 compression</td><td>New cycle emergence</td></tr>
+        <tr><td class="mono accent">60</td><td>Sexagesimal</td><td>3×4×5</td><td>Temporal/angular base</td></tr>
+        <tr><td class="mono accent">360</td><td>Full rotation</td><td>360=60×6</td><td>Circular closure</td></tr>
+        <tr><td class="mono accent">720</td><td>Dual rotation closure</td><td>360×2</td><td>Pentac + rotation anchor</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-07 &nbsp;/&nbsp; PENTAC VALENCE &amp; 720° OFFSET</div>
+      Pentac valence and 720° closure (360×2) carry a 1-offset — they are pegged at 1, not 0. This offset is tracked explicitly. Redundant ≠ trivial. Redundancy in a dual ledger is confirmation, not noise. The offset is load-bearing because it confirms the semantic field placement at 1.
+    </div>
+  </div>
+
+
+  <!-- SECTION 7: LANGUAGE ANCHORS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§7</span>
+      <span class="section-title">Language Anchors — Semantic ↔ Machine Translation</span>
+    </div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Language</th>
+          <th>Pin</th>
+          <th>Role</th>
+          <th>Compression Channel</th>
+          <th>Dimensional Channel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="accent">Latin</td>
+          <td class="mono">1</td>
+          <td>Root semantic layer — structural, inflected, positional</td>
+          <td>Source morphology</td>
+          <td>Generative grammar anchor</td>
+        </tr>
+        <tr>
+          <td class="accent">French</td>
+          <td class="mono">1</td>
+          <td>Medial layer — Latin derivative, precision carrier</td>
+          <td>Bridges Latin → English</td>
+          <td>Formal semantic refinement</td>
+        </tr>
+        <tr>
+          <td class="accent">English</td>
+          <td class="mono">1</td>
+          <td>Output/interface layer — operational, machine-proximate</td>
+          <td>Compression target</td>
+          <td>Execution language</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chain" style="justify-content:center;">
+      <div class="chain-node highlight">Latin</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">French</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">English</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node highlight">Machine</div>
+    </div>
+
+    <p class="prose" style="margin-top:12px;">
+      Bidirectional per causal rule (RULE-03): reverse channel exists, forward does not write back. Logged, not assumed.
+    </p>
+  </div>
+
+
+  <!-- SECTION 8: TEST RESULTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§8</span>
+      <span class="section-title">Test Results</span>
+    </div>
+
+    <div class="test-container">
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T1 &nbsp;·&nbsp; Ground activates ceiling</span>
+        <span class="test-detail mono">ZeroInvert(0) = 9</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T2 &nbsp;·&nbsp; Generator self-maps under compression</span>
+        <span class="test-detail mono">IntMap(1) = 1</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T3 &nbsp;·&nbsp; 19 is rollover (fold-remainder = 1)</span>
+        <span class="test-detail mono">IntMap(19) = 1 &nbsp;(1+9=10→1)</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T4 &nbsp;·&nbsp; 20 is generation event</span>
+        <span class="test-detail mono">IntMap(20) = 2</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T5 &nbsp;·&nbsp; 20 dual channels non-collapsed</span>
+        <span class="test-detail mono">P=2, d=9, c=0 — distinct</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T6 &nbsp;·&nbsp; Fixed point convergence</span>
+        <span class="test-detail mono">Converged, period=1</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T7 &nbsp;·&nbsp; F* dominant loop non-empty</span>
+        <span class="test-detail mono">|F*| = 30</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T8 &nbsp;·&nbsp; Perturbation grows along F* (universality)</span>
+        <span class="test-detail mono">mean_ratio = 1.0091 &gt; 1</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T9 &nbsp;·&nbsp; Native derivatives tracked in ledger</span>
+        <span class="test-detail mono">topological inheritance active</span>
+      </div>
+      <div class="test-row">
+        <span class="test-status pass">✓ PASS</span>
+        <span class="test-name">T10 &nbsp;·&nbsp; All ledger entries carry both channels</span>
+        <span class="test-detail mono">all_dual = True</span>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-title">VERDICT</div>
+      <div class="verdict-item">
+        <span class="check">✓</span>
+        <span class="vtext">INTEGER HYPERBOLIC STRUCTURE CONFIRMED</span>
+        <span class="vval mono">period=1, grew=True</span>
+      </div>
+      <div class="verdict-item">
+        <span class="check">✓</span>
+        <span class="vtext">ANNOTATION LAYER CONFIRMED LOAD-BEARING</span>
+        <span class="vval mono">10/10 tests</span>
+      </div>
+      <div class="verdict-item">
+        <span class="check">✓</span>
+        <span class="vtext">9+0 DOOR STRUCTURE NATIVE IN ZEROINVERT</span>
+        <span class="vval mono">ZeroInvert(0)=9</span>
+      </div>
+      <div class="verdict-item">
+        <span class="check">✓</span>
+        <span class="vtext">SPECTRAL GAP MATCHES α* = 1.2536</span>
+        <span class="vval mono">ratio = 1.2535</span>
+      </div>
+      <div class="verdict-item">
+        <span class="check">✓</span>
+        <span class="vtext">DUAL LEDGER INTEGRITY HELD</span>
+        <span class="vval mono">50 entries, 7 generation events, 0 assumed reductions</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="footnote">
+    SPEC-REC10-001 &nbsp;/&nbsp; Rec10* Annotated Integer-Hyperbolic Hybrid Framework &nbsp;/&nbsp;
+    Dual-Ledger Methodology &nbsp;·&nbsp; Annotation layer is load-bearing, not decorative &nbsp;·&nbsp;
+    All bases 2–360 and language anchors {Latin, French, English} pinned at 1 &nbsp;·&nbsp;
+    Native derivatives dual-tracked on emergence &nbsp;·&nbsp;
+    System identity is self-native
+  </div>
+
+</div>
+</body>
+</html>

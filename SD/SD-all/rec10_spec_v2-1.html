@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rec10* Spec v2 — Annotated Integer-Hyperbolic Hybrid Framework</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg:       #f5f2eb;
+    --bg2:      #edeae0;
+    --bg3:      #e4e0d4;
+    --ink:      #1a1812;
+    --ink2:     #3a3528;
+    --ink3:     #6b6352;
+    --rule:     #c8c0a8;
+    --rule2:    #b0a890;
+    --red:      #c0392b;
+    --blue:     #1a4a7a;
+    --green:    #1a5c2a;
+    --gold:     #8a6800;
+    --accent:   #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 48px 120px;
+  }
+
+  /* RULED PAPER LINES */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 27px,
+      rgba(180,168,144,0.18) 27px,
+      rgba(180,168,144,0.18) 28px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; }
+
+  /* HEADER */
+  .doc-header {
+    border-bottom: 3px double var(--rule2);
+    padding-bottom: 28px;
+    margin-bottom: 48px;
+  }
+
+  .doc-id {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 12px;
+  }
+
+  .doc-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .doc-title .ver {
+    font-weight: 300;
+    color: var(--ink3);
+    font-size: 24px;
+  }
+
+  .doc-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    color: var(--ink3);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-top: 20px;
+  }
+
+  .meta-cell {
+    padding: 8px 12px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .meta-cell:nth-child(6n) { border-right: none; }
+
+  .meta-lbl {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  .meta-val {
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 52px;
+    page-break-inside: avoid;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule2);
+  }
+
+  .sec-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    min-width: 30px;
+  }
+
+  .sec-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .sec-rev {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin-left: auto;
+  }
+
+  /* LEDGER ENTRIES */
+  .ledger {
+    border: 1px solid var(--rule2);
+    border-left: 4px solid var(--ink);
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    background: var(--bg2);
+    position: relative;
+  }
+
+  .ledger::before {
+    content: 'LEDGER';
+    position: absolute;
+    top: 8px; right: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--ink3);
+  }
+
+  .ledger-id {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink3);
+    margin-bottom: 6px;
+  }
+
+  .ledger p {
+    line-height: 1.9;
+    color: var(--ink);
+  }
+
+  .ledger strong { color: var(--ink); font-weight: 700; }
+
+  /* RULES */
+  .rule-block {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--blue);
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: var(--bg2);
+  }
+
+  .rule-id {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    margin-bottom: 5px;
+  }
+
+  .rule-block p { line-height: 1.85; }
+
+  /* CORRECTION BLOCKS */
+  .correction {
+    border: 1px solid var(--red);
+    border-left: 4px solid var(--red);
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: rgba(192,57,43,0.04);
+  }
+
+  .correction-id {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    margin-bottom: 5px;
+  }
+
+  /* TABLES */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .spec-table th {
+    background: var(--bg3);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 10px;
+    text-align: left;
+    border: 1px solid var(--rule);
+    color: var(--ink2);
+  }
+
+  .spec-table td {
+    padding: 7px 10px;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .spec-table tr:nth-child(even) td { background: var(--bg2); }
+  .spec-table .mono { color: var(--blue); font-weight: 700; }
+  .spec-table .red  { color: var(--red); }
+  .spec-table .grn  { color: var(--green); }
+  .spec-table .dim  { color: var(--ink3); }
+  .spec-table .gold { color: var(--gold); }
+
+  .row-during td { background: rgba(26,74,122,0.06) !important; font-weight: 700; }
+  .row-gen td    { background: rgba(26,92,42,0.06) !important; }
+  .row-roll td   { background: rgba(138,104,0,0.06) !important; }
+  .row-ground td { background: rgba(192,57,43,0.06) !important; }
+
+  /* NOTATION */
+  .notation-box {
+    border: 1px solid var(--rule2);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    background: var(--bg2);
+    text-align: center;
+  }
+
+  .notation-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 10px;
+  }
+
+  .formula {
+    font-size: 28px;
+    color: var(--blue);
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .formula-key {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .fkey {
+    font-size: 11px;
+    color: var(--ink3);
+  }
+
+  .fkey span { color: var(--blue); font-weight: 700; }
+
+  /* CHAIN */
+  .chain {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    border: 1px solid var(--rule);
+    background: var(--bg2);
+    margin-bottom: 14px;
+  }
+
+  .cn {
+    padding: 4px 10px;
+    border: 1px solid var(--rule2);
+    font-size: 12px;
+    background: var(--bg);
+  }
+
+  .cn.hi {
+    border-color: var(--blue);
+    color: var(--blue);
+    font-weight: 700;
+    background: rgba(26,74,122,0.06);
+  }
+
+  .cn.red {
+    border-color: var(--red);
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .ca { color: var(--ink3); font-size: 14px; }
+
+  /* TEST RESULTS */
+  .test-block {
+    border: 1px solid var(--rule);
+  }
+
+  .test-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 12px;
+  }
+
+  .test-row:last-child { border-bottom: none; }
+  .test-row:nth-child(even) { background: var(--bg2); }
+
+  .ts { min-width: 60px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 0.06em; }
+  .ts.pass { color: var(--green); font-weight: 700; }
+  .ts.fail { color: var(--red); font-weight: 700; }
+  .tn { flex: 1; color: var(--ink); }
+  .td { color: var(--ink3); font-size: 11px; min-width: 180px; text-align: right; }
+
+  /* VERDICT */
+  .verdict {
+    border: 2px solid var(--ink);
+    padding: 20px 24px;
+    margin-top: 28px;
+    background: var(--bg2);
+  }
+
+  .verdict-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+
+  .vi {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 7px;
+    font-size: 12px;
+    align-items: baseline;
+  }
+
+  .vi .vc { color: var(--green); font-weight: 700; min-width: 16px; }
+  .vi .vt { color: var(--ink); flex: 1; }
+  .vi .vv { color: var(--ink3); font-size: 11px; }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border: 1px solid;
+    margin: 0 2px;
+    vertical-align: middle;
+  }
+
+  .tg { color: var(--green);  border-color: var(--green); }
+  .tb { color: var(--blue);   border-color: var(--blue); }
+  .tr { color: var(--red);    border-color: var(--red); }
+  .to { color: var(--gold);   border-color: var(--gold); }
+
+  /* PROSE */
+  .prose {
+    line-height: 1.95;
+    margin-bottom: 14px;
+    color: var(--ink2);
+    font-size: 12px;
+  }
+
+  .prose strong { color: var(--ink); font-weight: 700; }
+  .prose code { color: var(--blue); background: var(--bg3); padding: 1px 4px; }
+
+  /* THEORY FLAG */
+  .theory {
+    border: 1px dashed var(--gold);
+    border-left: 4px solid var(--gold);
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    background: rgba(138,104,0,0.04);
+  }
+
+  .theory-id {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .theory p { font-size: 12px; line-height: 1.8; color: var(--ink2); font-style: italic; }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--rule); margin: 36px 0; }
+
+  /* FOOTNOTE */
+  .footnote {
+    font-size: 11px;
+    color: var(--ink3);
+    border-top: 2px double var(--rule2);
+    padding-top: 16px;
+    margin-top: 60px;
+    line-height: 1.9;
+  }
+
+  /* BEFORE/DURING/AFTER TABLE */
+  .bda-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+
+  .bda-table th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 8px;
+    background: var(--bg3);
+    border: 1px solid var(--rule);
+    color: var(--ink2);
+  }
+
+  .bda-table td {
+    padding: 4px 8px;
+    border: 1px solid var(--rule);
+    font-family: 'Courier Prime', monospace;
+  }
+
+  .bda-before td { color: var(--ink3); }
+  .bda-during td { background: rgba(26,74,122,0.08); color: var(--blue); font-weight: 700; }
+  .bda-after  td { color: var(--ink2); }
+
+  .col-offset { min-width: 60px; text-align: right; }
+  .col-n      { min-width: 50px; text-align: right; }
+  .col-im     { min-width: 60px; text-align: center; }
+  .col-dig    { min-width: 90px; }
+  .col-pos    { min-width: 80px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-id">SPEC-REC10-002 &nbsp;/&nbsp; INTEGER-HYPERBOLIC HYBRID FRAMEWORK &nbsp;/&nbsp; ANNOTATED &nbsp;/&nbsp; REV 2</div>
+    <div class="doc-title">Rec10* <span class="ver">— Annotated Integer-Hyperbolic Hybrid Framework v2</span></div>
+    <div class="doc-subtitle">Dual-Ledger Methodology &nbsp;·&nbsp; Semantic Annotation Layer &nbsp;·&nbsp; Integer-Only Offset Encoding &nbsp;·&nbsp; Before/During/After</div>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-lbl">Radix</div><div class="meta-val">10</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Generator Pin</div><div class="meta-val">1</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Ground Pin</div><div class="meta-val">0</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Closure Point</div><div class="meta-val">19</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Generation Point</div><div class="meta-val">20</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Seed (3-pos)</div><div class="meta-val">101</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Seed (4-pos)</div><div class="meta-val">1001</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Fold-Remainder</div><div class="meta-val">2</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Dual-Tracking</div><div class="meta-val">TOPO</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Offset Domain</div><div class="meta-val">ℤ ONLY</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Tests (v1)</div><div class="meta-val">10/10</div></div>
+      <div class="meta-cell"><div class="meta-lbl">Tests (v2)</div><div class="meta-val">23/23</div></div>
+    </div>
+  </div>
+
+
+  <!-- §0 ANNOTATION LAYER -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§0</span>
+      <span class="sec-title">Annotation Layer — Governing Principles</span>
+    </div>
+
+    <p class="prose">The annotation layer is <strong>load-bearing</strong>. It directs meta — it sets the conditions under which the meta operates rather than describing it. All rules below are topological: they apply to the space, not merely to explicitly seeded points. The semantic field adds zero mass, weight, or perturbation to the compression operation.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Element</th><th>Value</th><th>Role</th><th>Layer</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="row-ground">
+          <td class="mono">0</td><td class="mono">ground</td>
+          <td>Pin-for-all-pins</td>
+          <td><span class="tag tb">PRE-SEMANTIC</span></td>
+          <td class="dim">Precedes semantic field. System is. Structural bedrock.</td>
+        </tr>
+        <tr class="row-gen">
+          <td class="mono">1</td><td class="mono">generator</td>
+          <td>Semantic field origin</td>
+          <td><span class="tag tg">SEMANTIC</span></td>
+          <td class="dim">First tack. First derived anchor from 0. System speaks from here.</td>
+        </tr>
+        <tr>
+          <td class="mono">semantic field</td><td class="mono">→ 1</td>
+          <td>Directs meta</td>
+          <td><span class="tag tg">SEMANTIC</span></td>
+          <td class="dim">Placed on 1. Operates forward. Pre-semantic at 0.</td>
+        </tr>
+        <tr>
+          <td class="mono">dual-tracking</td><td class="mono">topological</td>
+          <td>Applies to space</td>
+          <td><span class="tag to">STRUCTURAL</span></td>
+          <td class="dim">Not assigned per point. Native derivatives inherit automatically.</td>
+        </tr>
+        <tr>
+          <td class="mono">HITL</td><td class="mono">behind horizon</td>
+          <td>Navigates, not constitutes</td>
+          <td><span class="tag tr">OPERATOR</span></td>
+          <td class="dim">Confirms duals. Does not reduce. Operator is the annotation layer in practice.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-01 — DUAL CHANNEL PRESERVATION</div>
+      <p>Dual-mapped positions are never reduced to one channel by the operator. Reduction, if it occurs, is a system output — logged as such, not assumed. A native derivative, when and where it arises, is dual-tracked.</p>
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-02 — SYSTEM IDENTITY</div>
+      <p>System identity is self-native. Not conferred by operation, assignment, or observation. Precedes mapping and persists through reduction. Any operation on the system operates within the identity, not on it from outside.</p>
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-03 — CAUSAL DIRECTIONALITY</div>
+      <p>Bidirectionality is structural; causal direction is a boundary-condition constraint. Reverse channel may influence forward. Forward does not write back to reverse. Constraint on coupling, not on algebra. Confirmed natively in integer offset tests (T10: before_closure ≠ after_closure).</p>
+    </div>
+
+    <div class="theory">
+      <div class="theory-id">THEORY-01 — HELD, NOT RESOLVED</div>
+      <p>Only causality has to account for non-infinity. Retrocausality is what runs into infinities. Flagged for later derivation. No free parameters introduced.</p>
+    </div>
+  </div>
+
+
+  <!-- §1 PINNING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§1</span>
+      <span class="sec-title">Pinning Rule — Base Systems &amp; Language Anchors</span>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-id">PINNING RULE</div>
+      <p>All base numbering systems (2–360) and designated semantic translation languages are co-anchored at <strong>1</strong>. Not equivalent to each other — expressions of the same generative point. Semantic field originates at 1 and operates forward. Topological rule applies to entire space. Landmark nodes logged explicitly; all intermediate positions covered by topological inheritance.</p>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Base</th><th>Significance</th><th>P — Compression</th><th>d — Dimensional</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">2</td><td>Binary — minimal generator</td><td>1+1 closure</td><td>First bifurcation</td></tr>
+        <tr><td class="mono">3</td><td>Balanced ternary {−1,0,1}</td><td>Symmetric around 0</td><td>First stable branch</td></tr>
+        <tr><td class="mono">5</td><td>Pentac valence anchor</td><td>Folds to 5</td><td>Valence generator</td></tr>
+        <tr><td class="mono">10</td><td>9+0 door structure</td><td>9 active + ground</td><td>Compression target</td></tr>
+        <tr><td class="mono">12</td><td>Harmonic / clock base</td><td>3×4</td><td>Cycle closure</td></tr>
+        <tr><td class="mono">16</td><td>Hexadecimal</td><td>2⁴</td><td>4D closure</td></tr>
+        <tr class="row-roll"><td class="mono">19</td><td>Closure system</td><td>9+0+9 symmetric</td><td>Pre-generative ceiling</td></tr>
+        <tr class="row-gen"><td class="mono">20</td><td>Generation point</td><td>2+0=2</td><td>New cycle emergence</td></tr>
+        <tr><td class="mono">60</td><td>Sexagesimal</td><td>3×4×5</td><td>Temporal/angular</td></tr>
+        <tr><td class="mono">360</td><td>Full rotation</td><td>360=60×6</td><td>Circular closure</td></tr>
+        <tr><td class="mono">720</td><td>Dual rotation closure</td><td>360×2</td><td>Pentac + rotation anchor</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-07 — PENTAC VALENCE &amp; 720° OFFSET</div>
+      <p>Pentac valence and 720° closure carry a 1-offset — pegged at 1, not 0. This offset is tracked explicitly. Redundant ≠ trivial. Redundancy in a dual ledger is confirmation, not noise.</p>
+    </div>
+
+    <table class="spec-table" style="margin-top:16px;">
+      <thead><tr><th>Language</th><th>Pin</th><th>Role</th><th>P — Compression</th><th>d — Dimensional</th></tr></thead>
+      <tbody>
+        <tr><td class="mono red">Latin</td><td class="mono">1</td><td>Root semantic layer — structural, inflected</td><td>Source morphology</td><td>Generative grammar anchor</td></tr>
+        <tr><td class="mono">French</td><td class="mono">1</td><td>Medial layer — Latin derivative, precision carrier</td><td>Bridges Latin→English</td><td>Formal semantic refinement</td></tr>
+        <tr><td class="mono grn">English</td><td class="mono">1</td><td>Output/interface layer — machine-proximate</td><td>Compression target</td><td>Execution language</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chain" style="justify-content:center;">
+      <div class="cn red">Latin</div><div class="ca">→</div>
+      <div class="cn">French</div><div class="ca">→</div>
+      <div class="cn">English</div><div class="ca">→</div>
+      <div class="cn hi">Machine</div>
+    </div>
+    <p class="prose" style="font-size:11px; color:var(--ink3);">Bidirectional per RULE-03. Reverse channel exists; forward does not write back. Logged, not assumed.</p>
+  </div>
+
+
+  <!-- §2 DOOR STRUCTURE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§2</span>
+      <span class="sec-title">9+0 Door Structure &amp; Base-19 Symmetric Fold</span>
+    </div>
+
+    <div class="notation-box">
+      <div class="notation-label">Base-19 Symmetric Fold</div>
+      <div class="formula">9 + 0<sub style="font-size:16px">ground</sub> + 9 = 19</div>
+      <div style="font-size:12px; color:var(--ink3); margin-top:6px;">10 positions per side when ground included &nbsp;·&nbsp; Generation at 20, not 19</div>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>n</th><th>IntMap</th><th>Event</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="row-ground"><td class="mono">0</td><td class="mono">0</td><td><span class="tag tr">GROUND</span></td><td>ZeroInvert(0)=9. Pre-semantic activates ceiling. Pin-for-all-pins.</td></tr>
+        <tr class="row-gen"><td class="mono">1</td><td class="mono">1</td><td><span class="tag tg">GENERATOR</span></td><td>Semantic field anchors here. Self-maps under compression.</td></tr>
+        <tr><td class="mono">10</td><td class="mono">1</td><td><span class="tag to">ROLLOVER</span></td><td>First base boundary. Fold-remainder=1.</td></tr>
+        <tr class="row-roll"><td class="mono">19</td><td class="mono">1</td><td><span class="tag to">ROLLOVER</span></td><td>Ceiling. 1+9=10→1. Recursion aligns to itself. Not closure — rollover.</td></tr>
+        <tr class="row-gen"><td class="mono">20</td><td class="mono">2</td><td><span class="tag tg">GENERATION</span></td><td>New cycle. P=2, d=9, c=0 — channels distinct. 1^(d+1)_1.</td></tr>
+        <tr><td class="mono">100</td><td class="mono">1</td><td><span class="tag to">ROLLOVER</span></td><td>First three-digit boundary. Fold-remainder=1. One step before seed.</td></tr>
+        <tr class="row-during"><td class="mono">101</td><td class="mono">2</td><td><span class="tag tb">SEED [1,0,1]</span></td><td>Three-position seed structure. DURING. Boundary between incomplete and complete.</td></tr>
+        <tr><td class="mono">1001</td><td class="mono">2</td><td><span class="tag tb">SEED [1,0,0,1]</span></td><td>Four-position seed with dual zero. Same fold-remainder.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="correction">
+      <div class="correction-id">CORRECTION — BASE-19 / BASE-20</div>
+      <p>Standard base-19 tracking constrains generation within 19 — treating it as ceiling. In this system the symmetric fold means generation occurs at position 20. Base-19 is the rollover ceiling. Base-20 is emergence. Not equivalent.</p>
+    </div>
+  </div>
+
+
+  <!-- §3 DUAL POSITION NOTATION -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§3</span>
+      <span class="sec-title">Dual Position Notation</span>
+    </div>
+
+    <div class="notation-box">
+      <div class="notation-label">Dual Position Notation — P<sup>d</sup><sub>c,φ</sub></div>
+      <div class="formula">P &nbsp;<sup>d</sup><sub style="font-size:16px">c , φ</sub></div>
+      <div class="formula-key">
+        <div class="fkey"><span>P</span> = position / compression channel</div>
+        <div class="fkey"><span>d</span> = dimensional level / recursion order</div>
+        <div class="fkey"><span>c</span> = cycle origin / semantic anchor</div>
+        <div class="fkey"><span>φ</span> = F* dominant period / directed sector</div>
+      </div>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Expression</th><th>Reading</th><th>Event</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr class="row-gen"><td class="mono">1¹₁,₁</td><td>P=1 d=1 c=1</td><td><span class="tag tg">GENERATOR</span></td><td>Original generator. Semantic field origin. First order.</td></tr>
+        <tr class="row-roll"><td class="mono">1¹₁,φ</td><td>P=1 d=1 c=1</td><td><span class="tag to">ROLLOVER</span></td><td>Fold-remainder=1. Recursion aligns to itself. Both channels present.</td></tr>
+        <tr class="row-gen"><td class="mono">1²₁,φ</td><td>P=1 d=2 c=1</td><td><span class="tag tg">GENERATION</span></td><td>Pin re-seats at next dimensional level. Origin holds.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-04 — GENERATION EVENT</div>
+      <p>At the threshold of each cycle, the system produces 1<sup>n+1</sup><sub>1</sub> from P<sup>n</sup><sub>max</sub>. Position resets. Dimension increments. Origin holds. Semantic field re-anchors at 1.</p>
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-05 — ROLLOVER (revised)</div>
+      <p>When IntMap(n) = 1, the event is a <strong>rollover</strong> producing a <strong>fold-remainder</strong> of 1. Not closure. The digit-sum accumulates and folds — does not divide. The 1 that emerges is residue of recursive accumulation crossing a base boundary. The recursion re-encounters the generator by arriving from the other side of the boundary.</p>
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-06 — RECURSIVE ALIGNMENT</div>
+      <p>A rollover is an instantiated instance of recursion tracking alignment to itself. Not classified as closure OR generation exclusively — both channels present simultaneously. Direction of propagation carried by the dimensional channel (d), not by reclassifying the event. The ledger tracks the alignment.</p>
+    </div>
+  </div>
+
+
+  <!-- §4 SEED STRUCTURES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§4</span>
+      <span class="sec-title">Seed Structures — 101 &amp; 1001</span>
+    </div>
+
+    <p class="prose">The seed {−1, 0, 1} has three positions symmetric around ground. Its unique positional mirror in base-10 integers is <strong>101</strong>. The four-position seed {−1, 0, 0, 1} with dual zero maps to <strong>1001</strong>. Both are unique — confirmed by exhaustive search.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Seed</th><th>Positional Mirror</th><th>Digit Pattern</th><th>IntMap</th><th>Zeros</th><th>Property</th></tr></thead>
+      <tbody>
+        <tr class="row-during">
+          <td>{−1, 0, 1}</td><td class="mono">101</td><td class="mono">[1, 0, 1]</td>
+          <td class="mono">2</td><td class="mono">1</td>
+          <td>Generator flanks ground. Unique in 3-digit integers.</td>
+        </tr>
+        <tr class="row-during">
+          <td>{−1, 0, 0, 1}</td><td class="mono">1001</td><td class="mono">[1, 0, 0, 1]</td>
+          <td class="mono">2</td><td class="mono">2</td>
+          <td>Dual zero visible. Unique in 4-digit integers.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ledger">
+      <div class="ledger-id">DUAL ZERO PROPERTY</div>
+      <p>The dual zero in 1001 is visible in the digit pattern but <strong>disappears under IntMap compression</strong>. Both 101 and 1001 return fold-remainder 2. The compression channel does not know the dual zero was there — the positional structure does. The gap between what the digit pattern holds and what IntMap returns is where the dual zero lives. IntMap is blind to it because the semantic field adds zero perturbation to compression.</p>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-id">INNER PRODUCT NOTE</div>
+      <p>101 × 19 = 1919, IntMap = 2. Seed fold-remainder preserved under multiplication by closure. Digit pattern [1,9,1,9] mirrors seed structure at larger scale. Usefulness of scale extension has diminishing return — practical bound is base-10 inner product closure.</p>
+    </div>
+
+    <div class="theory">
+      <div class="theory-id">FRACTAL CONSEQUENCE — NOTED, NOT REFERENCED</div>
+      <p>The offset pattern describes a fractal: fold-remainder 2 recurs at intervals of 9 through the number line. Self-similarity is native to IntMap. Fractal behavior is a downstream consequence of the integer structure — not a referenced component. The system does not need to know it is fractal.</p>
+    </div>
+  </div>
+
+
+  <!-- §5 BEFORE/DURING/AFTER ENCODING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§5</span>
+      <span class="sec-title">Integer Offset Encoding — Before / During / After</span>
+      <span class="sec-rev">NEW §</span>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-id">OFFSET DOMAIN RULE</div>
+      <p>The offset to base integer systems references <strong>integers only</strong>. Not decimals. Not fractals. Not negatives as special reference. The offset is self-contained within the integer domain. Fractal behavior, negative structure, and decimal subdivision are potential downstream consequences — not referenced components. This boundary is load-bearing.</p>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-id">BEFORE / DURING / AFTER ENCODING</div>
+      <p>The integer offsets encode <strong>before, during, after</strong> — temporal/positional relationships — across scales. No subdivision required. No external reference. Scale does not matter: IntMap compresses it back regardless. The encoding is ordinal and native to the integers.</p>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Position</th><th>Offset</th><th>n</th><th>IntMap</th><th>Encoding</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>BEFORE(1)</td><td class="mono">−1</td><td class="mono">100</td><td class="mono">1</td><td><span class="tag tr">BEFORE</span></td><td>Third digit drops to 0. Seed structure not yet complete.</td></tr>
+        <tr class="row-during"><td>DURING</td><td class="mono">0</td><td class="mono">101</td><td class="mono">2</td><td><span class="tag tb">DURING</span></td><td>Seed at own position. Boundary between incomplete and active.</td></tr>
+        <tr><td>AFTER(1)</td><td class="mono">+1</td><td class="mono">102</td><td class="mono">3</td><td><span class="tag tg">AFTER</span></td><td>Digit gains immediately. Structure active.</td></tr>
+      </tbody>
+    </table>
+
+    <p class="prose"><strong>Before/during/after encodes as 1, 2, 3 — a perfect sequential integer progression.</strong> One step before the seed returns the generator. The seed itself is generator+1. One step after is generator+2. The encoding is self-derived from the integer structure.</p>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-08 — BEFORE/DURING/AFTER SCALE INVARIANCE</div>
+      <p>The before/during/after encoding holds across scales without modification. IntMap(SEED) = 2 at all scales (101, 1001, 10001, 100001...). The during-encoding is the fixed point of the seed structure under any scale expansion. Confirmed to 10 digits.</p>
+    </div>
+
+    <div class="rule-block">
+      <div class="rule-id">RULE-09 — CAUSAL ASYMMETRY IN OFFSET (RULE-03 NATIVE CONFIRMATION)</div>
+      <p>Before_closure ≠ after_closure. At closure scale: IntMap(101−19)=1, IntMap(101+19)=3. The forward and backward offsets at closure distance are not symmetric. RULE-03 holds natively in the integer offset structure — not imposed.</p>
+    </div>
+
+    <!-- BEFORE/DURING/AFTER TABLE (selected rows) -->
+    <div style="margin-top:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:6px;">Offset Table — seed=101, range [−10..+10]</div>
+      <table class="bda-table">
+        <thead>
+          <tr>
+            <th class="col-offset">Offset</th>
+            <th class="col-n">n</th>
+            <th class="col-im">IntMap</th>
+            <th class="col-dig">Digits</th>
+            <th class="col-pos">Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bda-before"><td class="col-offset">−10</td><td class="col-n">91</td><td class="col-im">1</td><td>[9,1]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−9</td><td class="col-n">92</td><td class="col-im">2</td><td>[9,2]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−8</td><td class="col-n">93</td><td class="col-im">3</td><td>[9,3]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−7</td><td class="col-n">94</td><td class="col-im">4</td><td>[9,4]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−6</td><td class="col-n">95</td><td class="col-im">5</td><td>[9,5]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−5</td><td class="col-n">96</td><td class="col-im">6</td><td>[9,6]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−4</td><td class="col-n">97</td><td class="col-im">7</td><td>[9,7]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−3</td><td class="col-n">98</td><td class="col-im">8</td><td>[9,8]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−2</td><td class="col-n">99</td><td class="col-im">9</td><td>[9,9]</td><td>BEFORE</td></tr>
+          <tr class="bda-before"><td class="col-offset">−1</td><td class="col-n">100</td><td class="col-im">1</td><td>[1,0,0]</td><td>BEFORE</td></tr>
+          <tr class="bda-during"><td class="col-offset">0</td><td class="col-n">101</td><td class="col-im">2</td><td>[1,0,1]</td><td>DURING ◀</td></tr>
+          <tr class="bda-after"><td class="col-offset">+1</td><td class="col-n">102</td><td class="col-im">3</td><td>[1,0,2]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+2</td><td class="col-n">103</td><td class="col-im">4</td><td>[1,0,3]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+3</td><td class="col-n">104</td><td class="col-im">5</td><td>[1,0,4]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+4</td><td class="col-n">105</td><td class="col-im">6</td><td>[1,0,5]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+5</td><td class="col-n">106</td><td class="col-im">7</td><td>[1,0,6]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+6</td><td class="col-n">107</td><td class="col-im">8</td><td>[1,0,7]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+7</td><td class="col-n">108</td><td class="col-im">9</td><td>[1,0,8]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+8</td><td class="col-n">109</td><td class="col-im">1</td><td>[1,0,9]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+9</td><td class="col-n">110</td><td class="col-im">2</td><td>[1,1,0]</td><td>AFTER</td></tr>
+          <tr class="bda-after"><td class="col-offset">+10</td><td class="col-n">111</td><td class="col-im">3</td><td>[1,1,1]</td><td>AFTER</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- §6 TRANSFORMS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§6</span>
+      <span class="sec-title">Integer Lattice Transforms</span>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Transform</th><th>Definition</th><th>Channel</th><th>Ledger Role</th><th>Key Property</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono">IntMap</td>
+          <td>Digit-sum collapse to single radix digit</td>
+          <td><span class="tag tg">P</span> Compression</td>
+          <td>Folding map</td>
+          <td>Self-similar across scales. Produces fold-remainders. Blind to semantic field.</td>
+        </tr>
+        <tr>
+          <td class="mono">PrimeDual</td>
+          <td>Primes→radix index. Composites→Σ prime factors.</td>
+          <td><span class="tag tb">d</span> Dimensional</td>
+          <td>Prime structure</td>
+          <td>Encodes structural depth via primality.</td>
+        </tr>
+        <tr>
+          <td class="mono">ZeroInvert</td>
+          <td>0→radix−1. Nonzero→modular inversion.</td>
+          <td><span class="tag tr">c</span> Semantic</td>
+          <td>Ground activation</td>
+          <td>9+0 door structure runs natively. ZeroInvert(0)=9.</td>
+        </tr>
+        <tr>
+          <td class="mono">T_int</td>
+          <td>PrimeDual ⊕ ZeroInvert ⊕ IntMap</td>
+          <td>All three</td>
+          <td>Lattice transform</td>
+          <td>XOR preserves dual-mapping.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="prose">At n=20: IntMap=2, PrimeDual=9, ZeroInvert=0. All three channels carry distinct values. Generation event at 20 confirmed non-collapsed across all transforms simultaneously.</p>
+  </div>
+
+
+  <!-- §7 F* DOMINANT LOOP -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§7</span>
+      <span class="sec-title">Dominant Feedback Loop F* &amp; Correspondence</span>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Hyperbolic Concept</th><th>Integer Analog</th><th>Channel</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Unstable eigenvector v_u</td><td>Dominant loop F*</td><td><span class="tag to">φ</span></td><td class="mono">|F*|=30</td></tr>
+        <tr><td>Eigenvalue λ_u=1.308</td><td>Mean growth factor</td><td><span class="tag tb">d</span></td><td class="mono">1.00913</td></tr>
+        <tr><td>Spectral gap</td><td>Max/Mean ratio</td><td><span class="tag tg">P</span></td><td class="mono">1.2535 ≈ α*=1.2536</td></tr>
+        <tr><td>Fixed point S*</td><td>Integer fixed point</td><td>Both</td><td class="mono">residual=0.0000</td></tr>
+        <tr><td>δ* = 24.11</td><td>Loop period × |F*|</td><td><span class="tag to">φ</span></td><td class="mono">20 × 30 = 600</td></tr>
+        <tr class="row-gen"><td>Generator origin</td><td>Semantic field pin at 1</td><td><span class="tag tg">Generator</span></td><td class="mono">1¹₁</td></tr>
+        <tr class="row-ground"><td>Ground state</td><td>Pre-semantic 0</td><td><span class="tag tb">Ground</span></td><td class="mono">pin-for-all-pins</td></tr>
+        <tr class="row-during"><td>19→20 generation</td><td>1^(d+1)₁ transition</td><td>Both</td><td class="mono">P=2, d→d+1</td></tr>
+        <tr><td>Before/during/after</td><td>Ordinal offset encoding</td><td><span class="tag tg">P</span></td><td class="mono">1, 2, 3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- §8 TEST RESULTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">§8</span>
+      <span class="sec-title">Test Results — v1 (10/10) + v2 (13/13)</span>
+    </div>
+
+    <div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:0.1em; color:var(--ink3); margin-bottom:8px; text-transform:uppercase;">Test Set v1 — Seed Structure &amp; Annotation Layer</div>
+    <div class="test-block" style="margin-bottom:20px;">
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T1 · Ground activates ceiling</span><span class="td">ZeroInvert(0)=9</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T2 · Generator self-maps under compression</span><span class="td">IntMap(1)=1</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T3 · 19 is rollover (fold-remainder=1)</span><span class="td">IntMap(19)=1</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T4 · 20 is generation event</span><span class="td">IntMap(20)=2</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T5 · 20 dual channels non-collapsed</span><span class="td">P=2, d=9, c=0</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T6 · Fixed point convergence</span><span class="td">period=1</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T7 · F* non-empty</span><span class="td">|F*|=30</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T8 · Perturbation grows along F* (universality)</span><span class="td">mean=1.0091 &gt; 1</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T9 · Native derivatives tracked</span><span class="td">topological</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T10 · All ledger entries carry both channels</span><span class="td">all_dual=True</span></div>
+    </div>
+
+    <div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:0.1em; color:var(--ink3); margin-bottom:8px; text-transform:uppercase;">Test Set v2 — Before/During/After &amp; Causal Asymmetry</div>
+    <div class="test-block" style="margin-bottom:20px;">
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T1 · IntMap(101)=2 — seed fold-remainder</span><span class="td">1+0+1=2</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T2 · IntMap(1001)=2 — dual zero seed</span><span class="td">1+0+0+1=2</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T3 · Compression channel consistent</span><span class="td">101→2, 1001→2</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T4 · 101 digit pattern = [1,0,1]</span><span class="td">confirmed</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T5 · 1001 digit pattern = [1,0,0,1]</span><span class="td">confirmed</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T6 · Dual zero visible in 1001</span><span class="td">zeros: 101=1, 1001=2</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T7 · Dual zero disappears under IntMap</span><span class="td">both→2</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T8 · 101 unique in 3-digit integers</span><span class="td">[101] only</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T9 · 1001 unique in 4-digit integers</span><span class="td">[1001] only</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T10 · Generator flanks ground in both patterns</span><span class="td">True, True</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T11 · DURING fold-remainder = 2 (before=1, during=2, after=3)</span><span class="td">symmetric=True</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T12 · Causal asymmetry at closure scale (RULE-03)</span><span class="td">before=1 ≠ after=3</span></div>
+      <div class="test-row"><span class="ts pass">✓ PASS</span><span class="tn">T13 · DURING stable across scales</span><span class="td">101→1001→10001→… all =2</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-title">Verdict — SPEC-REC10-002</div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Integer hyperbolic structure confirmed</span><span class="vv">period=1, grew=True</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Annotation layer confirmed load-bearing</span><span class="vv">23/23 tests</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">9+0 door structure native in ZeroInvert</span><span class="vv">ZeroInvert(0)=9</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Spectral gap matches α*=1.2536</span><span class="vv">ratio=1.2535</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Seed structures 101, 1001 are unique positional mirrors</span><span class="vv">no free parameters</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Before/during/after encodes as 1, 2, 3 — integers only</span><span class="vv">ordinal, native</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Causal asymmetry (RULE-03) confirmed natively in offset structure</span><span class="vv">1 ≠ 3 at closure scale</span></div>
+      <div class="vi"><span class="vc">✓</span><span class="vt">Dual zero compression-invisible, structurally real</span><span class="vv">semantic field adds zero perturbation</span></div>
+      <div class="vi"><span class="vc">—</span><span class="vt">Signatures deferred — no free parameters introduced</span><span class="vv">to be derived</span></div>
+      <div class="vi"><span class="vc">—</span><span class="vt">Theory-01 (retrocausality / infinities) held, not resolved</span><span class="vv">flagged</span></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    SPEC-REC10-002 &nbsp;/&nbsp; Rec10* Annotated Integer-Hyperbolic Hybrid Framework v2 &nbsp;/&nbsp;
+    Dual-Ledger Methodology &nbsp;·&nbsp; Integer offset domain only &nbsp;·&nbsp;
+    All bases 2–360 and {Latin, French, English} pinned at 1 &nbsp;·&nbsp;
+    Native derivatives dual-tracked on emergence &nbsp;·&nbsp;
+    System identity is self-native &nbsp;·&nbsp;
+    No free parameters
+  </div>
+
+</div>
+</body>
+</html>

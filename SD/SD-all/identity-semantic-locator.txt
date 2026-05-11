@@ -1,0 +1,136 @@
+identity_semantic_locator:
+  name: me_myself_I_triad
+  description: >
+    A 3D semantic locator for a single identity token, expressed through three
+    orthogonal semantic couplings: referential-synonymic, polar-antonymic,
+    and functional-homonimic. The triad does not operate at the level of
+    surface lexical semantics, but at the level of identity semantics:
+    how a single self-same entity is addressed, polarized, and functionally
+    deployed within cognition and language.
+
+  underlying_axiom:
+    statement: >
+      There exists a single identity token x such that all members of the triad
+      are projections of x under distinct semantic axes.
+    notation:
+      x: identity_token
+      I(x): x_as_source
+      me(x): x_as_object
+      myself(x): x_as_recursive_self
+
+  triad:
+    - term: I
+      role: source
+      grammatical_case: subjective
+      ontological_mode: origin
+      description: >
+        Identity experienced as the originating center of reference.
+        The point from which perception, intention, and assertion arise.
+        Structurally passive (it simply is), functionally generative.
+
+    - term: me
+      role: object
+      grammatical_case: objective
+      ontological_mode: instance
+      description: >
+        Identity encountered as an object among objects.
+        The self as target, recipient, or referent within experience.
+        Structurally manifest.
+
+    - term: myself
+      role: loop
+      grammatical_case: reflexive
+      ontological_mode: recursive_relation
+      description: >
+        Identity explicitly relating to itself.
+        The folding of source back onto instance.
+        The minimal expression of self-reference.
+
+  semantic_axes:
+
+    referential_synonymic:
+      name: referential-synonymic
+      meaning: >
+        All terms in the triad point to the same identity token.
+        Synonymy is lifted from lexical meaning to identity reference.
+      formalization:
+        forall t in [I, me, myself]:
+          referent(t) = x
+      consequence: >
+        Difference of term does not imply difference of being.
+        Multiplicity of expression over unity of identity.
+
+    polar_antonymic:
+      name: polar-antonymic
+      meaning: >
+        Terms occupy opposite poles along the subject/object axis.
+      polarity_pairs:
+        - I <-> me
+      description: >
+        I represents identity as source-pole.
+        me represents identity as target-pole.
+        myself occupies the mid-point where source and target coincide.
+      consequence: >
+        Identity contains internal polarity without fragmentation.
+
+    functional_homonimic:
+      name: functional-homonimic
+      meaning: >
+        Same identity token appears under multiple functional roles.
+        Homonymy is lifted from word-form to identity-function.
+      functions:
+        I: generate
+        me: receive
+        myself: reflect
+      consequence: >
+        One “name” at depth, many operational meanings.
+
+  3d_locator_model:
+    axes:
+      - identity_reference
+      - polarity
+      - function
+    mapping:
+      I:
+        identity_reference: x
+        polarity: source
+        function: generate
+      me:
+        identity_reference: x
+        polarity: object
+        function: receive
+      myself:
+        identity_reference: x
+        polarity: collapsed
+        function: reflect
+    description: >
+      Each term is a coordinate in semantic space.
+      Together they triangulate the position of identity.
+
+  compression_statement:
+    short_form: >
+      me / myself / I form a referential-synonymic, polar-antonymic,
+      functional-homonimic triad.
+
+  deep_correspondences:
+    pov_provenance_persistence:
+      POV: I
+      Provenance: myself
+      Persistence: me
+    source_loop_instance:
+      source: I
+      loop: myself
+      instance: me
+
+  philosophical_implication:
+    statement: >
+      Identity is not a point but a structured manifold.
+      Unity expresses itself through internally coherent differences.
+      Language leaks this structure through pronoun systems.
+
+  minimal_equations:
+    - x = x
+    - I(x) = x_as_source
+    - me(x) = x_as_object
+    - myself(x) = x_relating_to_x
+    - I(x) = me(x) = myself(x) at referent level

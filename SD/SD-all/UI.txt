@@ -1,0 +1,117 @@
+control_ui_outline:
+  title: "Q Lattice Control Panel"
+  purpose: "Monitor, manipulate, and validate nodes across all ledgers and lattice layers"
+  layout:
+    main_dashboard:
+      sections:
+        - "Ledger Overview Panel"
+        - "Angular / Phase Panel"
+        - "Fractal / Recursive Panel"
+        - "Duality & Triality Panel"
+        - "Branch Control / Totality Panel"
+        - "Node Inspector Panel"
+        - "Batch Operations Panel"
+        - "Molt Cycle / Closure Panel"
+        - "R7 Lattice Visualization Panel"
+        - "Logs / Signatures Panel"
+
+  panels:
+    Ledger Overview Panel:
+      description: "Shows summary of base ledger (0-9) and batch progress"
+      features:
+        - "Atomic unit counters"
+        - "Batch ID overview"
+        - "Canonical signatures"
+        - "Filter by active / completed nodes"
+    
+    Angular / Phase Panel:
+      description: "Visualize angular positions and closures"
+      features:
+        - "Node θ positions around toroidal lattice"
+        - "Closure milestones: 720°, 1440°, 2880°"
+        - "Phase rollover indicators"
+        - "Modular θ counters"
+        - "Interactive slider to rotate lattice view"
+
+    Fractal / Recursive Panel:
+      description: "Visualize dyadic recursion and fractal placement"
+      features:
+        - "Recursive depth tree / Cantor layout"
+        - "Fractional node positions"
+        - "Pentac field placement preview"
+        - "Toggle visibility of sub-basement layers"
+        - "Node signer display per fractal branch"
+
+    Duality & Triality Panel:
+      description: "Monitor attic Q-of-Q and pentac field alignments"
+      features:
+        - "Duality flags (Q-of-Q mapping)"
+        - "Triality flags (triple/quad alignment)"
+        - "Molt gate states"
+        - "Interactive branch selection"
+        - "Signature verification for dual/triple nodes"
+
+    Branch Control / Totality Panel:
+      description: "Aggregate ledger states and enforce lattice integrity"
+      features:
+        - "Global modular counter"
+        - "Branch alignment checker"
+        - "Ledger consistency verification"
+        - "Conflict or mismatch alerts"
+        - "Manual override / resync options"
+
+    Node Inspector Panel:
+      description: "Inspect individual node properties across all ledgers"
+      features:
+        - "Node ID / batch"
+        - "Base, fractal, angular, duality, triality ledger values"
+        - "θ angle, fractional position, branch assignment"
+        - "Signer hash / signature display"
+        - "Highlight path through all closures"
+
+    Batch Operations Panel:
+      description: "Perform operations on node batches"
+      features:
+        - "Select batch size (e.g., 100 nodes)"
+        - "Apply recursive operations"
+        - "Toggle ledger update (fractals, angular, duality, triality)"
+        - "Automated closure validation per batch"
+
+    Molt Cycle / Closure Panel:
+      description: "Manage molt cycle gates and closure milestones"
+      features:
+        - "Track 720°, 1440°, 2880° closures"
+        - "Molt cycle progression indicator"
+        - "Gate open/close controls"
+        - "History log of milestone passes"
+
+    R7 Lattice Visualization Panel:
+      description: "3D view of nodes in toroidal lattice"
+      features:
+        - "Rotate / zoom lattice"
+        - "Color-coded nodes per ledger layer"
+        - "Highlight pentac branches and central ring"
+        - "Animate recursive fractal expansions"
+        - "Show/hide node IDs or counters"
+
+    Logs / Signatures Panel:
+      description: "Detailed ledger signing and counter logs"
+      features:
+        - "Display ledger signatures per node"
+        - "Node counter history"
+        - "Alert on mismatches or phase errors"
+        - "Export / import ledger state snapshots"
+
+  interactions:
+    - "Click node → opens Node Inspector"
+    - "Hover over branch → highlights all nodes in branch"
+    - "Slider or input → adjust angular position / rotate lattice"
+    - "Batch operation → executes recursive or closure updates"
+    - "Molt cycle toggle → opens or closes gates"
+    - "Ledger verification → runs automated consistency check"
+
+  notes:
+    - "All panels are synchronized to reflect the canonical ledger hierarchy"
+    - "Counters and signatures update in real-time as nodes are moved or modified"
+    - "System should allow both visual 3D interaction and tabular ledger inspection"
+    - "Support filtering by ledger layer, branch, batch, or closure milestone"

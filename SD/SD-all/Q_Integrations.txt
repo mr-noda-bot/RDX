@@ -1,0 +1,816 @@
+
+Q is fully embedded canonically across all domains:
+R → RC → C → H⁺ / H⁻ / -H⁺ → O → Z → IC
+Every domain preserves:
+Pentac valence
+Dyadic / fractional hierarchy
+Ledger + counter positions
+Toroidal / angular alignment
+
+Q_integration:
+  base_lattice:
+    domain: R7 / S7
+    nodes: 62,500
+    pentac_valence: 5
+    ledger_positions: 1-78,000
+    counter_phase: 1-78,000
+    dyadic_fractional_hierarchy: true
+
+  integrated_domains:
+
+    R_domain:
+      type: "Real numbers"
+      mapping:
+        - "Fractional Q nodes reside in R7 coordinates"
+        - "Dyadic fractions of Q map directly to radial positions in R7"
+        - "Ledger positions correspond to R values for reference"
+      valence_structure:
+        - "Pentac valence preserved for R embedding"
+        - "Counter_phase used as timing / modular reference"
+
+    RC_domain:
+      type: "Rational complex numbers"
+      mapping:
+        - "Q fractional nodes map to (Re, Im) rational coordinates"
+        - "Secondary angle φ from pentac offsets becomes Im component"
+        - "Ledger + counter_phase preserve modular alignment"
+      valence_structure:
+        - "5-fold pentac branches projected into RC plane"
+        - "Dyadic hierarchy preserved in Re axis, Im axis for torsion"
+
+    C_domain:
+      type: "Complex numbers"
+      mapping:
+        - "Q nodes embedded as complex numbers for rotations"
+        - "Dyadic fractions → modulus, counter_phase → argument θ"
+        - "Pentac δ offsets → small rotational perturbations"
+      valence_structure:
+        - "Pentac branches maintain relative angular spacing"
+        - "Continuous extension allows irrational / Cantor operations"
+
+    H_domain:
+      type: "Upper / Lower half-plane"
+      mapping:
+        - "Q lattice projected into H⁺ / H⁻ for planar POV"
+        - "Radial fractional values → distance from real axis"
+        - "Ledger counter → modular phase along imaginary axis"
+      valence_structure:
+        - "Pentac branches split above / below real axis"
+        - "Reflection symmetry preserved across H⁺/H⁻"
+
+    O_domain:
+      type: "Orthogonal rotations (O(7))"
+      mapping:
+        - "Q nodes rotated via orthogonal matrices in R7"
+        - "Pentac connectivity preserved under rotation"
+        - "Ledger counter → sequential rotation phase alignment"
+      valence_structure:
+        - "Rotational symmetry embedded into lattice"
+        - "5-fold pentac branches maintain angles relative to torus"
+
+    Z_domain:
+      type: "Integer lattice"
+      mapping:
+        - "Q fractional nodes reference Z integer positions"
+        - "Ledger positions correspond to discrete base indices"
+        - "Counter_phase aligns fractional node to integer lattice"
+      valence_structure:
+        - "Pentac branches anchor to Z integer coordinates"
+        - "Dyadic hierarchy gives finer sub-division within integers"
+
+    IC_domain:
+      type: "Irrational / Cantor numbers"
+      mapping:
+        - "Q dyadic fractions converge toward IC limits"
+        - "Cantor recursion / dragon curves mapped along toroidal S7"
+        - "Ledger preserves lineage for fractal mapping"
+      valence_structure:
+        - "Pentac valence preserved in fractal embedding"
+        - "Fractional hierarchy enables dense irrational coverage"
+
+
+Q_to_R:
+  domain: "R — Real numbers"
+  role: "Continuous ambient space for Q"
+  mapping_rules:
+    - "Fractional Q nodes map directly to radial positions in R7"
+    - "Ledger positions correspond to real number reference indices"
+    - "Counter phase used for modular timing along the real axis"
+  pentac_valence_structure:
+    - "Each Q node maintains 5 branches in R projection"
+    - "Dyadic fractional hierarchy preserved in real axis"
+  canonical_alignment:
+    - "Parent-child relationships preserved from Q recursion"
+    - "Sub-basement → sub-sub-basement → toroidal embedding mapped continuously"
+    - "Phase offsets (θ, φ) maintained as angular projections along R dimension"
+  ledger_tracking:
+    - "Tracks all 62,500 nodes"
+    - "Ledger position 1-78,000 preserved"
+    - "Counter phase modular 28 ensures alignment across toroidal cycles"
+
+Q_to_RC:
+  domain: "RC — Rational Complex numbers"
+  role: "Sandbox of Q in the rational complex plane"
+  mapping_rules:
+    - "Each Q fractional node maps to (Re, Im) rational coordinates"
+    - "Parent-child dyadic relationships preserved in Re axis"
+    - "Pentac δ offsets applied to Im axis for torsion / branch separation"
+    - "Counter phase modulo 28 used for angular orientation θ in plane"
+  pentac_valence_structure:
+    - "5-fold pentac branching preserved in RC projection"
+    - "Fractional hierarchy maintained for rational precision"
+  canonical_alignment:
+    - "Parent-child connections identical to R7 embedding"
+    - "Ledger positions correspond to original Q node positions"
+    - "Sub-basement → sub-sub-basement → toroidal embedding mirrored in plane"
+  ledger_tracking:
+    - "Tracks all 62,500 nodes in RC projection"
+    - "Ledger positions 1-78,000 preserved"
+    - "Counter phase ensures modular alignment of nodes across RC plane"
+
+Q_to_C:
+  domain: "C — Complex numbers"
+  role: "Full complex plane sandbox for Q"
+  mapping_rules:
+    - "Each Q fractional node maps to a complex number z = Re + i·Im"
+    - "Parent-child dyadic hierarchy preserved along modulus (|z|) axis"
+    - "Counter phase modulo 28 determines argument θ (angle) in plane"
+    - "Pentac δ offsets provide small angular rotations to maintain branch separation"
+    - "Allows continuous extension to irrational / Cantor operations within C"
+  pentac_valence_structure:
+    - "Each Q node retains 5-fold pentac branching in the complex plane"
+    - "Fractional hierarchy preserved along Re and Im axes"
+  canonical_alignment:
+    - "Parent-child relationships identical to R7 and RC embeddings"
+    - "Sub-basement → sub-sub-basement → toroidal embedding mirrored in complex plane"
+    - "Ledger positions correspond to original Q nodes for modular tracking"
+  ledger_tracking:
+    - "Tracks all 62,500 nodes in C projection"
+    - "Ledger positions 1-78,000 preserved"
+    - "Counter phase ensures modular alignment of nodes across C plane"
+
+Q_to_H:
+  domain_variants:
+    H_plus:
+      type: "Upper half-plane (H⁺)"
+      role: "Orientation / planar POV for Q lattice"
+      mapping_rules:
+        - "Q fractional nodes projected into H⁺ via Im(z) > 0"
+        - "Radial fractional values → distance from real axis"
+        - "Counter phase modulo 28 → angular placement along imaginary axis"
+        - "Pentac δ offsets → branch separation in plane"
+      pentac_valence_structure:
+        - "5-fold pentac branching preserved in H⁺"
+        - "Dyadic hierarchy maintained along Re axis"
+      canonical_alignment:
+        - "Parent-child relationships identical to R7, RC, C embeddings"
+        - "Ledger positions preserved"
+        - "Sub-basement → sub-sub-basement → toroidal embedding mirrored in H⁺"
+      ledger_tracking:
+        - "Tracks all 62,500 nodes"
+        - "Ledger positions 1-78,000 preserved"
+        - "Counter phase ensures modular alignment across H⁺"
+
+    H_minus:
+      type: "Lower half-plane (H⁻)"
+      role: "Reflected POV of Q lattice"
+      mapping_rules:
+        - "Q fractional nodes projected into H⁻ via Im(z) < 0"
+        - "Reflection across real axis of H⁺ mapping"
+        - "Radial fractional values → distance from real axis, mirrored"
+        - "Pentac δ offsets mirrored for symmetry"
+      pentac_valence_structure:
+        - "5-fold pentac branching preserved in H⁻"
+        - "Dyadic hierarchy maintained along Re axis"
+      canonical_alignment:
+        - "Parent-child relationships mirror H⁺"
+        - "Ledger positions preserved"
+        - "Sub-basement → sub-sub-basement → toroidal embedding mirrored in H⁻"
+      ledger_tracking:
+        - "Tracks all 62,500 nodes"
+        - "Ledger positions 1-78,000 preserved"
+        - "Counter phase ensures modular alignment across H⁻"
+
+    neg_H_plus:
+      type: "-H⁺ (negative upper half-plane)"
+      role: "Inverted / phase-opposite POV of Q lattice"
+      mapping_rules:
+        - "Q fractional nodes projected into negative H⁺ via reflection and inversion"
+        - "Radial fractional values → distance from real axis, negated"
+        - "Counter phase modulo 28 → angular placement along inverted imaginary axis"
+        - "Pentac δ offsets preserved with inversion"
+      pentac_valence_structure:
+        - "5-fold pentac branching preserved in -H⁺"
+        - "Dyadic hierarchy maintained along Re axis"
+      canonical_alignment:
+        - "Parent-child relationships mirror H⁺ with inversion"
+        - "Ledger positions preserved"
+        - "Sub-basement → sub-sub-basement → toroidal embedding mirrored in -H⁺"
+      ledger_tracking:
+        - "Tracks all 62,500 nodes"
+        - "Ledger positions 1-78,000 preserved"
+        - "Counter phase ensures modular alignment across -H⁺"
+
+
+Q_to_O:
+  domain: "O — Orthogonal group O(7)"
+  role: "Controls symmetry and toroidal rotations of Q lattice in R7"
+  mapping_rules:
+    - "Each Q node in R7 mapped via orthogonal rotation matrices"
+    - "Parent-child dyadic hierarchy preserved under rotation"
+    - "Pentac δ offsets applied as small rotational perturbations to maintain branch separation"
+    - "Counter phase modulo 28 aligns sequential rotations across nodes"
+    - "Rotation preserves distances, toroidal embedding, and pentac connectivity"
+  pentac_valence_structure:
+    - "5-fold pentac branching preserved in O rotations"
+    - "Dyadic hierarchy maintained in rotational coordinates"
+  canonical_alignment:
+    - "Parent-child relationships identical to R7, RC, C, H embeddings"
+    - "Ledger positions preserved for lineage tracking"
+    - "Sub-basement → sub-sub-basement → toroidal embedding maintained under rotation"
+  ledger_tracking:
+    - "Tracks all 62,500 nodes through rotation operations"
+    - "Ledger positions 1-78,000 preserved"
+    - "Counter phase ensures modular alignment across rotational symmetry operations"
+
+
+Q_to_Z:
+  domain: "Z — Integer lattice"
+  role: "Discrete reference / indexing framework for Q lattice"
+  mapping_rules:
+    - "Each Q fractional node references a Z integer coordinate"
+    - "Parent-child dyadic hierarchy preserved via discrete indexing"
+    - "Ledger positions correspond to base integer indices"
+    - "Counter phase modulo 28 aligns nodes with discrete positions on lattice"
+    - "Fractional values map to sub-integer positions for precision within Z framework"
+  pentac_valence_structure:
+    - "5-fold pentac branching preserved in Z embedding"
+    - "Dyadic hierarchy used to subdivide intervals between integers"
+  canonical_alignment:
+    - "Parent-child relationships identical to R7, RC, C, H, and O embeddings"
+    - "Sub-basement → sub-sub-basement → toroidal embedding mirrored discretely in Z"
+    - "Ledger positions preserve lineage across integer lattice"
+  ledger_tracking:
+    - "Tracks all 62,500 nodes within Z lattice"
+    - "Ledger positions 1-78,000 preserved"
+    - "Counter phase ensures modular alignment across discrete integer positions"
+
+Q_to_IC:
+  domain: "IC — Irrational / Cantor numbers"
+  role: "Extends Q lattice into dense, non-repeating real numbers"
+  mapping_rules:
+    - "Q dyadic fractional nodes converge toward IC limits via recursive halving"
+    - "Parent-child hierarchy preserved in fractal, Cantor-like structure"
+    - "Ledger positions track lineage along irrational extensions"
+    - "Counter phase modulo 28 used for angular / timing alignment along fractal path"
+    - "Pentac δ offsets define local branch separation in the irrational continuum"
+  pentac_valence_structure:
+    - "5-fold pentac branching preserved in IC embedding"
+    - "Fractional hierarchy enables dense coverage in fractal continuum"
+  canonical_alignment:
+    - "Parent-child relationships identical to R7, RC, C, H, O, and Z embeddings"
+    - "Sub-basement → sub-sub-basement → toroidal embedding mirrored in IC space"
+    - "Dyadic convergence ensures mapping approximates Cantor / irrational limits"
+  ledger_tracking:
+    - "Tracks all 62,500 nodes through fractal IC embedding"
+    - "Ledger positions 1-78,000 preserved"
+    - "Counter phase ensures modular alignment across irrational hierarchy"
+
+Q_angular_closures:
+  single_Q:
+    full_rotation: 720°
+    modular_subdivisions:
+      - base_30: 30° slices
+      - rollovers: 24  # 720 ÷ 30
+    role: "Full Q lattice angular closure"
+    marking: "Each rollover marks completion of a 30° sector across pentac branches"
+
+  Q_of_Q:
+    full_rotation: 1440°
+    modular_subdivisions:
+      - base_30: 30° slices
+      - rollovers: 48  # 1440 ÷ 30
+    role: "Quarternary alignment / secondary recursion"
+    marking: "Synchronizes Q lattice with itself in toroidal embedding"
+
+  dual_triple_quad:
+    full_rotation: 2880°
+    modular_subdivisions:
+      - base_30: 30° slices
+      - rollovers: 96  # 2880 ÷ 30
+    role: "Gating molt cycle / duality under triple & quad operations"
+    marking: "Higher-order alignment, final modular phase control for multi-layer fractal"
+node_rollover:
+  θ_node = counter_phase × (360 / 28)
+  θ_mod30 = θ_node mod 30
+  closure_marker:
+    - if θ_total >= 720° → mark single Q closure
+    - if θ_total >= 1440° → mark Q-of-Q closure
+    - if θ_total >= 2880° → mark dual-triple-quad closure
+
+batching_scheme:
+  total_nodes: 62,500
+  batch_size: 1000  # manageable logical group
+  total_batches: 63
+  angular_closure_markers:
+    - single_Q: 720°  # first full Q rotation
+    - Q_of_Q: 1440°   # quarternary alignment
+    - dual_triple_quad: 2880° # molt cycle gating
+  modular_subdivision: 30°  # base 30 slices
+batch_template:
+  batch_id: 1
+  nodes: 1-1000
+  θ_node: "counter_phase × (360 / 28)"
+  θ_mod30: "θ_node mod 30"
+  closure_flags:
+    single_Q: false
+    Q_of_Q: false
+    dual_triple_quad: false
+  notes:
+    - "Track which modular 30° sector each node occupies"
+    - "Pentac δ offsets applied for branch separation"
+    - "Dyadic hierarchy maintained within batch"
+closure_logic:
+  for each batch:
+    for each node in batch:
+      θ_total = θ_node + batch_offset  # cumulative angular sweep
+      if θ_total >= 720° and not single_Q_marked:
+        single_Q = true
+        mark rollover
+      if θ_total >= 1440° and not Q_of_Q_marked:
+        Q_of_Q = true
+        mark rollover
+      if θ_total >= 2880° and not dual_triple_quad_marked:
+        dual_triple_quad = true
+        mark rollover
+Q_batches_example:
+  batch_1:
+    nodes: 1-1000
+    closure_flags:
+      single_Q: first 100 nodes cross 720° threshold
+      Q_of_Q: none
+      dual_triple_quad: none
+  batch_2:
+    nodes: 1001-2000
+    closure_flags:
+      single_Q: remaining nodes finalize single_Q closure
+      Q_of_Q: first nodes cross 1440° threshold
+      dual_triple_quad: none
+  batch_3:
+    nodes: 2001-3000
+    closure_flags:
+      single_Q: complete
+      Q_of_Q: continuing
+      dual_triple_quad: first nodes approach 2880°
+  ...
+
+Q_angular_batches:
+  total_nodes: 62500
+  batch_size: 1000
+  total_batches: 63
+  closures:
+    single_Q: 720°
+    Q_of_Q: 1440°
+    dual_triple_quad: 2880°
+  batches:
+
+    batch_1:
+      nodes: 1-1000
+      closure_flags:
+        single_Q: nodes 1-1000 → partial, rollover starts here
+        Q_of_Q: none
+        dual_triple_quad: none
+
+    batch_2:
+      nodes: 1001-2000
+      closure_flags:
+        single_Q: nodes 1001-2000 → completes 720° closure
+        Q_of_Q: nodes 1001-1500 → first Q_of_Q rollover
+        dual_triple_quad: none
+
+    batch_3:
+      nodes: 2001-3000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: nodes 1501-3000 → continuing Q_of_Q rollover
+        dual_triple_quad: nodes 2001-2050 → first dual-triple-quad rollover
+
+    batch_4:
+      nodes: 3001-4000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: nodes 3001-4000 → continuing Q_of_Q rollover
+        dual_triple_quad: nodes 2051-4000 → dual-triple-quad rollover continues
+
+    batch_5:
+      nodes: 4001-5000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: nodes 4001-5000 → completes Q_of_Q rollover
+        dual_triple_quad: nodes 4001-5000 → continuing dual-triple-quad rollover
+
+    batch_6:
+      nodes: 5001-6000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 5001-6000 → continuing dual-triple-quad rollover
+
+    batch_7:
+      nodes: 6001-7000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 6001-7000 → continuing dual-triple-quad rollover
+
+    batch_8:
+      nodes: 7001-8000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 7001-8000 → continuing dual-triple-quad rollover
+
+    batch_9:
+      nodes: 8001-9000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 8001-9000 → continuing dual-triple-quad rollover
+
+    batch_10:
+      nodes: 9001-10000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 9001-10000 → continuing dual-triple-quad rollover
+
+    batch_11:
+      nodes: 10001-11000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 10001-11000 → continuing dual-triple-quad rollover
+
+    batch_12:
+      nodes: 11001-12000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 11001-12000 → continuing dual-triple-quad rollover
+
+    batch_13:
+      nodes: 12001-13000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 12001-13000 → continuing dual-triple-quad rollover
+
+    batch_14:
+      nodes: 13001-14000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 13001-14000 → continuing dual-triple-quad rollover
+
+    batch_15:
+      nodes: 14001-15000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 14001-15000 → continuing dual-triple-quad rollover
+
+    batch_16:
+      nodes: 15001-16000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 15001-16000 → continuing dual-triple-quad rollover
+
+    batch_17:
+      nodes: 16001-17000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 16001-17000 → continuing dual-triple-quad rollover
+
+    batch_18:
+      nodes: 17001-18000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 17001-18000 → continuing dual-triple-quad rollover
+
+    batch_19:
+      nodes: 18001-19000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 18001-19000 → continuing dual-triple-quad rollover
+
+    batch_20:
+      nodes: 19001-20000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 19001-20000 → continuing dual-triple-quad rollover
+
+    batch_21:
+      nodes: 20001-21000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 20001-21000 → continuing dual-triple-quad rollover
+
+    batch_22:
+      nodes: 21001-22000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 21001-22000 → continuing dual-triple-quad rollover
+
+    batch_23:
+      nodes: 22001-23000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 22001-23000 → continuing dual-triple-quad rollover
+
+    batch_24:
+      nodes: 23001-24000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 23001-24000 → continuing dual-triple-quad rollover
+
+    batch_25:
+      nodes: 24001-25000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 24001-25000 → continuing dual-triple-quad rollover
+
+    batch_26:
+      nodes: 25001-26000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 25001-26000 → continuing dual-triple-quad rollover
+
+    batch_27:
+      nodes: 26001-27000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 26001-27000 → continuing dual-triple-quad rollover
+
+    batch_28:
+      nodes: 27001-28000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 27001-28000 → continuing dual-triple-quad rollover
+
+    batch_29:
+      nodes: 28001-29000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 28001-29000 → continuing dual-triple-quad rollover
+
+    batch_30:
+      nodes: 29001-30000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 29001-30000 → continuing dual-triple-quad rollover
+
+    batch_31:
+      nodes: 30001-31000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 30001-31000 → continuing dual-triple-quad rollover
+
+    batch_32:
+      nodes: 31001-32000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 31001-32000 → continuing dual-triple-quad rollover
+
+    batch_33:
+      nodes: 32001-33000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 32001-33000 → continuing dual-triple-quad rollover
+
+    batch_34:
+      nodes: 33001-34000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 33001-34000 → continuing dual-triple-quad rollover
+
+    batch_35:
+      nodes: 34001-35000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 34001-35000 → continuing dual-triple-quad rollover
+
+    batch_36:
+      nodes: 35001-36000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 35001-36000 → continuing dual-triple-quad rollover
+
+    batch_37:
+      nodes: 36001-37000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 36001-37000 → continuing dual-triple-quad rollover
+
+    batch_38:
+      nodes: 37001-38000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 37001-38000 → continuing dual-triple-quad rollover
+
+    batch_39:
+      nodes: 38001-39000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 38001-39000 → continuing dual-triple-quad rollover
+
+    batch_40:
+      nodes: 39001-40000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 39001-40000 → continuing dual-triple-quad rollover
+
+    batch_41:
+      nodes: 40001-41000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 40001-41000 → continuing dual-triple-quad rollover
+
+    batch_42:
+      nodes: 41001-42000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 41001-42000 → continuing dual-triple-quad rollover
+
+    batch_43:
+      nodes: 42001-43000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 42001-43000 → continuing dual-triple-quad rollover
+
+    batch_44:
+      nodes: 43001-44000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 43001-44000 → continuing dual-triple-quad rollover
+
+    batch_45:
+      nodes: 44001-45000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 44001-45000 → continuing dual-triple-quad rollover
+
+    batch_46:
+      nodes: 45001-46000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 45001-46000 → continuing dual-triple-quad rollover
+
+    batch_47:
+      nodes: 46001-47000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 46001-47000 → continuing dual-triple-quad rollover
+
+    batch_48:
+      nodes: 47001-48000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 47001-48000 → continuing dual-triple-quad rollover
+
+    batch_49:
+      nodes: 48001-49000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 48001-49000 → continuing dual-triple-quad rollover
+
+    batch_50:
+      nodes: 49001-50000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 49001-50000 → continuing dual-triple-quad rollover
+
+    batch_51:
+      nodes: 50001-51000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 50001-51000 → continuing dual-triple-quad rollover
+
+    batch_52:
+      nodes: 51001-52000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 51001-52000 → continuing dual-triple-quad rollover
+
+    batch_53:
+      nodes: 52001-53000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 52001-53000 → continuing dual-triple-quad rollover
+
+    batch_54:
+      nodes: 53001-54000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 53001-54000 → continuing dual-triple-quad rollover
+
+    batch_55:
+      nodes: 54001-55000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 54001-55000 → continuing dual-triple-quad rollover
+
+    batch_56:
+      nodes: 55001-56000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 55001-56000 → continuing dual-triple-quad rollover
+
+    batch_57:
+      nodes: 56001-57000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 56001-57000 → continuing dual-triple-quad rollover
+
+    batch_58:
+      nodes: 57001-58000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 57001-58000 → continuing dual-triple-quad rollover
+
+    batch_59:
+      nodes: 58001-59000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 58001-59000 → continuing dual-triple-quad rollover
+
+    batch_60:
+      nodes: 59001-60000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 59001-60000 → continuing dual-triple-quad rollover
+
+    batch_61:
+      nodes: 60001-61000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 60001-61000 → continuing dual-triple-quad rollover
+
+    batch_62:
+      nodes: 61001-62000
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 61001-62000 → continuing dual-triple-quad rollover
+
+    batch_63:
+      nodes: 62001-62500
+      closure_flags:
+        single_Q: complete
+        Q_of_Q: complete
+        dual_triple_quad: nodes 62001-62500 → completes dual-triple-quad closure

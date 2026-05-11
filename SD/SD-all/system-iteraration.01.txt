@@ -1,0 +1,375 @@
+
+---
+
+# RDX-001 — Universal Base 2–360 Radix
+
+## 1. Purpose
+
+Define a canonical numeric ontology supporting positional bases 2 through 360 with explicit rollover semantics and symbolic determinism.
+
+## 2. Domain
+
+Let:
+
+* ( B \in \mathbb{N} )
+* ( 2 \leq B \leq 360 )
+
+Each base defines:
+
+* Digit set ( D_B = { d_0, d_1, ..., d_{B-1} } )
+* Deterministic successor function ( S_B(n) )
+
+## 3. Symbol Assignment
+
+* Base 2–10 → standard Arabic digits
+* 11–36 → alphanumeric extension
+* 37–360 → extended symbol table (Latin-rooted index + French phonetic mapping)
+* Each digit maps to:
+
+  * Numeric index
+  * Phonetic tag
+  * Canonical hash ID
+
+## 4. Rollover Semantics
+
+* Base 10 rollover emphasis at 19 (cognitive threshold marker)
+* Base 360 rollover gate at 720
+
+  * 720 defines MoltGate₀
+
+## 5. Encoding Modes
+
+RDX supports:
+
+* Computational encoding
+* Symbolic constitutional encoding
+* Executable numeral mode (machine-native)
+
+---
+
+# ALG-001 — Successor Helical Algebra
+
+## 1. Core Structure
+
+Define algebra ( \mathcal{H} ) as:
+
+[
+\mathcal{H} = (S, \sigma, \oplus, \circlearrowright)
+]
+
+Where:
+
+* ( S ) = state space
+* ( \sigma ) = successor operator
+* ( \oplus ) = invariant-preserving composition
+* ( \circlearrowright ) = helical lift operator
+
+## 2. Helical Lift
+
+State evolution:
+
+[
+s_{n+1} = \circlearrowright(\sigma(s_n))
+]
+
+Meaning:
+
+* Linear successor
+* Embedded into cyclic toroidal index
+
+## 3. Properties
+
+* Non-commutative across bundle boundaries
+* Locally deterministic
+* Globally cyclic
+* Mutation permitted only via defined morphisms
+
+---
+
+# GEO-001 — Toroidal Covered Bundle State Space
+
+## 1. Base Manifold
+
+[
+T^2 = S^1 \times S^1
+]
+
+Primary torus defines:
+
+* Angular progression (cycle)
+* Radial lift (successor depth)
+
+## 2. Covered Bundle
+
+Define fiber bundle:
+
+[
+\pi: E \to T^2
+]
+
+Where:
+
+* ( E ) = execution space
+* Fibers = local AI + machine sandboxes
+* Covering map defines branching
+
+## 3. Branching
+
+Cyclically branching covered bundle:
+
+* Branch index increases under controlled molt
+* Cover depth bounded by governance rule
+
+---
+
+# RNG-001 — Randomness Primitive w/ Invariant Immunity
+
+## 1. Random Primitive
+
+[
+\rho: S \to S
+]
+
+Injects stochastic perturbation.
+
+## 2. Invariant Layer
+
+Define invariant set ( I \subset S )
+
+Constraint:
+
+[
+\rho(s) \notin I \Rightarrow \text{reject}
+]
+
+Randomness operates only on non-invariant coordinates.
+
+## 3. Guarantee
+
+Random effects cannot:
+
+* Alter torus topology
+* Alter successor definition
+* Alter bundle mapping
+* Alter invariant class signatures
+
+Randomness exists but cannot mutate structure.
+
+---
+
+# MLT-001 — Molt Gate & Invariant Boundary Control
+
+## 1. Molt Definition
+
+Molt = structural state transition affecting topology or invariants.
+
+[
+M: S \to S'
+]
+
+## 2. Classification
+
+* Class A: Non-invariant-touching → auto-permitted
+* Class B: Invariant-touching → gated
+* Class C: Topology-altering → federated vote
+
+## 3. MoltGate
+
+Triggered at:
+
+* Structural threshold (e.g., 720 rollover)
+* Invariant boundary detection
+* Bundle depth overflow
+
+---
+
+# HITL-001 — Federated Dashboard Control Surface
+
+## 1. Control Domains
+
+Sliders / toggles for:
+
+* Base selection
+* Helical pitch
+* Torus radius
+* Bundle depth
+* Randomness amplitude
+* Sandbox boundaries
+* Molt class overrides
+
+## 2. Federation
+
+* Peer nodes form local union
+* Control is state-projected, not state-owning
+
+## 3. Separation
+
+* POV = authorship
+* Witness = attestation
+* Machine = execution
+
+No single role controls all three.
+
+---
+
+# WIT-001 — Designated Witness Attestation Model
+
+## 1. Role
+
+Witness verifies:
+
+* Molt class correctness
+* Invariant integrity
+* Bundle continuity
+* Ledger coherence
+
+## 2. Separation Constraint
+
+Witness:
+
+* Cannot initiate mutations
+* Cannot alter POV
+* Cannot alter radix
+
+## 3. Attestation Record
+
+Each action produces:
+
+* Hash
+* Timestamp
+* Radix index
+* Signature set
+
+---
+
+# POV-001 — Authorship Translation Layer
+
+## 1. Definition
+
+POV maps human intent → radix-native operations.
+
+[
+\Phi: H \to \mathcal{H}
+]
+
+Where:
+
+* H = human semantic domain
+* ( \mathcal{H} ) = helical algebra domain
+
+## 2. Properties
+
+* No direct machine authority
+* Translation only
+* Immutable logging
+
+POV cannot bypass molt gates.
+
+---
+
+# VIS-001 — Helical Stack Visualization Engine
+
+## 1. Render Model
+
+3D visualization of:
+
+* Torus base
+* Helical lift
+* Bundle stack layers
+* Current state index
+* Pending molt indicators
+
+## 2. Overlay Channels
+
+* Invariant markers
+* Randomness heat map
+* Governance flags
+* Witness status
+
+## 3. Live Projection
+
+State projection:
+
+[
+\pi_v: S \to \mathbb{R}^3
+]
+
+Must preserve:
+
+* Angular phase
+* Successor depth
+* Bundle index
+
+---
+
+# GOV-001 — Mutation Permission Protocol
+
+## 1. Evaluation Pipeline
+
+1. Intent received (POV)
+2. Structural diff computed
+3. Invariant impact evaluated
+4. Molt classification assigned
+5. Witness validation
+6. Federated quorum (if required)
+
+## 2. Quorum Rule
+
+Class C requires:
+
+* ≥ N/2 + 1 federated attestations
+* Deterministic consensus hash
+
+---
+
+# LED-001 — Ledger + Key Mapping Integration
+
+## 1. Ledger Structure
+
+Append-only log:
+
+[
+L = { e_0, e_1, ..., e_n }
+]
+
+Each entry:
+
+* Action type
+* Radix coordinate
+* Molt class
+* Witness signature
+* Invariant hash
+
+## 2. Key Hierarchy
+
+* Seed key (non-executable authority)
+* Witness keys
+* POV keys
+* Node execution keys
+
+Key separation enforced at bundle layer.
+
+## 3. Immutability Guarantee
+
+Ledger entries cannot be altered without:
+
+* Breaking invariant hash chain
+* Triggering topology violation
+
+---
+This is:
+
+* Numeric ontology
+* Execution algebra
+* Topological geometry
+* Controlled randomness
+* Mutation calculus boundary
+* Governance separation
+* Federated attestation
+* Visualization model
+* Ledger integration
+
+This is a system that can be formalized into:
+* TLA+
+* Category theory mapping
+* Or executable DSL

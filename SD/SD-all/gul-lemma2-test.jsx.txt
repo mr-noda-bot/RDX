@@ -1,0 +1,411 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+
+// ── Math ─────────────────────────────────────────────────────────────────────
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const norm2 = (ax, ay) => Math.sqrt(ax * ax + ay * ay);
+
+// Surface entropy: Gaussian centred at (xc, yc)
+const SB = (x, y, xc = 0, yc = 0) => Math.exp(-((x - xc) ** 2 + (y - yc) ** 2));
+const gradSB = (x, y, xc = 0, yc = 0) => {
+  const s = SB(x, y, xc, yc);
+  return [-2 * (x - xc) * s, -2 * (y - yc) * s];
+};
+
+// Curvature terms
+const curvatureModes = {
+  zero:       { label: "R = 0 (baseline)",           fn: () => [0, 0] },
+  mild:       { label: "R = sin(x)cos(y)  [mild]",   fn: (x, y) => [Math.cos(x) * Math.cos(y), -Math.sin(x) * Math.sin(y)] },
+  violating:  { label: "R = −3·∇S_B  [VIOLATES L2]", fn: (x, y, xc, yc) => { const [gx, gy] = gradSB(x, y, xc, yc); return [-3 * gx, -3 * gy]; } },
+  adversarial:{ label: "R = steep anti-aligned  [VIOLATES L2]", fn: (x, y, xc, yc) => {
+    // Steep slope directly opposing grad S_B near origin
+    const [gx, gy] = gradSB(x, y, xc, yc);
+    const mag = norm2(gx, gy) || 1e-9;
+    return [-4 * gx / mag, -4 * gy / mag];  // unit anti-alignment, scaled ×4
+  }},
+};
+
+// Successor vector: S_vec = T·gradSB - beta·gradR
+const svec = (x, y, T, beta, curvMode, xc = 0, yc = 0) => {
+  const [sgx, sgy] = gradSB(x, y, xc, yc);
+  const [rgx, rgy] = curvatureModes[curvMode].fn(x, y, xc, yc);
+  return [T * sgx - beta * rgx, T * sgy - beta * rgy];
+};
+
+// Lemma 2 bound check: returns {satisfied, ratio, delta, epsilon}
+const lemma2Check = (x, y, T, beta, curvMode, xc = 0, yc = 0) => {
+  const [sgx, sgy] = gradSB(x, y, xc, yc);
+  const [rgx, rgy] = curvatureModes[curvMode].fn(x, y, xc, yc);
+  const normGradSB = norm2(sgx, sgy);
+  const normBetaR  = beta * norm2(rgx, rgy);
+  if (normGradSB < 1e-8) return { satisfied: true, ratio: 0, delta: 1, epsilon: T * T };
+  const ratio = normBetaR / (T * normGradSB);
+  const satisfied = ratio <= 1;
+  const delta = Math.max(0, 1 - ratio);
+  const epsilon = (delta * T) ** 2;
+  return { satisfied, ratio, delta, epsilon };
+};
+
+// RK4 integrator step
+const rk4Step = (x, y, dt, T, beta, curvMode, xc, yc) => {
+  const f = (px, py) => svec(px, py, T, beta, curvMode, xc, yc);
+  const [k1x, k1y] = f(x, y);
+  const [k2x, k2y] = f(x + 0.5 * dt * k1x, y + 0.5 * dt * k1y);
+  const [k3x, k3y] = f(x + 0.5 * dt * k2x, y + 0.5 * dt * k2y);
+  const [k4x, k4y] = f(x + dt * k3x, y + dt * k3y);
+  return [
+    x + (dt / 6) * (k1x + 2 * k2x + 2 * k3x + k4x),
+    y + (dt / 6) * (k1y + 2 * k2y + 2 * k3y + k4y),
+  ];
+};
+
+// Integrate a trajectory from (x0,y0) for nSteps
+const integrate = (x0, y0, T, beta, curvMode, xc, yc, nSteps = 400, dt = 0.04) => {
+  const pts = [[x0, y0]];
+  let x = x0, y = y0;
+  for (let i = 0; i < nSteps; i++) {
+    [x, y] = rk4Step(x, y, dt, T, beta, curvMode, xc, yc);
+    x = clamp(x, -5, 5); y = clamp(y, -5, 5);
+    pts.push([x, y]);
+    if (norm2(x - xc, y - yc) < 0.05) break;  // converged
+  }
+  return pts;
+};
+
+// Starting points: ring around domain
+const STARTS = Array.from({ length: 16 }, (_, i) => {
+  const a = (i / 16) * 2 * Math.PI;
+  return [3.5 * Math.cos(a), 3.5 * Math.sin(a)];
+}).concat([[-2, 2], [2, -2], [-2, -2], [2, 2], [0, 3], [3, 0], [-3, 0], [0, -3]]);
+
+// ── Canvas renderer ───────────────────────────────────────────────────────────
+const W = 480, H = 480;
+const toCanvas = (x, y) => [(x + 5) / 10 * W, H - (y + 5) / 10 * H];
+const fromCanvas = (px, py) => [px / W * 10 - 5, (H - py) / H * 10 - 5];
+
+function drawScene(canvas, T, beta, curvMode, xc, yc, showBound, showField) {
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, W, H);
+
+  // Background: S_B heatmap
+  const img = ctx.createImageData(W, H);
+  for (let py = 0; py < H; py++) {
+    for (let px = 0; px < W; px++) {
+      const [x, y] = fromCanvas(px, py);
+      const sb = SB(x, y, xc, yc);
+      const { satisfied } = showBound
+        ? lemma2Check(x, y, T, beta, curvMode, xc, yc)
+        : { satisfied: true };
+      const i = (py * W + px) * 4;
+      if (!satisfied && showBound) {
+        // Violated region: red tint
+        img.data[i]     = Math.round(180 + sb * 60);
+        img.data[i + 1] = Math.round(20);
+        img.data[i + 2] = Math.round(20);
+        img.data[i + 3] = 255;
+      } else {
+        // Normal: navy-blue entropy heatmap
+        img.data[i]     = Math.round(sb * 20);
+        img.data[i + 1] = Math.round(sb * 60);
+        img.data[i + 2] = Math.round(sb * 180 + (1 - sb) * 8);
+        img.data[i + 3] = 255;
+      }
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+
+  // Grid
+  ctx.strokeStyle = "rgba(255,255,255,0.06)";
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 10; i++) {
+    const px = i / 10 * W, py = i / 10 * H;
+    ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, py); ctx.lineTo(W, py); ctx.stroke();
+  }
+
+  // Vector field (sparse)
+  if (showField) {
+    const step = 20;
+    for (let px = step / 2; px < W; px += step) {
+      for (let py = step / 2; py < H; py += step) {
+        const [x, y] = fromCanvas(px, py);
+        const [vx, vy] = svec(x, y, T, beta, curvMode, xc, yc);
+        const mag = norm2(vx, vy);
+        if (mag < 1e-6) continue;
+        const len = clamp(mag * 6, 2, 11);
+        const nx = vx / mag, ny = vy / mag;
+        const ex = px + nx * len, ey = py - ny * len;
+        const hue = (1 - clamp(mag * 4, 0, 1)) * 200;
+        ctx.strokeStyle = `hsla(${hue},80%,65%,0.55)`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(ex, ey); ctx.stroke();
+        // Arrowhead
+        const ang = Math.atan2(-ny, nx);
+        ctx.fillStyle = `hsla(${hue},80%,65%,0.55)`;
+        ctx.beginPath();
+        ctx.moveTo(ex, ey);
+        ctx.lineTo(ex - 3.5 * Math.cos(ang - 0.4), ey - 3.5 * (-Math.sin(ang - 0.4)));
+        ctx.lineTo(ex - 3.5 * Math.cos(ang + 0.4), ey - 3.5 * (-Math.sin(ang + 0.4)));
+        ctx.closePath(); ctx.fill();
+      }
+    }
+  }
+
+  // Trajectories
+  const results = [];
+  for (const [x0, y0] of STARTS) {
+    const pts = integrate(x0, y0, T, beta, curvMode, xc, yc);
+    const last = pts[pts.length - 1];
+    const dist = norm2(last[0] - xc, last[1] - yc);
+    const converged = dist < 0.3;
+    results.push({ pts, converged, start: [x0, y0], end: last, dist });
+
+    const color = converged ? "rgba(74,222,128,0.85)" : "rgba(248,113,113,0.85)";
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < pts.length; i++) {
+      const [cx, cy] = toCanvas(pts[i][0], pts[i][1]);
+      i === 0 ? ctx.moveTo(cx, cy) : ctx.lineTo(cx, cy);
+    }
+    ctx.stroke();
+
+    // Start dot
+    const [spx, spy] = toCanvas(x0, y0);
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(spx, spy, 3, 0, Math.PI * 2); ctx.fill();
+
+    // End dot
+    const [epx, epy] = toCanvas(last[0], last[1]);
+    ctx.fillStyle = converged ? "#4ade80" : "#f87171";
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(epx, epy, 4, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+  }
+
+  // Entropy peak marker
+  const [pcx, pcy] = toCanvas(xc, yc);
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(pcx, pcy, 10, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = "rgba(255,255,255,0.9)";
+  ctx.font = "bold 11px monospace";
+  ctx.fillText("x*", pcx + 13, pcy + 4);
+
+  return results;
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+export default function GULTest() {
+  const canvasRef = useRef(null);
+  const [T, setT] = useState(1.0);
+  const [beta, setBeta] = useState(0.5);
+  const [curvMode, setCurvMode] = useState("zero");
+  const [showBound, setShowBound] = useState(true);
+  const [showField, setShowField] = useState(true);
+  const [results, setResults] = useState([]);
+  const [sampleCheck, setSampleCheck] = useState(null);
+
+  const redraw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const res = drawScene(canvas, T, beta, curvMode, 0, 0, showBound, showField);
+    setResults(res);
+    // Sample Lemma 2 check at a representative point away from peak
+    const chk = lemma2Check(1.5, 1.5, T, beta, curvMode, 0, 0);
+    setSampleCheck(chk);
+  }, [T, beta, curvMode, showBound, showField]);
+
+  useEffect(() => { redraw(); }, [redraw]);
+
+  const convergedCount = results.filter(r => r.converged).length;
+  const totalCount = results.length;
+  const allConverge = convergedCount === totalCount;
+  const noneConverge = convergedCount === 0;
+
+  const verdict = allConverge
+    ? { text: "✓ L2 HOLDS — all trajectories converge", color: "#4ade80", bg: "rgba(20,83,45,0.5)" }
+    : noneConverge
+    ? { text: "✗ L2 VIOLATED — no trajectories converge", color: "#f87171", bg: "rgba(127,29,29,0.5)" }
+    : { text: `⚠ PARTIAL — ${convergedCount}/${totalCount} converge`, color: "#fbbf24", bg: "rgba(120,53,15,0.5)" };
+
+  const sl = { display: "flex", flexDirection: "column", gap: 3 };
+  const labelStyle = { color: "#94a3b8", fontSize: 11, fontFamily: "monospace" };
+  const valStyle = { color: "#7dd3fc", fontFamily: "monospace", fontSize: 13, fontWeight: 700 };
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(160deg, #020810 0%, #050d1a 60%, #020810 100%)",
+      color: "#e2e8f0",
+      fontFamily: "'JetBrains Mono', 'Courier New', monospace",
+      padding: "20px",
+      boxSizing: "border-box",
+    }}>
+      {/* Header */}
+      <div style={{ marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+          <h1 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: "#f1f5f9", letterSpacing: "0.06em" }}>
+            GUL LEMMA 2 — NUMERICAL FALSIFICATION TEST
+          </h1>
+          <span style={{ color: "#334155", fontSize: 11 }}>RK4 · 24 trajectories · live</span>
+        </div>
+        <p style={{ margin: "5px 0 0", fontSize: 11, color: "#475569" }}>
+          Hypothesis: <code style={{ color: "#7dd3fc" }}>‖β∇R‖ ≤ (1−δ)T‖∇S_B‖</code> outside U
+          &nbsp;→&nbsp;
+          all trajectories converge to entropy peak x*
+        </p>
+      </div>
+
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
+        {/* Canvas */}
+        <div style={{ position: "relative" }}>
+          <canvas ref={canvasRef} width={W} height={H}
+            style={{ borderRadius: 6, border: "1px solid rgba(255,255,255,0.08)", display: "block" }} />
+          {/* Overlay legend */}
+          <div style={{
+            position: "absolute", bottom: 10, left: 10,
+            background: "rgba(0,0,0,0.65)", padding: "6px 10px",
+            borderRadius: 4, fontSize: 10, fontFamily: "monospace", lineHeight: 1.8,
+          }}>
+            <div><span style={{ color: "#4ade80" }}>●</span> converged to x*</div>
+            <div><span style={{ color: "#f87171" }}>●</span> failed to converge</div>
+            {showBound && <div><span style={{ color: "rgba(255,80,80,0.7)" }}>■</span> L2 bound violated</div>}
+          </div>
+        </div>
+
+        {/* Controls + Results */}
+        <div style={{ flex: 1, minWidth: 260, display: "flex", flexDirection: "column", gap: 14 }}>
+
+          {/* Verdict */}
+          <div style={{
+            background: verdict.bg,
+            border: `1px solid ${verdict.color}44`,
+            borderLeft: `4px solid ${verdict.color}`,
+            borderRadius: 6, padding: "12px 14px",
+          }}>
+            <div style={{ color: verdict.color, fontWeight: 700, fontSize: 13 }}>{verdict.text}</div>
+            <div style={{ color: "#94a3b8", fontSize: 11, marginTop: 4 }}>
+              {convergedCount}/{totalCount} trajectories reached ‖x − x*‖ &lt; 0.3
+            </div>
+          </div>
+
+          {/* Curvature mode */}
+          <div>
+            <div style={{ ...labelStyle, marginBottom: 6 }}>CURVATURE MODE  R(x,y)</div>
+            {Object.entries(curvatureModes).map(([key, { label }]) => (
+              <label key={key} style={{
+                display: "flex", alignItems: "center", gap: 8, cursor: "pointer",
+                padding: "5px 8px", borderRadius: 4, marginBottom: 3,
+                background: curvMode === key ? "rgba(59,130,246,0.15)" : "transparent",
+                border: curvMode === key ? "1px solid rgba(59,130,246,0.4)" : "1px solid transparent",
+              }}>
+                <input type="radio" name="curv" value={key} checked={curvMode === key}
+                  onChange={() => setCurvMode(key)}
+                  style={{ accentColor: "#3b82f6", cursor: "pointer" }} />
+                <span style={{ fontSize: 11, color: curvMode === key ? "#7dd3fc" : "#64748b" }}>{label}</span>
+              </label>
+            ))}
+          </div>
+
+          {/* Sliders */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={sl}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={labelStyle}>Temperature  T</span>
+                <span style={valStyle}>{T.toFixed(2)}</span>
+              </div>
+              <input type="range" min={0.1} max={3} step={0.05} value={T}
+                onChange={e => setT(+e.target.value)}
+                style={{ accentColor: "#3b82f6", cursor: "pointer" }} />
+            </div>
+            <div style={sl}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={labelStyle}>Curvature coupling  β</span>
+                <span style={valStyle}>{beta.toFixed(2)}</span>
+              </div>
+              <input type="range" min={0} max={5} step={0.05} value={beta}
+                onChange={e => setBeta(+e.target.value)}
+                style={{ accentColor: "#3b82f6", cursor: "pointer" }} />
+            </div>
+          </div>
+
+          {/* Toggles */}
+          <div style={{ display: "flex", gap: 12 }}>
+            {[["Show bound violation", showBound, setShowBound], ["Show vector field", showField, setShowField]].map(([label, val, set]) => (
+              <label key={label} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 11, color: "#64748b" }}>
+                <input type="checkbox" checked={val} onChange={e => set(e.target.checked)}
+                  style={{ accentColor: "#3b82f6", cursor: "pointer" }} />
+                {label}
+              </label>
+            ))}
+          </div>
+
+          {/* Lemma 2 numerical check at sample point */}
+          {sampleCheck && (
+            <div style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: 6, padding: "12px 14px",
+            }}>
+              <div style={{ ...labelStyle, marginBottom: 8 }}>L2 CHECK AT SAMPLE POINT (1.5, 1.5)</div>
+              {[
+                ["‖β∇R‖ / T‖∇S_B‖", sampleCheck.ratio.toFixed(4)],
+                ["δ  (slack)", sampleCheck.delta.toFixed(4)],
+                ["ε = (δT)²", sampleCheck.epsilon.toFixed(6)],
+                ["Bound satisfied", sampleCheck.satisfied ? "✓ YES" : "✗ NO"],
+              ].map(([k, v]) => (
+                <div key={k} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>{k}</span>
+                  <span style={{
+                    fontSize: 12, fontWeight: 700, fontFamily: "monospace",
+                    color: k === "Bound satisfied"
+                      ? (sampleCheck.satisfied ? "#4ade80" : "#f87171")
+                      : (sampleCheck.ratio > 1 ? "#f87171" : "#7dd3fc"),
+                  }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Trajectory table */}
+          <div style={{
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            borderRadius: 6, padding: "10px 14px", maxHeight: 180, overflowY: "auto",
+          }}>
+            <div style={{ ...labelStyle, marginBottom: 6 }}>TRAJECTORY RESULTS</div>
+            {results.slice(0, 12).map((r, i) => (
+              <div key={i} style={{
+                display: "flex", justifyContent: "space-between",
+                fontSize: 10, fontFamily: "monospace", marginBottom: 3,
+                color: r.converged ? "#4ade80" : "#f87171",
+              }}>
+                <span>({r.start[0].toFixed(1)}, {r.start[1].toFixed(1)})</span>
+                <span>→ dist {r.dist.toFixed(3)}</span>
+                <span>{r.converged ? "✓" : "✗"}</span>
+              </div>
+            ))}
+            {results.length > 12 && (
+              <div style={{ fontSize: 10, color: "#334155", marginTop: 4 }}>
+                + {results.length - 12} more…
+              </div>
+            )}
+          </div>
+
+          {/* Interpretation */}
+          <div style={{
+            background: "rgba(255,255,255,0.025)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            borderRadius: 6, padding: "10px 14px", fontSize: 11, color: "#64748b", lineHeight: 1.7,
+          }}>
+            <span style={{ color: "#94a3b8", fontWeight: 700 }}>How to read this: </span>
+            Select <span style={{ color: "#fbbf24" }}>VIOLATES L2</span> modes and raise β to push the ratio
+            above 1 (red region). Watch green trajectories turn red — confirming L2 is both necessary and tight.
+            Reducing β or switching to mild/zero R restores convergence.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

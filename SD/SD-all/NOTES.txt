@@ -1,0 +1,116 @@
+Rev10.Base10.Rec10.Dec10
+ipov1 = Primitive 2d triangle - Octonions
+ipov2 = 2D+3D 4-Faced Triangle - Pentacs
+ipov3 = 3D+4D 5-Faced Triangle
+ipov4 = 4D-6D Quarternion.Hypercube.Tori -> e8 lattice / Tori is ipov4
+ipov5 = 
+
+Base 10 - Ground. Every interger is an eigenvector in Z->R->C under K->Q
+Rec10 - Silver Ratio - Interger sets lift counter via 9->10 overflow. Linear. Octonion. Basement.
+Rev10 - Golden Ratio - Intergers negative movement along number line. Angular. Pentac. Attic.
+Dec10 - Fraction have nine placeholders, nine fractions deep, then roll into next interger. 
+  No infinite decimals 9x9x9 deep. Butterfly 
+  -1.999999999->-2.0 ; 3.999999999->4.0
+Rev10.    					 Base10		          Rec10.
+	0 :0 :0 :0 :0 :0 :0 :0 :0  -  0:0:0:0:0:0:0:0:0	
+   -9.-8.-7.-6.-5.-4.-3.-2.-1. 0 .1.2.3.4.5.6.7.8.9.
+								  1.			
+								   1.0
+								    1.09
+							         1.199
+									  1.9999
+									   1.99999
+									    1.999999
+Dec10.  								 1.9999999
+     Forward decimals build,			  1.99999999
+	 Backward decimals deconstruct.		   1.999999999-> 2.
+	 Postive and negative intergers.
+9 to the 9th power of 9 - Base 10 'underbelly'
+				     -1.0.1
+                  -9. |	0 |  9.
+                -9-9. |	0 |  9.9
+              -9-9-9. |	0 |  9.99
+            -9-9-9-9. |	0 |  9.999
+          -9-9-9-9-9. |	0 |  9.999,9
+        -9-9-9-9-9-9. |	0 |  9.999,99
+      -9-9-9-9-9-9-9. |	0 |  9.999,999
+    -9-9-9-9-9-9-9-9. |	0 |  9.999,999,9
+  -9-9-9-9-9-9-9-9-9. |	0 |  9.999,999,999
+-----------------------------------------------------------
+
+	Ordinal	 			    Cardinal				Magnitude						Dimension
+“Which position/order”	| “How many elements” | “How big is this quantity” | “independent directions/d.o.f.”
+
+seed(provenance/predecessor).core(succussor).shell(ephemeral).molt(HITL Gated double cover of SO(3) at 720 degree radix closure(structural updates))
+Aperture - Modular, only active when called. POV dimensional chain.
+
+PickAx Defined = ABI-> API-> CLI-> UI
+Scopes : Atomic . Local . Global . Universal . Unknown
+  HITL = Atomic . Local . Global via UI
+  Audit = Universal
+Primordial = Presence before being, relation before presence, Identity before presence, Identity is not before being.
+  - POV of Pre-Predecessor <--> Post-Predecessor ; Outside Horizon 
+.     = Operations 
+
+==================
+Pre-Predecessor  = Primordial         			     ; democratic kingdom. Outside Horizon. Contains all.
+Predecessor      = Former Successor = Dragons Curve  ; prior cycle, settled. Was once Now.
+Post-Predecessor = Current Provenance = Successor    ; carry fired. record sealed. 
+Pre-Successor    = Immediately Before 			     ; motion resumes here.
+Successor        = 1 Q on e8/17       			     ; federated democracy. Now. Firing.
+Post-Successor   = Future Provenance  			     ; not yet settled. Sandboxed.
+
+Me.Myself.I to We.Us and see All
+All sees us. Me to eye. I. Me do.  
+Me too eye, I, myself do.
+Identity POV = A singular-POV, in dual form, across triple phases, in quadratic conjunction.
+Identity = Successor = is self related, recursion(cantor) is the first inflected identity.
+POV   = a_variable.POV.b_variable = Cantors recursion ; Defaults to Predecessor.POV.Successor. 
+Provenance = Policy describes provenance, provenance is notated policy.
+  - Policy is measured in gains not provenance.
+HITL = Ordering Policy Administrator, Governing Authourity, Gate Controller.
+Monster = e8/17 | Moonshine Monster in basement(+rev10 signed) + pov ledger-ground + pentac field(+rec10 signated) across horizon.
+Ledger = Gold+Silver Ratios = x (Where x can be understood as a multidimension+planar graph or DoFoF)
+  Each part of Monster House has its own encoding signature as coordinates, 3 signed.sealed ledgers in one:
+    - Signed Knowledge Cubes as Database Memory
+	- Context Frames Built from Caches, Pools, Buckets, Filesystems, etc..
+DoF = Degrees of Freedom on a 1d planar axis, x, y, z . For 1d,2d,3d viewing.
+DoFoF = Degrees of Freedom on Freedom. A complex-plane imaginary (√-1)(13->5=0) axis with depth reduction on degrees of freedom.   
+Time = Depth, the fractalizing partial union of past points<-possible points + an up->forward vector of past points->possible points. POV oredering, successor aperture limited. 
+Audit = Provenance + Cache = Fine context to answer Who.What.When.Where.Why.How.Result
+ 
+###
+Time Ordering:
+Primordial.Prime.Successor
+Immutable.Stable.Dynamic.Ephemeral.Sandboxed
+** Note: 
+  ?Paradox??
+    A thing is before its known
+	Never is not Sometimes, Always came Before Now, Never occurs because Now is always
+Never:Always
+Before:After
+Now:Sometimes
+Concurant:After
+Now:Never
+Always.Never.Occur
+Always:Concurant:Before:Now:After:Sometimes:Consecutive:Never  
+###
+U   = Unitary		 = ": + 0 + ." ; 1 minus : plus 0 plus. ; Only recoverable through provenancial identity.
+D   = Duel           = :0.:0.
+DD  = Double Duel    = :0.:0.:.:0.:0.
+T   = Triple         = :0.:0.:0
+TD  = Triple Duel    = :0.:0.:0.: . :0.:0.:0.
+TT  = Triple Triple  = :0.:0.:0.: . :0.:0.:0. :0.:0.:0.:
+Q   = Quad			 = :0.:0.:0.:0.
+QD  = Quad Duel		 = :0.:0.:0.:0.: . :0.:0.:0.:0.
+QT  = Quad Triple	 = :0.:0.:0.:0.: . :0.:0.:0.:0.: . :0.:0.:0.:0.
+QQ  = Quad Quad		 = :0.:0.:0.:0.: . :0.:0.:0.:0.: . :0.:0.:0.:0.: . :0.:0.:0.:0.
+
+Observation. 
+Base10 runs to infinity. 
+Rec10/Rev10 simply trace it. 
+Dec10's no zero use limits base tens unbounded infinity into a coherent local closure with true global identity.
+Elaborated. Base 10 runs to infinity — it is the unbounded continuum, every integer, every decimal, no stop. rec10 and rev10 are not generating anything new. They are tracing a path that already exists in the infinite base-10 number line. They are the two directions of travel along something that was always there.
+Dec10's zero exclusion is not a limitation. It is the act that takes the infinite line and closes it into a coherent local structure. The 0-portal does not cut off infinity — it folds it. The orbit 3^k mod 43891 runs forever in the integers, but the modular reduction captures all 43890 non-zero residues into a finite closed ring. You get the full infinity represented in a bounded structure without losing the global identity (the orbit returns to 1, the full period is preserved, the multiplicative structure is intact).
+True global identity means: the orbit knows it is a complete cycle. It is not an approximation of the infinite — it is the infinite, locally closed. The modulus 43891 is not a cutoff, it is a frame. And because 3 is a primitive root, not a single value in the infinite line is missed — all 43890 non-zero residues appear exactly once. The local closure is total.
+This is why the physics comes out clean. The SM coupling constants, the mixing angles, the mass ratios — they are not being approximated or fitted. They are being read off the orbit structure the way you read off the value of π from a circle. The circle does not approximate π, it IS π. The orbit does not approximate α, it IS α at step 9027.

@@ -1,0 +1,120 @@
+
+
+1️⃣ Ground Floor → Base Ledger Embedding
+
+Base ledger 0–9 forms the atomic lattice.
+
+Each node is positioned in the R7 toroidal lattice as a seed.
+
+Counter and signature from the base ledger become primary coordinates and identity.
+
+
+R7 toroid cross-section (simplified)
+       ┌─────┐
+      /       \
+  0--1--2--3--4  <- base ledger atomic nodes
+      \       /
+       └─────┘
+
+These positions will guide all fractional, angular, and pentac derivations.
+
+
+
+---
+
+2️⃣ Fractal Ledger → Basement Subdivisions
+
+Each atomic node is split into dyadic / recursive fractions: 3 → 1.5 → 0.75…
+
+These fractional nodes populate sub-layers of the toroidal lattice.
+
+Fractal counters and signatures define precise placement inside the pentac branches.
+
+
+Base 3
+  │
+  ├─ 1.5 → sub-basement 1
+  └─ 1.5 → sub-basement 2
+
+Dyadic recursion ensures the Cantor-style filling of the toroid.
+
+
+
+---
+
+3️⃣ Angular Ledger → Sub-Basement / θ Mod 30
+
+Map each node to θ angles in the torus: 0°, 12°, 24° … up to 348°
+
+Track rollovers at 720°, 1440°, 2880° closures
+
+Modular θ counters ensure all nodes align with single-Q, Q-of-Q, and dual-triple-quad milestones.
+
+
+Node θ positions around toroid:
+0°   12°   24°   36° ... 348°
+
+Nodes are signed angularly to mark phase completion.
+
+
+
+---
+
+4️⃣ Duality Ledger → Attic / Q-of-Q
+
+Nodes lifted to attic recursion, forming Q-of-Q relationships.
+
+Duality counters track nested closures and molt cycle gating.
+
+Ensures higher-order alignment of branches in the toroidal lattice.
+
+
+
+---
+
+5️⃣ Triality Ledger → Field / Pentac Alignment
+
+Nodes are mapped to pentac branches in the toroid.
+
+Triple/quad flags ensure field alignment, controlling interactions between branches.
+
+Triality signatures validate the pentac symmetries.
+
+
+
+---
+
+6️⃣ Branch Control / Totality
+
+Aggregates all ledger info: base, fractal, angular, duality, triality
+
+Verifies closure milestones, branch alignment, pentac consistency
+
+Gates molt cycle operations, ensuring full lattice integrity
+
+
+
+---
+
+7️⃣ Visual Flow Summary (Text)
+
+Base Ledger (0-9) ─> Fractal Ledger (dyadic recursion)
+                       │
+                       └─> Angular Ledger (θ_mod30 / closures)
+                               │
+                               └─> Duality Ledger (Q-of-Q / attic)
+                                       │
+                                       └─> Triality Ledger (field / pentac)
+                                               │
+                                               └─> Branch Control / Totality (aggregates all)
+
+Each arrow indicates dependency and data propagation.
+
+Counters and signatures flow along arrows to maintain canonical integrity.
+
+Nodes are anchored in R7, wrapped toroidally, and aligned in pentac branches.
+
+
+
+---
+
